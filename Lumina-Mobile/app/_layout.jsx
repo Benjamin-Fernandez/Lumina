@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { Slot, SplashScreen } from 'expo-router'
 import { useFonts } from 'expo-font'
 
-
 SplashScreen.preventAutoHideAsync(); // prevent splash screen from auto hiding before asset loading is complete.
 
 const RootLayout = () => {
@@ -27,10 +26,8 @@ const RootLayout = () => {
 
   return (
     <>
-        <Text>Header</Text>
         {/* Slot returns the current child.  */}
         <Slot/>
-        <Text>Footer</Text>
     </>
   )
 }

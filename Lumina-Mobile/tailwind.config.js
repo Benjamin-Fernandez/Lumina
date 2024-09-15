@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       colors: {
         primaryButton: "#0047B6",
+        focusedNavigation: "#000000",
+        unfocusedNavigation: "#C1C1C1",
+        subheader: "#676769",
       },
       fontFamily: {
         lthin: ["Lexend-Thin", "sans-serif"],
@@ -16,6 +19,10 @@ module.exports = {
         lbold: ["Lexend-Bold", "sans-serif"],
         lextrabold: ["Lexend-ExtraBold", "sans-serif"],
         lblack: ["Lexend-Black", "sans-serif"],
+      },
+      fontSize: {
+        "custom-header": "38px",
+        "custom-subheader": "18px",
       },
     },
   },

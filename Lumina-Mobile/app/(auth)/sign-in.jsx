@@ -1,18 +1,18 @@
-import { ScrollView, StatusBar, Text, View, Image, Button } from 'react-native'
+import { View, Text, ScrollView, Image } from 'react-native'
+import CustomButton from '../../components/CustomButton'
 import React from 'react'
-import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import CustomButton from '../components/CustomButton'
 import { Octicons } from '@expo/vector-icons';
+import FormField from '../../components/FormField';
 
 
-export default function App() {
+const SignIn = () => {
   return (
-    <SafeAreaView className="h-full">
+    <SafeAreaView className="h-full bg-white">
       <ScrollView contentContainerStyle={{height: '100%'}}>
-        <View className="w-full justify-center items-center h-[50%] px-4">
+        <View className="w-full justify-center items-center h-[40%] px-4">
           <Image
-            source={require('../assets/images/icon.png')}
+            source={require('../../assets/images/icon.png')}
             className="w-[230px] h-[295px]"
             resizeMode='contain'
           />
@@ -20,18 +20,17 @@ export default function App() {
         <View className="w-full p-12">
           <Text
           className="font-lregular text-custom-header w-[183px] mb-3">
-            Welcome to Lumina 👋!
-          </Text>
-          <Text className="font-llight text-custom-subheader text-subheader">
-            Lumina is designed for NTU students only. Please sign in to continue. 
+            Sign in to continue 🔑!
           </Text>
         </View>
         <View className="w-full justify-center items-center px-12">
+          <FormField
+          title="username"/>
           <CustomButton
-            title="Sign In / Sign Up"
+            title="Sign in"
             icon = {Octicons}
             iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
-            handlePress={() => router.push('/sign-in')}
+            handlePress={() => router.push('/conversation-history')}
             containerStyles = "w-full mt-7"
           />
         </View>
@@ -39,3 +38,5 @@ export default function App() {
     </SafeAreaView>
   )
 }
+
+export default SignIn
