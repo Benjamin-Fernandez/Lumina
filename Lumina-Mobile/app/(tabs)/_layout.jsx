@@ -7,12 +7,30 @@ const TabsLayout = () => {
     <>
         <Tabs>
             <Tabs.Screen
-                name="conversation-history"
+                name="home"
                 options={{
-                    header: 'History',
+                    title: 'Home',
                     headerShown: true,
+                    // tabBarIcon: 
                 }}
             />
+            <Tabs.Screen
+              name="new-conversation"
+              options={{
+                title:'Start',
+                headerShown: true,
+                // tabBarIcon
+              }}
+            />
+            <Tabs.Screen
+              name="conversation-history"
+              options={{
+                title:'History',
+                headerShown: true,
+                // tabBarIcon
+              }}
+            />
+            
         </Tabs>
     </>
   )

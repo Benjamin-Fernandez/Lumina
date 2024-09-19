@@ -4,9 +4,35 @@ import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../components/CustomButton'
 import { Octicons } from '@expo/vector-icons';
+import { authorize } from 'react-native-app-auth';  
 
+const config = {
+  issuer: 'https://login.microsoftonline.com/common',
+  clientId: '8056ae32-9e42-4e77-bb36-2bb47f029744', // Replace with your microsoft client id
+  redirectUrl: 'com.lumina://oauth/auth/', // replace with your redirect uri added in microsoft portal
+  scopes: ['openid', 'profile', 'email'],
+  serviceConfiguration: {
+    authorizationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+    tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+    revocationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/logout',
+  },
+  useNonce: true, 
+  usePKCE: true, //For iOS, we have added the useNonce and usePKCE parameters, which are recommended for security reasons.
+  additionalParameters: {
+    prompt: 'consent',
+  },
+};
 
-export default function App() {
+const microsoftSignIn = async () => {
+    try {
+      const { idToken } = await authorize(config);
+      console.log(idToken) // here you get the idToken if login successful.
+    } catch (error) {
+      //on login error 
+    }
+  };
+
+export default function App() { 
   return (
     <SafeAreaView className="h-full">
       <ScrollView contentContainerStyle={{height: '100%'}}>
@@ -28,10 +54,11 @@ export default function App() {
         </View>
         <View className="w-full justify-center items-center px-12">
           <CustomButton
-            title="Sign In / Sign Up"
+            title="Sign In"
             icon = {Octicons}
             iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
-            handlePress={() => router.push('/sign-in')}
+            // handlePress={() => router.push('/conversation-history')}
+            handlePress={microsoftSignIn}
             containerStyles = "w-full mt-7"
           />
         </View>

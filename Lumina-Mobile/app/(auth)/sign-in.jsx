@@ -7,6 +7,7 @@ import FormField from '../../components/FormField';
 
 
 const SignIn = () => {
+
   return (
     <SafeAreaView className="h-full bg-white">
       <ScrollView contentContainerStyle={{height: '100%'}}>
@@ -31,6 +32,7 @@ const SignIn = () => {
             icon = {Octicons}
             iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
             handlePress={() => router.push('/conversation-history')}
+            // handlePress={()=>signIn()}
             containerStyles = "w-full mt-7"
           />
         </View>
