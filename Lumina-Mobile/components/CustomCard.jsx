@@ -34,10 +34,10 @@ const CustomCard = ({ title, favourite, image }) => {
       )}
 
       {/* Text Section (30% of the card height) */}
-      <View className="h-[50%] p-3 flex-row justify-between bg-white">
+      <View className="h-[50%] p-3 flex-row justify-between bg-white rounded-b-lg">
         <View className="flex-[0.70]">
           <Text
-            className="font-lregular text-base font-bold"
+            className="font-llight text-base font-bold"
             numberOfLines={2}
             ellipsizeMode="tail"
           >

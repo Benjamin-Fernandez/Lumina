@@ -24,6 +24,9 @@ module.exports = {
         "custom-header": "38px",
         "custom-subheader": "18px",
       },
+      margin: {
+        header: "5rem",
+      },
     },
   },
   plugins: [],

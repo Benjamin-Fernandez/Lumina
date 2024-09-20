@@ -9,30 +9,36 @@ const Home = ({ username, onLogout }) => {
     router.push("/");
   };
   handleFavouriteChatbot = () => {
-    router.push("/chatbot/favourites");
+    router.push("/chatbots/favourites");
+  };
+  handleDiscoverChatbot = () => {
+    router.push("/chatbots/discover");
+  };
+  handleChatbotDetail = () => {
+    router.push("/chatbots/1");
   };
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
       <View className="flex-row justify-between items-center mt-16 mx-2">
         {/* <Text className="text-lg font-bold">Hello, {username}</Text> */}
-        <Text className="font-llight text-3xl">Hello, Jane 👋! </Text>
+        <Text className="font-llight text-3xl">Home </Text>
         <TouchableOpacity onPress={handleLogOut}>
           <Icon name="sign-out" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
       {/* Favourite Chatbots Row*/}
-      <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
-        <Text className="font-llight text-xl">Favourite Chatbots</Text>
-        <TouchableOpacity onPress={handleFavouriteChatbot}>
+      <TouchableOpacity onPress={handleFavouriteChatbot}>
+        <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
+          <Text className="font-lregular text-xl">Favourite Chatbots</Text>
           <Icon name="chevron-right" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
 
       {/* Chatbots */}
       <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">
-        <TouchableOpacity className="w-[30%]">
+        <TouchableOpacity className="w-[30%]" onPress={handleChatbotDetail}>
           <CustomCard title={"SC2000 Chatbot"} favourite={true} />
         </TouchableOpacity>
         <TouchableOpacity className="w-[30%]">
@@ -44,12 +50,12 @@ const Home = ({ username, onLogout }) => {
       </View>
 
       {/* Discover Chatbots Row*/}
-      <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
-        <Text className="font-llight text-xl">Discover Chatbots</Text>
-        <TouchableOpacity>
+      <TouchableOpacity onPress={handleDiscoverChatbot}>
+        <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
+          <Text className="font-lregular text-xl">Discover Chatbots</Text>
           <Icon name="chevron-right" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
 
       {/* Chatbots */}
       <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">

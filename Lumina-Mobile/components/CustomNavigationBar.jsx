@@ -1,6 +1,9 @@
-import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Octicons'; // You can use other icon sets
+import React from "react";
+import { View, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Octicons"; // You can use other icon sets
+import tailwindConfig from "../tailwind.config.js";
+
+const colors = tailwindConfig.theme.extend.colors;
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   return (
@@ -11,7 +14,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
         const onPress = () => {
           const event = navigation.emit({
-            type: 'tabPress',
+            type: "tabPress",
             target: route.key,
             canPreventDefault: true,
           });
@@ -21,7 +24,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
           }
         };
 
-        const iconName = options.tabBarIcon || 'home'; // Default to 'home' icon
+        const iconName = options.tabBarIcon || "home"; // Default to 'home' icon
 
         return (
           <TouchableOpacity
@@ -29,7 +32,13 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             onPress={onPress}
             className={`flex-1 justify-center items-center`}
           >
-            <Icon name={iconName} size={24} color={isFocused ? '#673ab7' : '#222'} />
+            <Icon
+              name={iconName}
+              size={24}
+              color={
+                isFocused ? colors.primaryButton : colors.unfocusedNavigation
+              }
+            />
           </TouchableOpacity>
         );
       })}
