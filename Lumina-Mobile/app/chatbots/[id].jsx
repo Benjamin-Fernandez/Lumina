@@ -41,24 +41,19 @@ const ChatbotDetail = () => {
       </View>
       <View className="px-7">
         <Text className="font-lregular text-lg mb-5">Description</Text>
-        <Text>
+        <Text className="font-llight text-[17px] mb-5">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid,
           mollitia fuga saepe fugiat animi perspiciatis autem atque soluta
           eveniet corporis incidunt veniam nisi maxime dignissimos adipisci
           quisquam asperiores velit corrupti veritatis minima rem dolores aut
           eos. Qui eveniet nihil, eius, quas provident nesciunt sequi possimus,
           tempora soluta fugiat libero facilis sint cumque enim accusantium
-          tempore sunt eum neque voluptas iusto? Doloribus nesciunt, unde
-          quibusdam quaerat ducimus rem laboriosam blanditiis soluta inventore,
-          officiis, minima sit facilis illo provident dolore aliquam debitis
-          eligendi. Accusantium veniam labore numquam ex saepe. Eius soluta
-          incidunt ex itaque consequatur ullam saepe provident doloremque, iste
-          nisi impedit.
+          tempore
         </Text>
       </View>
       <TouchableOpacity className="px-7">
-        <View className="w-full h-[40px] rounded-full bg-primaryButton mt-8 items-center justify-center">
-          <Text className="font-lregular text-base text-white">
+        <View className="w-full h-[50px] rounded-full bg-primaryButton mt-8 items-center justify-center">
+          <Text className="font-lregular text-lg text-white">
             Start Chatbot
           </Text>
         </View>
