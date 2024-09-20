@@ -1,17 +1,18 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs, Redirect } from 'expo-router'
+import CustomNavigationBar from '../../components/CustomNavigationBar'
 
 const TabsLayout = () => {
   return (
     <>
-        <Tabs>
+        <Tabs tabBar={props => <CustomNavigationBar {...props} />}>
             <Tabs.Screen
                 name="home"
                 options={{
                     title: 'Home',
-                    headerShown: true,
-                    // tabBarIcon: 
+                    headerShown: false,
+                    tabBarIcon: 'dependabot',
                 }}
             />
             <Tabs.Screen
@@ -19,7 +20,7 @@ const TabsLayout = () => {
               options={{
                 title:'Start',
                 headerShown: true,
-                // tabBarIcon
+                tabBarIcon: 'plus-circle'
               }}
             />
             <Tabs.Screen
@@ -27,7 +28,7 @@ const TabsLayout = () => {
               options={{
                 title:'History',
                 headerShown: true,
-                // tabBarIcon
+                tabBarIcon: 'inbox'
               }}
             />
             

@@ -7,35 +7,26 @@ import CustomButton from '../components/CustomButton'
 import { Octicons } from '@expo/vector-icons';
 import * as AuthSession from 'expo-auth-session';
 
-// const config = {   
-//   issuer: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540',   
-//   clientId: '8056ae32-9e42-4e77-bb36-2bb47f029744',   
-//   redirectUrl: 'exp://10.91.206.64:8081',   
-//   scopes: ['openid', 'profile', 'email'],   
-//   serviceConfiguration: {
-//     authorizationEndpoint: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize',
-//     tokenEndpoint: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/token',
-//   },
-// };
-async function signIn() {
-  const authUrl = 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize?client_id=8056ae32-9e42-4e77-bb36-2bb47f029744&response_type=code&redirect_uri=exp://10.91.206.64:8081&response_mode=query&scope=openid+profile+email';
-  // const result = await AuthSession.startAsync({ authUrl });
-  // console.log(result);
-  try {
-    const result = await AuthSession.startAsync({ authUrl });
-    if (result.type === 'success') {
-      // Store the token securely
-      await SecureStore.setItemAsync('authToken', result.params.access_token);
-      // Navigate to the main app or home screen
-      router.push('/home');
-    } else {
-      // Handle failure
-      console.error('Login failed:', result);
-    }
-  } catch (error) {
-    console.error('Auth Error:', error);
-  }
-}
+// -----------------------------UNCOMMENT FOR AUTH--------------------------------
+// async function signIn() {
+//   const authUrl = 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize?client_id=8056ae32-9e42-4e77-bb36-2bb47f029744&response_type=code&redirect_uri=exp://10.91.206.64:8081&response_mode=query&scope=openid+profile+email';
+//   // const result = await AuthSession.startAsync({ authUrl });
+//   // console.log(result);
+//   try {
+//     const result = await AuthSession.startAsync({ authUrl });
+//     if (result.type === 'success') {
+//       // Store the token securely
+//       await SecureStore.setItemAsync('authToken', result.params.access_token);
+//       // Navigate to the main app or home screen
+//       router.push('/home');
+//     } else {
+//       // Handle failure
+//       console.error('Login failed:', result);
+//     }
+//   } catch (error) {
+//     console.error('Auth Error:', error);
+//   }
+// }
 
 
 export default function App() { 
@@ -64,8 +55,8 @@ export default function App() {
             title="Sign In"
             icon = {Octicons}
             iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
-            // handlePress={() => router.push('/conversation-history')}
-            handlePress={signIn}
+            handlePress={() => router.push('/conversation-history')}
+            // handlePress={signIn}
             containerStyles = "w-full mt-7"
           />
         </View>
