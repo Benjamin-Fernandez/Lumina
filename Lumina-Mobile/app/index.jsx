@@ -1,38 +1,45 @@
 import { ScrollView, StatusBar, Text, View, Image, Button } from 'react-native'
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../components/CustomButton'
 import { Octicons } from '@expo/vector-icons';
-import { authorize } from 'react-native-app-auth';  
+import * as AuthSession from 'expo-auth-session';
 
-const config = {
-  issuer: 'https://login.microsoftonline.com/common',
-  clientId: '8056ae32-9e42-4e77-bb36-2bb47f029744', // Replace with your microsoft client id
-  redirectUrl: 'com.lumina://oauth/auth/', // replace with your redirect uri added in microsoft portal
-  scopes: ['openid', 'profile', 'email'],
-  serviceConfiguration: {
-    authorizationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-    revocationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/logout',
-  },
-  useNonce: true, 
-  usePKCE: true, //For iOS, we have added the useNonce and usePKCE parameters, which are recommended for security reasons.
-  additionalParameters: {
-    prompt: 'consent',
-  },
-};
-
-const microsoftSignIn = async () => {
-    try {
-      const { idToken } = await authorize(config);
-      console.log(idToken) // here you get the idToken if login successful.
-    } catch (error) {
-      //on login error 
+// const config = {   
+//   issuer: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540',   
+//   clientId: '8056ae32-9e42-4e77-bb36-2bb47f029744',   
+//   redirectUrl: 'exp://10.91.206.64:8081',   
+//   scopes: ['openid', 'profile', 'email'],   
+//   serviceConfiguration: {
+//     authorizationEndpoint: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize',
+//     tokenEndpoint: 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/token',
+//   },
+// };
+async function signIn() {
+  const authUrl = 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize?client_id=8056ae32-9e42-4e77-bb36-2bb47f029744&response_type=code&redirect_uri=exp://10.91.206.64:8081&response_mode=query&scope=openid+profile+email';
+  // const result = await AuthSession.startAsync({ authUrl });
+  // console.log(result);
+  try {
+    const result = await AuthSession.startAsync({ authUrl });
+    if (result.type === 'success') {
+      // Store the token securely
+      await SecureStore.setItemAsync('authToken', result.params.access_token);
+      // Navigate to the main app or home screen
+      router.push('/home');
+    } else {
+      // Handle failure
+      console.error('Login failed:', result);
     }
-  };
+  } catch (error) {
+    console.error('Auth Error:', error);
+  }
+}
+
 
 export default function App() { 
+
   return (
     <SafeAreaView className="h-full">
       <ScrollView contentContainerStyle={{height: '100%'}}>
@@ -58,7 +65,7 @@ export default function App() {
             icon = {Octicons}
             iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
             // handlePress={() => router.push('/conversation-history')}
-            handlePress={microsoftSignIn}
+            handlePress={signIn}
             containerStyles = "w-full mt-7"
           />
         </View>
