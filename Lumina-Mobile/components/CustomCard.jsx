@@ -2,20 +2,39 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 
-const CustomCard = ({ title, description, image }) => {
+// Generate a random color
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+const CustomCard = ({ title, favourite, image }) => {
+  const cardColor = image ? null : getRandomColor(); // Generate a random color if no image
+
   return (
-    <View className="bg-white mt-4 rounded-lg shadow-lg w-[30%] h-[140px] flex-col">
-      {/* Image Section (70% of the card height) */}
-      <View className="h-[50%]">
-        <Image
-          source={{ uri: image }}
-          className="w-full h-full rounded-t-lg"
-          resizeMode="cover"
-        />
-      </View>
+    <View
+      className="mt-4 rounded-lg shadow-lg w-[100%] h-[140px] flex-col"
+      style={{ backgroundColor: cardColor }}
+    >
+      {/* Image Section (50% of the card height) */}
+      {image ? (
+        <View className="h-[50%]">
+          <Image
+            source={{ uri: image }}
+            className="w-full h-full rounded-t-lg"
+            resizeMode="cover"
+          />
+        </View>
+      ) : (
+        <View className="h-[50%] bg-transparent rounded-t-lg" /> // Placeholder for no image
+      )}
 
       {/* Text Section (30% of the card height) */}
-      <View className="h-[50%] p-3 flex-row justify-between">
+      <View className="h-[50%] p-3 flex-row justify-between bg-white">
         <View className="flex-[0.70]">
           <Text
             className="font-lregular text-base font-bold"
@@ -27,7 +46,11 @@ const CustomCard = ({ title, description, image }) => {
         </View>
         <View className="flex-[0.25] mt-4">
           <TouchableOpacity>
-            <Icon name="heart" size={20} color="red" />
+            {favourite ? (
+              <Icon name="heart-fill" size={20} color="red" />
+            ) : (
+              <Icon name="heart" size={20} color="red" />
+            )}
           </TouchableOpacity>
         </View>
       </View>

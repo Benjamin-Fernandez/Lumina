@@ -25,9 +25,15 @@ const Home = ({ username, onLogout }) => {
 
       {/* Chatbots */}
       <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">
-        <CustomCard title={"SC2000 Chatbot"} />
-        <CustomCard title={"HW0028 Chatbot"} />
-        <CustomCard title={"AskNarelle"} />
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"SC2000 Chatbot"} favourite={true} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"HW0028 Chatbot"} favourite={true} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"AskNarelle"} favourite={true} />
+        </TouchableOpacity>
       </View>
 
       {/* Discover Chatbots Row*/}
@@ -40,14 +46,26 @@ const Home = ({ username, onLogout }) => {
 
       {/* Chatbots */}
       <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">
-        <CustomCard title={"SC2000 Chatbot"} />
-        <CustomCard title={"HW0028 Chatbot"} />
-        <CustomCard title={"AskNarelle"} />
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"SC2000 Chatbot"} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"HW0028 Chatbot"} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"AskNarelle"} />
+        </TouchableOpacity>
       </View>
       <View className="flex-row justify-between items-center ml-2 mr-3 mt-2">
-        <CustomCard title={"SC2000 Chatbot"} />
-        <CustomCard title={"HW0028 Chatbot"} />
-        <CustomCard title={"AskNarelle"} />
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"SC2000 Chatbot"} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"HW0028 Chatbot"} />
+        </TouchableOpacity>
+        <TouchableOpacity className="w-[30%]">
+          <CustomCard title={"AskNarelle"} />
+        </TouchableOpacity>
       </View>
     </View>
   );
