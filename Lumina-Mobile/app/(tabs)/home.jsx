@@ -2,15 +2,22 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Octicons"; // Assuming you're using Material Icons
 import CustomCard from "../../components/CustomCard";
+import { router } from "expo-router";
 
 const Home = ({ username, onLogout }) => {
+  handleLogOut = () => {
+    router.push("/");
+  };
+  handleFavouriteChatbot = () => {
+    router.push("/chatbot/favourites");
+  };
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
       <View className="flex-row justify-between items-center mt-16 mx-2">
         {/* <Text className="text-lg font-bold">Hello, {username}</Text> */}
         <Text className="font-llight text-3xl">Hello, Jane 👋! </Text>
-        <TouchableOpacity onPress={onLogout}>
+        <TouchableOpacity onPress={handleLogOut}>
           <Icon name="sign-out" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -18,7 +25,7 @@ const Home = ({ username, onLogout }) => {
       {/* Favourite Chatbots Row*/}
       <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
         <Text className="font-llight text-xl">Favourite Chatbots</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleFavouriteChatbot}>
           <Icon name="chevron-right" size={24} color="black" />
         </TouchableOpacity>
       </View>

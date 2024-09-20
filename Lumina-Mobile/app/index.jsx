@@ -1,11 +1,11 @@
-import { ScrollView, StatusBar, Text, View, Image, Button } from 'react-native'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { router } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import CustomButton from '../components/CustomButton'
-import { Octicons } from '@expo/vector-icons';
-import * as AuthSession from 'expo-auth-session';
+import { ScrollView, StatusBar, Text, View, Image, Button } from "react-native";
+import React from "react";
+import { useState, useEffect } from "react";
+import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "../components/CustomButton";
+import { Octicons } from "@expo/vector-icons";
+import * as AuthSession from "expo-auth-session";
 
 // -----------------------------UNCOMMENT FOR AUTH--------------------------------
 // async function signIn() {
@@ -28,39 +28,37 @@ import * as AuthSession from 'expo-auth-session';
 //   }
 // }
 
-
-export default function App() { 
-
+export default function App() {
   return (
     <SafeAreaView className="h-full">
-      <ScrollView contentContainerStyle={{height: '100%'}}>
-        <View className="w-full justify-center items-center h-[50%] px-4">
+      <ScrollView contentContainerStyle={{ height: "100%" }}>
+        <View className="w-full justify-center items-center h-[60%] px-4">
           <Image
-            source={require('../assets/images/icon.png')}
-            className="w-[230px] h-[295px]"
-            resizeMode='contain'
+            source={require("../assets/images/icon.png")}
+            className="w-[200px] h-[295px]"
+            resizeMode="contain"
           />
         </View>
         <View className="w-full p-12">
-          <Text
-          className="font-lregular text-custom-header w-[183px] mb-3">
+          <Text className="font-lregular text-custom-header w-[183px] mb-3">
             Welcome to Lumina 👋!
           </Text>
           <Text className="font-llight text-custom-subheader text-subheader">
-            Lumina is designed for NTU students only. Please sign in to continue. 
+            Lumina is designed for NTU students only. Please sign in to
+            continue.
           </Text>
         </View>
         <View className="w-full justify-center items-center px-12">
           <CustomButton
             title="Sign In"
-            icon = {Octicons}
-            iconProps={{ name: 'sign-in', size: 24, color: '#fff' }}
-            handlePress={() => router.push('/conversation-history')}
+            icon={Octicons}
+            iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
+            handlePress={() => router.push("/home")}
             // handlePress={signIn}
-            containerStyles = "w-full mt-7"
+            containerStyles="w-full mt-7"
           />
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
