@@ -2,8 +2,12 @@ import { View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 import React from "react";
 import CustomConversation from "../../components/CustomConversation";
+import { router } from "expo-router";
 
 const ConversationHistory = () => {
+  handleConversations = () => {
+    router.push("/conversations/1");
+  };
   return (
     <View className="h-full bg-white p-5">
       <View className="flex-row justify-between items-center mt-16 mx-2">
@@ -14,7 +18,7 @@ const ConversationHistory = () => {
         </TouchableOpacity>
       </View>
       <View className="flex-col">
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleConversations}>
           <CustomConversation
             firstLine={
               "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat dolores ratione eligendi velit quo culpa accusantium dolore iure aspernatur atque?"
