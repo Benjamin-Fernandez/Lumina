@@ -18,8 +18,12 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             target: route.key,
             canPreventDefault: true,
           });
+          console.log(route);
 
           if (!isFocused && !event.defaultPrevented) {
+            if (route.name == "new-conversation") {
+              navigation.navigate("/conversations/1");
+            }
             navigation.navigate(route.name);
           }
         };

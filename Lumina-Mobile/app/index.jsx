@@ -39,24 +39,29 @@ export default function App() {
             resizeMode="contain"
           />
         </View>
-        <View className="w-full p-12">
-          <Text className="font-lregular text-custom-header w-[183px] mb-3">
-            Welcome to Lumina 👋!
-          </Text>
-          <Text className="font-llight text-custom-subheader text-subheader">
-            Lumina is designed for NTU students only. Please sign in to
-            continue.
-          </Text>
-        </View>
-        <View className="w-full justify-center items-center px-12">
-          <CustomButton
-            title="Sign In"
-            icon={Octicons}
-            iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
-            handlePress={() => router.push("/home")}
-            // handlePress={signIn}
-            containerStyles="w-full mt-7"
-          />
+        <View className="w-full h-[40%] p-12">
+          <View>
+            <Text className="font-llight text-custom-header w-full">
+              Welcome to
+            </Text>
+            <Text className="font-llight text-custom-header w-full mb-3">
+              Lumina 👋!
+            </Text>
+            <Text className="font-llight text-custom-subheader text-subheader">
+              Lumina is designed for NTU students only. Please sign in to
+              continue.
+            </Text>
+          </View>
+          <View className="justify-center items-center">
+            <CustomButton
+              title="Sign In"
+              icon={Octicons}
+              iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
+              handlePress={() => router.push("/home")}
+              // handlePress={signIn}
+              containerStyles="w-full mt-7"
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

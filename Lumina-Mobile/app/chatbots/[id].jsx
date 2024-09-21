@@ -11,13 +11,11 @@ const ChatbotDetail = () => {
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
       <View className="flex-row justify-between items-center mt-12 mx-2">
-        <TouchableOpacity>
-          <Icon
-            name="chevron-left"
-            size={24}
-            color="black"
-            onPress={handleBack}
-          />
+        <TouchableOpacity
+          className="absolute left-2 h-16 w-16 align-middle justify-center"
+          onPress={handleBack}
+        >
+          <Icon name="chevron-left" size={24} color="black" />
         </TouchableOpacity>
       </View>
 

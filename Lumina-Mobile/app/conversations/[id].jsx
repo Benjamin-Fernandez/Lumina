@@ -11,7 +11,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-
 import Icon from "react-native-vector-icons/Octicons";
 import { router } from "expo-router";
 
@@ -29,25 +28,23 @@ const ChatScreen = ({ navigation }) => {
     }
   };
   const handleBack = () => {
-    router.back();
+    router.push("/conversation-history");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        className="flex-1"
-        behavior={Platform.OS === "ios" ? "padding" : undefined} // 'padding' works well for iOS; Android manages it by default
-        keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust this value to reduce the padding
+        className="flex-1 bg-black"
+        behavior={Platform.OS === "ios" ? "padding" : "height"} // Use "position" for more predictable input handling
+        keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
       >
         <View className="h-full bg-white p-5">
-          <View className="relative flex-row justify-center items-center mt-12 mx-2">
-            <TouchableOpacity className="absolute left-2">
-              <Icon
-                name="chevron-left"
-                size={24}
-                color="black"
-                onPress={handleBack}
-              />
+          <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
+            <TouchableOpacity
+              className="absolute left-2 h-16 w-16 align-middle justify-center"
+              onPress={handleBack}
+            >
+              <Icon name="chevron-left" size={24} color="black" />
             </TouchableOpacity>
             <Text className="font-lregular text-xl align-middle">
               Chat Title
@@ -55,13 +52,17 @@ const ChatScreen = ({ navigation }) => {
           </View>
 
           {/* Messages or No Messages */}
-          <ScrollView className="flex-1 p-4">
-            {messages.length === 0 ? (
-              <View className="flex-1 items-center justify-center">
-                <Text className="text-gray-500 text-lg">No messages yet</Text>
-              </View>
-            ) : (
-              messages.map((message) => (
+          {messages.length === 0 ? (
+            <View className="h-[80%] justify-center align-middle items-center flex-1 ">
+              <Image
+                source={require("../../assets/images/icon.png")}
+                className="w-[100px] h-[100px]"
+              />
+              <Text className="font-llight text-2xl">Lumina</Text>
+            </View>
+          ) : (
+            <ScrollView className="flex-1 ">
+              {messages.map((message) => (
                 <View
                   key={message.id}
                   className={`mb-2 max-w-[80%] ${
@@ -80,23 +81,21 @@ const ChatScreen = ({ navigation }) => {
                   )}
                   <Text className="font-llight text-base">{message.text}</Text>
                 </View>
-              ))
-            )}
-          </ScrollView>
+              ))}
+            </ScrollView>
+          )}
 
           {/* Input Box */}
-          <View className="flex-row items-center p-4">
+          <View className="flex-row items-center p-4 ">
             <TextInput
               className="flex-1 bg-gray-100 px-4 py-2 h-16 rounded-full text-base font-llight"
               placeholder="Ask me anything..."
               value={input}
               onChangeText={(text) => setInput(text)}
             />
-            <View className="absolute right-9">
-              <TouchableOpacity onPress={handleSend}>
-                <Icon name="paper-airplane" size={24} color="gray" />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity className="absolute right-9" onPress={handleSend}>
+              <Icon name="paper-airplane" size={24} color="gray" />
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>

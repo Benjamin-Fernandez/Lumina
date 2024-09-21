@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React from "react";
 
-const NewConversation = () => {
+const Conversation = () => {
   return (
     <View>
-      <Text>NewConversation</Text>
+      <Text>new-conversation</Text>
     </View>
-  )
-}
+  );
+};
 
-export default NewConversation
+export default Conversation;
