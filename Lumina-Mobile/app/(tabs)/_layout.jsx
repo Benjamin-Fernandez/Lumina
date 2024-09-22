@@ -16,14 +16,6 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="new-conversation"
-          options={{
-            title: "Start",
-            headerShown: false,
-            tabBarIcon: "plus-circle",
-          }}
-        />
-        <Tabs.Screen
           name="conversation-history"
           options={{
             title: "History",

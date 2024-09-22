@@ -2,6 +2,7 @@ import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Octicons"; // You can use other icon sets
 import tailwindConfig from "../tailwind.config.js";
+import { router } from "expo-router";
 
 const colors = tailwindConfig.theme.extend.colors;
 
@@ -18,13 +19,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             target: route.key,
             canPreventDefault: true,
           });
-          console.log(route);
-
           if (!isFocused && !event.defaultPrevented) {
-            if (route.name == "new-conversation") {
-              navigation.navigate("/conversations/1");
-            }
-            navigation.navigate(route.name);
+            router.push(`/${route.name}`);
           }
         };
 
