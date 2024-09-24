@@ -6,29 +6,37 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/CustomButton";
 import { Octicons } from "@expo/vector-icons";
 import * as AuthSession from "expo-auth-session";
+import * as WebBrowser from "expo-web-browser";
+import {
+  exchangeCodeAsync,
+  makeRedirectUri,
+  useAuthRequest,
+  useAutoDiscovery,
+} from "expo-auth-session";
 
-// -----------------------------UNCOMMENT FOR AUTH--------------------------------
-// async function signIn() {
-//   const authUrl = 'https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/oauth2/v2.0/authorize?client_id=8056ae32-9e42-4e77-bb36-2bb47f029744&response_type=code&redirect_uri=exp://10.91.206.64:8081&response_mode=query&scope=openid+profile+email';
-//   // const result = await AuthSession.startAsync({ authUrl });
-//   // console.log(result);
-//   try {
-//     const result = await AuthSession.startAsync({ authUrl });
-//     if (result.type === 'success') {
-//       // Store the token securely
-//       await SecureStore.setItemAsync('authToken', result.params.access_token);
-//       // Navigate to the main app or home screen
-//       router.push('/home');
-//     } else {
-//       // Handle failure
-//       console.error('Login failed:', result);
-//     }
-//   } catch (error) {
-//     console.error('Auth Error:', error);
-//   }
-// }
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
+  // Endpoint
+  const discovery = useAutoDiscovery(
+    "https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/v2.0"
+  );
+  const redirectUri = "lumina-mobile://auth";
+  const clientId = "8056ae32-9e42-4e77-bb36-2bb47f029744";
+
+  // We store the JWT in here
+  const [token, setToken] = useState(null);
+
+  // Request
+  const [request, , promptAsync] = useAuthRequest(
+    {
+      clientId,
+      scopes: ["openid", "profile", "email", "User.Read"],
+      redirectUri,
+    },
+    discovery
+  );
+
   return (
     <SafeAreaView className="h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -57,7 +65,30 @@ export default function App() {
               title="Sign In"
               icon={Octicons}
               iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
-              handlePress={() => router.push("/home")}
+              handlePress={() => {
+                promptAsync().then((codeResponse) => {
+                  if (
+                    request &&
+                    codeResponse?.type === "success" &&
+                    discovery
+                  ) {
+                    exchangeCodeAsync(
+                      {
+                        clientId,
+                        code: codeResponse.params.code,
+                        extraParams: request.codeVerifier
+                          ? { code_verifier: request.codeVerifier }
+                          : undefined,
+                        redirectUri,
+                      },
+                      discovery
+                    ).then((res) => {
+                      setToken(res.accessToken);
+                      router.push("/home");
+                    });
+                  }
+                });
+              }}
               // handlePress={signIn}
               containerStyles="w-full mt-7"
             />
