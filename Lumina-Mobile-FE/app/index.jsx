@@ -7,6 +7,8 @@ import CustomButton from "../components/CustomButton";
 import { Octicons } from "@expo/vector-icons";
 import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
+import axios from "axios";
+import { Buffer } from "buffer";
 import {
   exchangeCodeAsync,
   makeRedirectUri,
@@ -23,6 +25,7 @@ export default function App() {
   );
   const redirectUri = "lumina-mobile://auth";
   const clientId = "8056ae32-9e42-4e77-bb36-2bb47f029744";
+  axios.defaults.baseURL = "http://192.168.0.103:3000";
 
   // We store the JWT in here
   const [token, setToken] = useState(null);
@@ -36,6 +39,35 @@ export default function App() {
     },
     discovery
   );
+
+  // To decode JWT from SSO
+  // Function to decode the JWT
+
+  function parseJwt(token) {
+    if (!token) {
+      console.error("Token is undefined or null");
+      return {};
+    }
+
+    const base64Url = token.split(".")[1];
+    if (!base64Url) {
+      console.error("Invalid token structure");
+      return {};
+    }
+
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = Buffer.from(base64, "base64").toString("utf-8");
+
+    return JSON.parse(jsonPayload);
+  }
+
+  // // Assuming you have the idToken from the authentication response
+  // const idToken = "your-id-token-here";
+  // const decodedToken = parseJwt(idToken);
+
+  // // Accessing the email
+  // const email = decodedToken.email || decodedToken.preferred_username;
+  // console.log("User's email:", email);
 
   return (
     <SafeAreaView className="h-full">
@@ -82,11 +114,32 @@ export default function App() {
                         redirectUri,
                       },
                       discovery
-                    ).then((res) => {
-                      console.log(res);
-                      setToken(res.accessToken);
-                      router.push("/home");
-                    });
+                    )
+                      .then((res) => {
+                        if (res.idToken) {
+                          const idToken = res.idToken;
+                          return axios
+                            .get(
+                              "/api/user/email/" + parseJwt(res.idToken).email
+                            )
+                            .then((res) => {
+                              if (res.data.user === null) {
+                                return axios.post("/api/user/", {
+                                  email: parseJwt(idToken).email,
+                                });
+                              }
+                            })
+                            .then(() => {
+                              setToken(res.accessToken); // This should be inside the promise chain
+                              router.push("/home");
+                            });
+                        } else {
+                          console.log("Error: No idToken found");
+                        }
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
                   }
                 });
               }}
