@@ -118,21 +118,26 @@ export default function App() {
                       .then((res) => {
                         if (res.idToken) {
                           const idToken = res.idToken;
-                          return axios
-                            .get(
-                              "/api/user/email/" + parseJwt(res.idToken).email
-                            )
-                            .then((res) => {
-                              if (res.data.user === null) {
-                                return axios.post("/api/user/", {
-                                  email: parseJwt(idToken).email,
-                                });
-                              }
-                            })
-                            .then(() => {
-                              setToken(res.accessToken); // This should be inside the promise chain
-                              router.push("/home");
-                            });
+                          return (
+                            axios
+                              .get(
+                                // Check if user exists in database
+                                "/api/user/email/" + parseJwt(res.idToken).email
+                              )
+                              .then((res) => {
+                                // If user does not exist, create a new user
+                                if (res.data.user === null) {
+                                  return axios.post("/api/user/", {
+                                    email: parseJwt(idToken).email,
+                                  });
+                                }
+                              })
+                              // Redirect to home page
+                              .then(() => {
+                                setToken(res.accessToken);
+                                router.push("/home");
+                              })
+                          );
                         } else {
                           console.log("Error: No idToken found");
                         }
