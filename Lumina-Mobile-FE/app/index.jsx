@@ -83,6 +83,7 @@ export default function App() {
                       },
                       discovery
                     ).then((res) => {
+                      console.log(res);
                       setToken(res.accessToken);
                       router.push("/home");
                     });
