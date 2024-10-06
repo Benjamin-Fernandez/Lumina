@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  email: {
     type: String,
     required: true,
   },
   conversation: {
-    type: String,
+    type: [String],
     required: [false, ""],
   },
   favourite_chatbots: {
-    type: String,
+    type: [String],
     required: [false, ""],
   },
 });

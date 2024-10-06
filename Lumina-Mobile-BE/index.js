@@ -5,8 +5,14 @@ const app = express();
 // Importing models
 const User = require("./models/user.model");
 
+// Importing routes
+const userRoute = require("./routes/user.route");
+
 // Middleware -> needed to parse the request body which is in JSON format
 app.use(express.json());
+
+// 1. Insert routes in index.js 2. Create a new file in routes folder 3. Create a new file in controllers folder
+app.use("/api/user", userRoute);
 
 mongoose
   .connect(
@@ -27,17 +33,7 @@ mongoose
       // ----------------------------------- Endpoints ------------- ----------------------
       // GET request to the root route
       app.get("/", (req, res) => {
-        res.send("Hello World!");
-      });
-
-      // POST request to user route
-      app.post("/api/user", async (req, res) => {
-        try {
-          const user = await User.create(req.body);
-          res.status(200).json({ user });
-        } catch (error) {
-          res.status(500).json({ error: error.message });
-        }
+        res.send("WELCOME TO LUMINA!");
       });
     });
   });
