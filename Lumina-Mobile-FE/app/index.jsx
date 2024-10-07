@@ -7,7 +7,7 @@ import CustomButton from "../components/CustomButton";
 import { Octicons } from "@expo/vector-icons";
 import * as AuthSession from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
-import axios from "axios";
+import axios from "../config/axiosConfig";
 import { Buffer } from "buffer";
 import {
   exchangeCodeAsync,
@@ -15,6 +15,7 @@ import {
   useAuthRequest,
   useAutoDiscovery,
 } from "expo-auth-session";
+import { useUser } from "../context/UserContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -25,12 +26,11 @@ export default function App() {
   );
   const redirectUri = "lumina-mobile://auth";
   const clientId = "8056ae32-9e42-4e77-bb36-2bb47f029744";
-  axios.defaults.baseURL = "http://192.168.0.103:3000";
 
-  // We store the JWT in here
+  // Store token
   const [token, setToken] = useState(null);
 
-  // Request
+  // Request to sign in
   const [request, , promptAsync] = useAuthRequest(
     {
       clientId,
@@ -40,9 +40,10 @@ export default function App() {
     discovery
   );
 
+  const { setEmail } = useUser();
+
   // To decode JWT from SSO
   // Function to decode the JWT
-
   function parseJwt(token) {
     if (!token) {
       console.error("Token is undefined or null");
@@ -61,13 +62,55 @@ export default function App() {
     return JSON.parse(jsonPayload);
   }
 
-  // // Assuming you have the idToken from the authentication response
-  // const idToken = "your-id-token-here";
-  // const decodedToken = parseJwt(idToken);
-
-  // // Accessing the email
-  // const email = decodedToken.email || decodedToken.preferred_username;
-  // console.log("User's email:", email);
+  // Function to handle sign in
+  const handleSignIn = async () => {
+    promptAsync().then((codeResponse) => {
+      if (request && codeResponse?.type === "success" && discovery) {
+        exchangeCodeAsync(
+          {
+            clientId,
+            code: codeResponse.params.code,
+            extraParams: request.codeVerifier
+              ? { code_verifier: request.codeVerifier }
+              : undefined,
+            redirectUri,
+          },
+          discovery
+        )
+          .then((res) => {
+            if (res.idToken) {
+              const idToken = res.idToken;
+              return (
+                axios
+                  .get(
+                    // Check if user exists in database
+                    "user/email/" + parseJwt(res.idToken).email
+                  )
+                  .then((res) => {
+                    // If user does not exist, create a new user
+                    if (res.data.user === null) {
+                      return axios.post("user/", {
+                        email: parseJwt(idToken).email,
+                      });
+                    }
+                  })
+                  // Redirect to home page
+                  .then(() => {
+                    setToken(res.accessToken);
+                    setEmail(parseJwt(idToken).email);
+                    router.push("/home");
+                  })
+              );
+            } else {
+              console.log("Error: No idToken found");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
 
   return (
     <SafeAreaView className="h-full">
@@ -97,58 +140,7 @@ export default function App() {
               title="Sign In"
               icon={Octicons}
               iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
-              handlePress={() => {
-                promptAsync().then((codeResponse) => {
-                  if (
-                    request &&
-                    codeResponse?.type === "success" &&
-                    discovery
-                  ) {
-                    exchangeCodeAsync(
-                      {
-                        clientId,
-                        code: codeResponse.params.code,
-                        extraParams: request.codeVerifier
-                          ? { code_verifier: request.codeVerifier }
-                          : undefined,
-                        redirectUri,
-                      },
-                      discovery
-                    )
-                      .then((res) => {
-                        if (res.idToken) {
-                          const idToken = res.idToken;
-                          return (
-                            axios
-                              .get(
-                                // Check if user exists in database
-                                "/api/user/email/" + parseJwt(res.idToken).email
-                              )
-                              .then((res) => {
-                                // If user does not exist, create a new user
-                                if (res.data.user === null) {
-                                  return axios.post("/api/user/", {
-                                    email: parseJwt(idToken).email,
-                                  });
-                                }
-                              })
-                              // Redirect to home page
-                              .then(() => {
-                                setToken(res.accessToken);
-                                router.push("/home");
-                              })
-                          );
-                        } else {
-                          console.log("Error: No idToken found");
-                        }
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                      });
-                  }
-                });
-              }}
-              // handlePress={signIn}
+              handlePress={handleSignIn}
               containerStyles="w-full mt-7"
             />
           </View>

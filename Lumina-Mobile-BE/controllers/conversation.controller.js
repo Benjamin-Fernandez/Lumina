@@ -1,11 +1,21 @@
 const Conversation = require("../models/conversation.model");
 
+// // GET request to find all conversations
+// const getConversations = async (req, res) => {
+//   try {
+//     const conversations = await Conversation.find();
+//     res.status(200).json({ conversations });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 // GET request to find conversation by id
-const getConversationById = async (req, res) => {
+const getConversationsByEmail = async (req, res) => {
   try {
-    const { id } = req.params;
-    const conversation = await Conversation.findById(id);
-    res.status(200).json({ conversation });
+    const { user_email } = req.params;
+    const conversations = await Conversation.findMany({ user_email });
+    res.status(200).json({ conversations });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -48,7 +58,8 @@ const deleteConversationById = async (req, res) => {
 };
 
 module.exports = {
-  getConversationById,
+  //   getConversations,
+  getConversationsByEmail,
   createConversation,
   updateConversationById,
   deleteConversationById,

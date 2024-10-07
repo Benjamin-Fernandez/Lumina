@@ -2,17 +2,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
+// Middleware -> needed to parse the request body which is in JSON format
+app.use(express.json());
+
 // Importing models
 const User = require("./models/user.model");
 
 // Importing routes
 const userRoute = require("./routes/user.route");
+const conversationRoute = require("./routes/conversation.route");
+const messageRoute = require("./routes/message.route");
 
-// Middleware -> needed to parse the request body which is in JSON format
-app.use(express.json());
-
-// 1. Insert routes in index.js 2. Create a new file in routes folder 3. Create a new file in controllers folder
-app.use("/api/user", userRoute);
+/* 1. Insert routes in index.js 
+2. Create a new file in routes folder 
+3. Create a new file in controllers folder */
+app.use("/user", userRoute);
+app.use("/conversation", conversationRoute);
+app.use("/message", messageRoute);
 
 mongoose
   .connect(
