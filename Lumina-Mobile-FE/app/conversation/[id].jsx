@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import {
   View,
   Text,
@@ -12,21 +12,79 @@ import {
   Keyboard,
 } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
-import { router } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
+import { useUser } from "../../context/UserContext";
+import axios from "../../config/axiosConfig";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]); // Start with zero messages
   const [input, setInput] = useState("");
+  const [conversationId, setConversationId] = useState(null);
+  const { email } = useUser(); // Get email from context
+  const params = useLocalSearchParams();
 
-  const handleSend = () => {
+  React.useEffect(() => {
+    if (params.id) {
+      setConversationId(params.id);
+    }
+  }, [params.id]);
+
+  const handleSend = async () => {
+    console.log("Sending message: ", input);
     if (input.trim()) {
-      setMessages([
-        ...messages,
-        { id: messages.length + 1, text: input, fromSelf: true },
-      ]);
+      if (messages.length === 0) {
+        const { id } = await axios.post("conversation/", {
+          userEmail: email,
+          chatbot: "Lumina GPT-4o-mini",
+        });
+        conversationId = id;
+        await axios.post("message/", {
+          conversationId: conversationId,
+          fromSelf: true,
+          content: input,
+        });
+      } else {
+        await axios.post("message/", {
+          conversationId: conversationId,
+          fromSelf: true,
+          content: input,
+        });
+      }
+      await axios.put("conversation/" + conversationId, {
+        lastMessage: input,
+      });
+      setMessages([...messages, { content: input, fromSelf: true }]);
+      console.log("Message sent: ", input);
       setInput("");
     }
   };
+
+  const fetchMessages = async () => {
+    try {
+      const response = await axios.get(
+        "message/conversation/" + conversationId
+      );
+      console.log("Messages fetched from the database: ", response.data);
+
+      // Assuming response.data contains the array of message objects
+      const messages = response.data;
+
+      // Set the messages directly to the state
+      setMessages(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (conversationId !== null) {
+        fetchMessages();
+      }
+    }, [conversationId])
+  );
+
   const handleBack = () => {
     router.push("/conversation-history");
   };
@@ -64,7 +122,7 @@ const ChatScreen = ({ navigation }) => {
             <ScrollView className="flex-1 ">
               {messages.map((message) => (
                 <View
-                  key={message.id}
+                  key={message._id}
                   className={`mb-2 max-w-[80%] ${
                     message.fromSelf
                       ? "self-end bg-gray-100 rounded-full p-3"
@@ -79,7 +137,9 @@ const ChatScreen = ({ navigation }) => {
                       className="w-9 h-9 rounded-full mr-2"
                     />
                   )}
-                  <Text className="font-llight text-base">{message.text}</Text>
+                  <Text className="font-llight text-base">
+                    {message.content}
+                  </Text>
                 </View>
               ))}
             </ScrollView>

@@ -1,5 +1,17 @@
 const Message = require("../models/message.model");
 
+// GET request to find all messages in a conversation
+const getMessagesByConversationId = async (req, res) => {
+  try {
+    const messages = await Message.find({
+      conversationId: req.params.conversationId,
+    });
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // GET request to find message by id
 const getMessageById = async (req, res) => {
   try {
@@ -20,15 +32,15 @@ const createMessage = async (req, res) => {
   }
 };
 
-// PUT request to update message by id
-const updateMessageById = async (req, res) => {
-  try {
-    const message = await Message.findByIdAndUpdate(req.params.id, req.body);
-    res.status(200).json(message);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// // PUT request to update message by id
+// const updateMessageById = async (req, res) => {
+//   try {
+//     const message = await Message.findByIdAndUpdate(req.params.id, req.body);
+//     res.status(200).json(message);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // DELETE request to delete message by id
 const deleteMessageById = async (req, res) => {
@@ -41,8 +53,9 @@ const deleteMessageById = async (req, res) => {
 };
 
 module.exports = {
+  getMessagesByConversationId,
   getMessageById,
   createMessage,
-  updateMessageById,
+  // updateMessageById,
   deleteMessageById,
 };

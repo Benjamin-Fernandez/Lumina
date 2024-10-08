@@ -4,8 +4,8 @@ const User = require("../models/user.model");
 const {
   getUserById,
   createUser,
-  updateUserById,
-  deleteUserById,
+  updateUserByEmail,
+  deleteUserByEmail,
   getUserByEmail,
 } = require("../controllers/user.controller");
 
@@ -18,10 +18,10 @@ router.get("/email/:email", getUserByEmail);
 // POST request to create a new user
 router.post("/", createUser);
 
-// PUT request to update user by id
-router.put("/:id", updateUserById);
+// PUT request to update user by email
+router.put("/email/:email", updateUserByEmail);
 
 // DELETE request to delete user by id
-router.delete("/:id", deleteUserById);
+router.delete("/email/:email", deleteUserByEmail);
 
 module.exports = router;

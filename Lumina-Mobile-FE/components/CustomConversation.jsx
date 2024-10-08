@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import CustomModal from "./CustomModal";
 
-const CustomConversation = ({ firstLine, date, time }) => {
+const CustomConversation = ({ id, lastMessage, date, time }) => {
   const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
@@ -20,7 +20,8 @@ const CustomConversation = ({ firstLine, date, time }) => {
   const handleConversation = () => {
     if (!isSwipeActive) {
       // Only navigate if swipe is not active
-      router.push("/conversations/1");
+      console.log("Navigating to conversation with ID: " + id);
+      router.push("/conversation/" + id); // Navigate to the conversation screen
     }
   };
   // Handle delete action (show modal)
@@ -90,7 +91,7 @@ const CustomConversation = ({ firstLine, date, time }) => {
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {firstLine}
+              {lastMessage}
             </Text>
             <Text className="font-llight text-[17px] text-gray-500">
               {date} | {time}

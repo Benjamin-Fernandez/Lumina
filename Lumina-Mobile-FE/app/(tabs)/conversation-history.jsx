@@ -8,17 +8,20 @@ import { useUser } from "../../context/UserContext";
 
 const ConversationHistory = () => {
   const handleNewChat = () => {
-    router.push("/conversations/1");
+    router.push("/conversation/new");
   };
   const [conversations, setConversations] = React.useState([]);
   const { email } = useUser();
 
   React.useEffect(() => {
+    console.log("User email obtained from context " + email);
     // Fetch conversations from the database
     const fetchConversations = async () => {
       try {
-        const response = await axios.get("/email/" + email);
-        setConversations(response.data);
+        const response = await axios.get("/conversation/email/" + email);
+        console.log("Conversations fetched from the database: ", response.data);
+        const { conversations } = response.data;
+        setConversations(conversations);
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }
@@ -48,9 +51,10 @@ const ConversationHistory = () => {
             return (
               <React.Fragment key={index}>
                 <CustomConversation
-                  firstLine={conversation.firstLine}
-                  date={conversation.date}
-                  time={conversation.time}
+                  id={conversation._id}
+                  firstLine={conversation.lastMessage}
+                  date={conversation.updatedAt}
+                  time={conversation.updatedAt}
                 />
                 <View
                   style={{

@@ -96,6 +96,7 @@ export default function App() {
                   })
                   // Redirect to home page
                   .then(() => {
+                    console.log("User signed in successfully");
                     setToken(res.accessToken);
                     setEmail(parseJwt(idToken).email);
                     router.push("/home");

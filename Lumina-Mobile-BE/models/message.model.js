@@ -2,20 +2,22 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
   {
-    conversation_id: {
+    conversationId: {
       type: String,
-      required: true,
+      required: [true, "Please provide conversation id"],
     },
-    sender: {
-      type: String,
-      required: true,
+    fromSelf: {
+      type: Boolean,
+      required: [true, "Please provide sender"],
     },
     content: {
       type: String,
-      required: true,
+      required: [true, "Please provide message content"],
     },
   },
   {
     timestamps: true,
   }
 );
+
+module.exports = mongoose.model("Message", messageSchema);

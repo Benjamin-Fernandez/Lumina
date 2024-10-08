@@ -1,5 +1,12 @@
+/**
+ * 1. Create context file
+ * 2. Create a provider component
+ *
+ */
+
 import React, { createContext, useContext, useState } from "react";
 
+// createContext --> create an instance of Context API that other components can read
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {

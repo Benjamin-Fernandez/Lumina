@@ -32,47 +32,33 @@ const createUser = async (req, res) => {
   }
 };
 
-// PUT request to update user by id
-const updateUserById = async (req, res) => {
+// PUT request to update user by email
+const updateUserByEmail = async (req, res) => {
   try {
-    const { id } = req.params;
-    const {
-      conversation,
-      favourite_chatbots,
-      remove_conversation,
-      remove_favourite_chatbots,
-    } = req.body;
+    console.log(req.params);
+    const { email } = req.params;
+    const { favourite_chatbot, remove_favourite_chatbot } = req.body;
 
     // Initialize update object
     let update = {};
 
-    // Add to conversation array
-    if (conversation) {
-      update.$push = { conversation: { $each: conversation } };
-    }
-
     // Add to favourite_chatbots array
-    if (favourite_chatbots) {
+    if (favourite_chatbot) {
       update.$push = {
         ...update.$push,
-        favourite_chatbots: { $each: favourite_chatbots },
+        favourite_chatbot: { $each: favourite_chatbot },
       };
-    }
-
-    // Remove from conversation array
-    if (remove_conversation) {
-      update.$pull = { conversation: { $in: remove_conversation } };
     }
 
     // Remove from favourite_chatbots array
-    if (remove_favourite_chatbots) {
+    if (remove_favourite_chatbot) {
       update.$pull = {
         ...update.$pull,
-        favourite_chatbots: { $in: remove_favourite_chatbots },
+        favourite_chatbot: { $in: remove_favourite_chatbot },
       };
     }
 
-    const user = await User.findByIdAndUpdate(id, update, { new: true });
+    const user = await User.findOneAndUpdate(email, update, { new: true });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -84,16 +70,15 @@ const updateUserById = async (req, res) => {
   }
 };
 
-// DELETE request to delete user by id
-const deleteUserById = async (req, res) => {
+// DELETE request to delete user by email
+const deleteUserByEmail = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
+    const { email } = req.params;
+    const user = await User.findOneAndDelete(email);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -104,6 +89,6 @@ module.exports = {
   getUserById,
   getUserByEmail,
   createUser,
-  updateUserById,
-  deleteUserById,
+  updateUserByEmail,
+  deleteUserByEmail,
 };
