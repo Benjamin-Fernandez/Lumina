@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import CustomModal from "./CustomModal";
 
-const CustomConversation = ({ id, lastMessage, date, time }) => {
+const CustomConversation = ({ id, chatBot, lastMessage, date, time }) => {
   const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
@@ -21,7 +21,10 @@ const CustomConversation = ({ id, lastMessage, date, time }) => {
     if (!isSwipeActive) {
       // Only navigate if swipe is not active
       console.log("Navigating to conversation with ID: " + id);
-      router.push("/conversation/" + id); // Navigate to the conversation screen
+      router.push({
+        pathname: "/conversation/" + id,
+        params: { chatBot: chatBot },
+      }); // Navigate to the conversation screen
     }
   };
   // Handle delete action (show modal)
@@ -41,7 +44,7 @@ const CustomConversation = ({ id, lastMessage, date, time }) => {
   const renderRightActions = (progress, dragX) => {
     return (
       <TouchableOpacity
-        className="bg-red-500 w-1/4 justify-center items-center h-[70px] mt-4 rounded-r-lg"
+        className="bg-red-500 w-1/4 justify-center items-center h-[70px] rounded-r-lg"
         onPress={handleDeletePress} // Open modal on trash icon press
       >
         <Icon name="trash" size={24} color="white" />
@@ -85,9 +88,9 @@ const CustomConversation = ({ id, lastMessage, date, time }) => {
           disabled={isSwipeActive} // Disable press when swipe is active
           activeOpacity={isSwipeActive ? 1 : 0.2} // Change opacity when swipe is active to prevent accidental navigation
         >
-          <View className="mt-4 rounded-l-lg w-[100%] h-[70px] flex-col bg-white p-3 justify-around">
+          <View className="rounded-l-lg w-[100%] h-[70px] flex-col bg-white p-3 justify-around">
             <Text
-              className="font-llight text-[17px] font-bold"
+              className="font-llight text-[17px] font-bold "
               numberOfLines={1}
               ellipsizeMode="tail"
             >

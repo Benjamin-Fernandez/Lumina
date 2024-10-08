@@ -10,6 +10,10 @@ const conversationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide chatbot"],
     },
+    firstMessage: {
+      type: String,
+      required: [true, "Please provide first message"],
+    },
     lastMessage: {
       type: String,
       required: false,

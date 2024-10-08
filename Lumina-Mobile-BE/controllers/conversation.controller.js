@@ -35,7 +35,10 @@ const createConversation = async (req, res) => {
 const updateConversationById = async (req, res) => {
   try {
     const { id } = req.params;
-    const conversation = await Conversation.findByIdAndUpdate(id, req.body);
+    const conversation = await Conversation.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json({ conversation });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
