@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/Octicons"; // Assuming you're using 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import CustomModal from "./CustomModal";
+import axios from "../config/axiosConfig";
 
 const CustomConversation = ({ id, chatBot, lastMessage, date, time }) => {
   const [isSwipeActive, setIsSwipeActive] = useState(false);
@@ -36,9 +37,14 @@ const CustomConversation = ({ id, chatBot, lastMessage, date, time }) => {
     setIsModalVisible(false); // Hide the modal
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     setIsModalVisible(false);
     // Handle the delete logic here (e.g., delete conversation)
+    await Promise.all(
+      axios.delete("/conversation/" + id),
+      axios.delete("/message/conversation/" + id)
+    );
+
     console.log("Conversation deleted!");
   };
   const renderRightActions = (progress, dragX) => {

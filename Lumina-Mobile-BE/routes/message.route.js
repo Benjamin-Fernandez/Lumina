@@ -7,6 +7,7 @@ const {
   createMessage,
   getMessagesByConversationId,
   // updateMessageById,
+  deleteMessageByConversationId,
   deleteMessageById,
 } = require("../controllers/message.controller");
 
@@ -24,5 +25,8 @@ router.post("/", createMessage);
 
 // DELETE request to delete message by id
 router.delete("/:id", deleteMessageById);
+
+// DELETE request to delete all messages in a conversation
+router.delete("/conversation/:conversationId", deleteMessageByConversationId);
 
 module.exports = router;

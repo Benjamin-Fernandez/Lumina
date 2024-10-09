@@ -52,10 +52,23 @@ const deleteMessageById = async (req, res) => {
   }
 };
 
+// DELETE request to delete all messages in a conversation
+const deleteMessageByConversationId = async (req, res) => {
+  try {
+    const messages = await Message.deleteMany({
+      conversationId: req.params.conversationId,
+    });
+    res.status(200).json({ message: "Messages deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getMessagesByConversationId,
   getMessageById,
   createMessage,
+  deleteMessageByConversationId,
   // updateMessageById,
   deleteMessageById,
 };

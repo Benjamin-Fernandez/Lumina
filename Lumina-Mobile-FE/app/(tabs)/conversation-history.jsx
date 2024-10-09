@@ -13,7 +13,7 @@ const ConversationHistory = () => {
 
   const handleNewChat = () => {
     router.push({
-      pathname: "/conversation/new/",
+      pathname: "/conversation/new",
       params: { chatBot: "Lumina GPT-4o-mini" },
     });
   };

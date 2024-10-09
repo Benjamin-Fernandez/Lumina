@@ -49,6 +49,8 @@ const ChatScreen = ({ navigation }) => {
     console.log("Conversation ID: ", conversationId);
     if (conversationId !== "new") {
       fetchConversation();
+    } else {
+      setLoading(false);
     }
   }, []);
 
