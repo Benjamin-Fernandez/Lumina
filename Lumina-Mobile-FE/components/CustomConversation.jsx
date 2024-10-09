@@ -13,7 +13,14 @@ import { router } from "expo-router";
 import CustomModal from "./CustomModal";
 import axios from "../config/axiosConfig";
 
-const CustomConversation = ({ id, chatBot, lastMessage, date, time }) => {
+const CustomConversation = ({
+  id,
+  chatBot,
+  lastMessage,
+  date,
+  time,
+  setConversations,
+}) => {
   const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
@@ -44,6 +51,11 @@ const CustomConversation = ({ id, chatBot, lastMessage, date, time }) => {
       axios.delete("/conversation/" + id),
       axios.delete("/message/conversation/" + id)
     );
+    setConversations((prevConversations) => {
+      return prevConversations.filter(
+        (conversation) => conversation._id !== id
+      );
+    });
 
     console.log("Conversation deleted!");
   };

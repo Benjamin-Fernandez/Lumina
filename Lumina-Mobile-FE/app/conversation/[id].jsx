@@ -79,8 +79,6 @@ const ChatScreen = ({ navigation }) => {
             lastMessage: input,
           }),
         ]);
-        setMessages([...messages, { content: input, fromSelf: true }]);
-        setInput("");
       } else {
         console.log("Conversation exists: ", conversationId);
         await axios.post("/message", {
@@ -92,9 +90,9 @@ const ChatScreen = ({ navigation }) => {
         await axios.put("/conversation/" + conversationId, {
           lastMessage: input,
         });
-        setMessages([...messages, { content: input, fromSelf: true }]);
-        setInput("");
       }
+      setMessages([...messages, { content: input, fromSelf: true }]);
+      setInput("");
     }
   };
 

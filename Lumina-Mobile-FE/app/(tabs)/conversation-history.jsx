@@ -27,6 +27,7 @@ const ConversationHistory = () => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       });
       setConversations(sortedConversations);
+      console.log("Conversations sorted by date: ", sortedConversations);
     } catch (error) {
       console.error("Error fetching conversations:", error);
     } finally {
@@ -95,6 +96,7 @@ const ConversationHistory = () => {
                     lastMessage={conversation.lastMessage}
                     date={conversation.updatedAt.split("T")[0]}
                     time={conversation.updatedAt.split("T")[1].split(".")[0]}
+                    setConversations={setConversations}
                   />
                   <View
                     style={{
