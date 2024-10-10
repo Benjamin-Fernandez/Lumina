@@ -1,4 +1,4 @@
-const express = requirew("express");
+const express = require("express");
 const router = express.Router();
 const { getResponse } = require("../controllers/openai.controller");
 

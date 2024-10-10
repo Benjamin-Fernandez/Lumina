@@ -138,9 +138,9 @@ export default function App() {
           </View>
           <View className="justify-center items-center">
             <CustomButton
-              title="Sign In"
+              title="Sign In with Microsoft"
               icon={Octicons}
-              iconProps={{ name: "sign-in", size: 24, color: "#fff" }}
+              iconProps={{ name: "key", size: 24, color: "#fff" }}
               handlePress={handleSignIn}
               containerStyles="w-full mt-7"
             />
