@@ -19,8 +19,8 @@ const getResponse = async (req, res) => {
         ],
       },
       ...messages.map((message) => {
-        console.log("Message: ", message);
-        console.log("Content: ", message.content);
+        //console.log("Message: ", message);
+        //console.log("Content: ", message.content);
         return {
           role: message.fromSelf ? "user" : "assistant", // Use 'user' if the message is from the user, 'assistant' otherwise
           content: [
@@ -37,14 +37,14 @@ const getResponse = async (req, res) => {
     max_tokens: 800,
   };
 
-  console.log("Payload: ", payload);
+  //console.log("Payload: ", payload);
   try {
     const API = `${process.env.AZURE_OPENAI_API_BASE}?api-version=${process.env.AZURE_OPENAI_APIVERSION}&api-key=${process.env.AZURE_OPENAI_APIKEY}`;
-    console.log("API endpoint", API);
-    console.log("Payload", payload);
+    //console.log("API endpoint", API);
+    //console.log("Payload", payload);
     const response = await axios.post(API, payload);
     res.status(200).json({ response: response.data });
-    console.log("Response: ", response.data);
+    //console.log("Response: ", response.data);
   } catch (error) {
     console.error(
       "Error fetching response:",
