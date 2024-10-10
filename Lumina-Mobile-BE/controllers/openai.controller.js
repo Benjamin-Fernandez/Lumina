@@ -6,20 +6,33 @@ const getResponse = async (req, res) => {
 
   try {
     const response = await axios.post(
-      `${process.env.OPENAI_API_ENDPOINT}/conversations/${process.env.OPENAI_CONVERSATION_ID}/append`,
+      `${process.env.AZURE_OPENAI_API_BASE}/openai/deployments/ANV2Exp-AzureOpenAI-NorthCtrlUS-TWY-GPT4o/chat/completions?api-version=${process.env.AZURE_OPENAI_APIVERSION}`,
       {
-        messages: messages.map((message) => {
-          return {
-            role: "user",
-            content: message,
-          };
-        }),
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
+        messages: [
+          {
+            role: "system",
+            content: [
+              {
+                type: "text",
+                text: "You are an AI assistant that helps people find information.",
+              },
+            ],
+          },
+          ...messages.map((message) => {
+            return {
+              role: message.fromSelf ? "user" : "assistant", // Use 'user' if the message is from the user, 'assistant' otherwise
+              content: [
+                {
+                  type: "text",
+                  text: message.content,
+                },
+              ],
+            };
+          }),
+        ],
+        temperature: 0.7,
+        top_p: 0.95,
+        max_tokens: 800,
       }
     );
     res.status(200).json({ response });
