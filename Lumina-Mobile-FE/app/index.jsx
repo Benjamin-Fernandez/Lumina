@@ -96,18 +96,18 @@ export default function App() {
                   })
                   // Redirect to home page
                   .then(() => {
-                    //console.log("User signed in successfully");
+                    console.log("User signed in successfully");
                     setToken(res.accessToken);
                     setEmail(parseJwt(idToken).email);
                     router.push("/home");
                   })
               );
             } else {
-              //console.log("Error: No idToken found");
+              console.log("Error: No idToken found");
             }
           })
           .catch((err) => {
-            //console.log(err);
+            console.log(err);
           });
       }
     });

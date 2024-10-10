@@ -28,7 +28,7 @@ const CustomConversation = ({
   const handleConversation = () => {
     if (!isSwipeActive) {
       // Only navigate if swipe is not active
-      //console.log("Navigating to conversation with ID: " + id);
+      console.log("Navigating to conversation with ID: " + id);
       router.push({
         pathname: "/conversation/" + id,
         params: { chatBot: chatBot },
@@ -57,7 +57,7 @@ const CustomConversation = ({
       );
     });
 
-    //console.log("Conversation deleted!");
+    console.log("Conversation deleted!");
   };
   const renderRightActions = (progress, dragX) => {
     return (

@@ -37,7 +37,7 @@ const ChatScreen = ({ navigation }) => {
       const response = await axios.get(
         "message/conversation/" + conversationId
       );
-      //console.log("Messages fetched from the database: ", response.data);
+      console.log("Messages fetched from the database: ", response.data);
 
       // Assuming response.data contains the array of message objects
       const messages = response.data;
@@ -53,7 +53,7 @@ const ChatScreen = ({ navigation }) => {
 
   // Fetch messages on initial render
   React.useEffect(() => {
-    //console.log("Conversation ID: ", conversationId);
+    console.log("Conversation ID: ", conversationId);
     if (conversationId !== "new") {
       fetchConversation();
     } else {
@@ -62,14 +62,14 @@ const ChatScreen = ({ navigation }) => {
   }, []);
 
   const getResponse = useCallback(async () => {
-    //console.log("Getting response from OpenAI...");
-    //console.log("Messages: ", messages);
+    console.log("Getting response from OpenAI...");
+    console.log("Messages: ", messages);
 
     const response = await axios.post("/openai", {
       messages: messages,
     });
 
-    //console.log(
+    console.log(
       "Response from OpenAI: ",
       response.data.response.choices[0].message.content
     );
@@ -90,7 +90,7 @@ const ChatScreen = ({ navigation }) => {
       },
     ]);
 
-    //console.log("Conversation updated: ", conversationId);
+    console.log("Conversation updated: ", conversationId);
     await axios.put("/conversation/" + conversationId, {
       lastMessage: response.data.response.choices[0].message.content,
     });
@@ -98,7 +98,7 @@ const ChatScreen = ({ navigation }) => {
   }, [messages, conversationId]);
 
   React.useEffect(() => {
-    //console.log("Messages: ", messages);
+    console.log("Messages: ", messages);
     if (messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage.fromSelf) {
@@ -109,7 +109,7 @@ const ChatScreen = ({ navigation }) => {
   }, [messages, getResponse]);
   // Handle sending a message
   const handleSend = async () => {
-    //console.log("Sending message: ", input);
+    console.log("Sending message: ", input);
     if (input.trim()) {
       if (messages.length === 0) {
         const res = await axios.post("conversation/", {
@@ -125,7 +125,7 @@ const ChatScreen = ({ navigation }) => {
           content: input,
         });
       } else {
-        //console.log("Conversation exists: ", conversationId);
+        console.log("Conversation exists: ", conversationId);
         await axios.post("/message", {
           conversationId: conversationId,
           fromSelf: true,
