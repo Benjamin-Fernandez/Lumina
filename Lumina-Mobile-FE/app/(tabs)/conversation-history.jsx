@@ -21,13 +21,13 @@ const ConversationHistory = () => {
   const fetchConversations = async () => {
     try {
       const response = await axios.get("/conversation/email/" + email);
-      console.log("Conversations fetched from the database: ", response.data);
+      //console.log("Conversations fetched from the database: ", response.data);
       const { conversations } = response.data;
       const sortedConversations = conversations.sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       });
       setConversations(sortedConversations);
-      console.log("Conversations sorted by date: ", sortedConversations);
+      //console.log("Conversations sorted by date: ", sortedConversations);
     } catch (error) {
       console.error("Error fetching conversations:", error);
     } finally {
@@ -35,7 +35,7 @@ const ConversationHistory = () => {
     }
   };
   React.useEffect(() => {
-    console.log("User email obtained from context " + email);
+    //console.log("User email obtained from context " + email);
     // Fetch conversations from the database
     fetchConversations();
   }, []);

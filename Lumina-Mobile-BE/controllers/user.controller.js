@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
 // PUT request to update user by email
 const updateUserByEmail = async (req, res) => {
   try {
-    console.log(req.params);
+    //console.log(req.params);
     const { email } = req.params;
     const { favourite_chatbot, remove_favourite_chatbot } = req.body;
 
