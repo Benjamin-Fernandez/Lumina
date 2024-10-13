@@ -12,7 +12,7 @@ const getRandomColor = () => {
   return color;
 };
 
-const CustomCard = ({ title, favourite, image }) => {
+const CustomCard = ({ title, favourite, image, chatbot, handleFavourite }) => {
   const cardColor = image ? null : getRandomColor(); // Generate a random color if no image
 
   return (
@@ -45,7 +45,7 @@ const CustomCard = ({ title, favourite, image }) => {
           </Text>
         </View>
         <View className="flex-[0.25] mt-4">
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFavourite(chatbot)}>
             {favourite ? (
               <Icon name="heart-fill" size={20} color="red" />
             ) : (

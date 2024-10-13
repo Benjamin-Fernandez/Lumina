@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const { User } = require("../models/user.model");
 
 // GET request to user route with id parameter
 const getUserById = async (req, res) => {
@@ -37,28 +37,10 @@ const updateUserByEmail = async (req, res) => {
   try {
     console.log(req.params);
     const { email } = req.params;
-    const { favourite_chatbot, remove_favourite_chatbot } = req.body;
+    const { favourite_chatbot } = req.body;
+    const update = { favourite_chatbot };
 
-    // Initialize update object
-    let update = {};
-
-    // Add to favourite_chatbots array
-    if (favourite_chatbot) {
-      update.$push = {
-        ...update.$push,
-        favourite_chatbot: { $each: favourite_chatbot },
-      };
-    }
-
-    // Remove from favourite_chatbots array
-    if (remove_favourite_chatbot) {
-      update.$pull = {
-        ...update.$pull,
-        favourite_chatbot: { $in: remove_favourite_chatbot },
-      };
-    }
-
-    const user = await User.findOneAndUpdate(email, update, { new: true });
+    const user = await User.findOneAndUpdate({ email }, update, { new: true });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

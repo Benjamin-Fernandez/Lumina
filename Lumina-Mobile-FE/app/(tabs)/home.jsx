@@ -20,6 +20,38 @@ const Home = ({ username, onLogout }) => {
   handleChatbotDetail = () => {
     router.push("/chatbots/1");
   };
+  handleFavourite = async (chatbot) => {
+    // Add the chatbot to the user's favourite chatbots
+    try {
+      let updatedFavouriteChatbots = [];
+      let updatedDiscoverChatbots = [];
+      if (favouriteChatbots.includes(chatbot)) {
+        console.log("Removing chatbot from favourites");
+        // Remove the chatbot from the user's favourite chatbots
+        updatedFavouriteChatbots = favouriteChatbots.filter(
+          (favChatbot) => favChatbot._id !== chatbot._id
+        );
+        updatedDiscoverChatbots = [...discoverChatbots, chatbot];
+      } else {
+        console.log("Adding chatbot to favourites");
+        // Add the new chatbotID to the existing favourite_chatbot array
+        updatedFavouriteChatbots = [...favouriteChatbots, chatbot];
+        console.log("Updated Favourite Chatbots: ", updatedFavouriteChatbots);
+        // Remove the chatbot from the discover chatbots
+        updatedDiscoverChatbots = discoverChatbots.filter(
+          (discoverChatbot) => discoverChatbot._id !== chatbot._id
+        );
+      }
+      // Update the user's favourite chatbots in the database
+      const response = await axios.put("/user/email/" + email, {
+        favourite_chatbot: updatedFavouriteChatbots,
+      });
+      setFavouriteChatbots(updatedFavouriteChatbots);
+      setDiscoverChatbots(updatedDiscoverChatbots);
+    } catch (error) {
+      console.error("Error updating favourite chatbots:", error);
+    }
+  };
 
   // Context
   const { email } = useUser();
@@ -49,7 +81,9 @@ const Home = ({ username, onLogout }) => {
       const discoverChatbots = [];
 
       chatbots.forEach((chatbot) => {
-        if (favourite_chatbot.includes(chatbot._id)) {
+        if (
+          favourite_chatbot.find((favChatbot) => favChatbot._id === chatbot._id)
+        ) {
           favouriteChatbots.push(chatbot);
         } else {
           discoverChatbots.push(chatbot);
@@ -89,23 +123,28 @@ const Home = ({ username, onLogout }) => {
       </TouchableOpacity>
       {/* Chatbots */}
       {favouriteChatbots.length === 0 ? (
-        <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">
-          <Text className="font-lregular text-lg">No favourite chatbots</Text>
+        <View className="flex-row justify-center items-center ml-2 mr-3 mt-4 border-dotted border-2 h-[140px] border-gray-300 p-4 rounded-lg">
+          <Icon name="info" size={24} color="gray" />
+          <Text className="font-lregular text-lg ml-2">
+            No Favourite Chatbots
+          </Text>
         </View>
       ) : (
-        favouriteChatbots
-          .slice(-3)
-          .reverse()
-          .map((chatbot, index) => (
-            <View
-              className="flex-row justify-between items-center ml-2 mr-3 mt-4"
-              key={index}
-            >
-              <TouchableOpacity className="w-[30%]">
-                <CustomCard title={chatbot.name} favourite={true} />
+        <View className="flex-row items-center ml-2 mr-3 mt-4">
+          {favouriteChatbots
+            .slice(-3)
+            .reverse()
+            .map((chatbot, index) => (
+              <TouchableOpacity className="w-[30%] mr-5" key={index}>
+                <CustomCard
+                  title={chatbot.name}
+                  favourite={true}
+                  handleFavourite={handleFavourite}
+                  chatbot={chatbot}
+                />
               </TouchableOpacity>
-            </View>
-          ))
+            ))}
+        </View>
       )}
       {/* Discover Chatbots Row */}
       <TouchableOpacity onPress={handleDiscoverChatbot}>
@@ -116,8 +155,11 @@ const Home = ({ username, onLogout }) => {
       </TouchableOpacity>
       {/* Chatbots */}
       {discoverChatbots.length === 0 ? (
-        <View className="flex-row justify-between items-center ml-2 mr-3 mt-4">
-          <Text className="font-lregular text-lg">No chatbots found</Text>
+        <View className="flex-row justify-center items-center ml-2 mr-3 mt-4 border-dotted border-2 h-[140px] border-gray-300 p-4 rounded-lg">
+          <Icon name="info" size={24} color="gray" />
+          <Text className="font-lregular text-lg ml-2">
+            No Chatbots to Discover
+          </Text>
         </View>
       ) : (
         discoverChatbots
@@ -130,12 +172,16 @@ const Home = ({ username, onLogout }) => {
           }, [])
           .map((row, rowIndex) => (
             <View
-              className="flex-row justify-between items-center ml-2 mr-3 mt-4"
+              className="flex-row items-center ml-2 mr-3 mt-4"
               key={rowIndex}
             >
               {row.map((chatbot, index) => (
-                <TouchableOpacity className="w-[30%]" key={index}>
-                  <CustomCard title={chatbot.name} />
+                <TouchableOpacity className="w-[30%] mr-5" key={index}>
+                  <CustomCard
+                    title={chatbot.name}
+                    chatbot={chatbot}
+                    handleFavourite={handleFavourite}
+                  />
                 </TouchableOpacity>
               ))}
             </View>

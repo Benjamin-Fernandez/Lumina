@@ -1,4 +1,4 @@
-const Chatbot = require("../models/chatbot.model");
+const { Chatbot } = require("../models/user.model");
 
 // GET request to find all chatbots
 const getChatbots = async (req, res) => {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Chatbot = require("../models/chatbot.model");
+const Chatbot = require("../models/user.model");
 
 const {
   getChatbots,
