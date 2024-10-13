@@ -13,6 +13,7 @@ const userRoute = require("./routes/user.route");
 const conversationRoute = require("./routes/conversation.route");
 const messageRoute = require("./routes/message.route");
 const openaiRoute = require("./routes/openai.route");
+const chatbotRoute = require("./routes/chatbot.route");
 
 /* 1. Insert routes in index.js 
 2. Create a new file in routes folder 
@@ -21,6 +22,7 @@ app.use("/user", userRoute);
 app.use("/conversation", conversationRoute);
 app.use("/message", messageRoute);
 app.use("/openai", openaiRoute);
+app.use("/chatbot", chatbotRoute);
 
 mongoose
   .connect(
