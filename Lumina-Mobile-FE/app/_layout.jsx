@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Slot, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { UserProvider } from "../context/UserContext";
+import { ChatbotProvider } from "../context/ChatbotContext";
 
 SplashScreen.preventAutoHideAsync(); // prevent splash screen from auto hiding before asset loading is complete.
 
@@ -35,7 +36,9 @@ const RootLayout = () => {
     <>
       {/* Slot returns the current child.  */}
       <UserProvider>
-        <Slot />
+        <ChatbotProvider>
+          <Slot />
+        </ChatbotProvider>
       </UserProvider>
     </>
   );

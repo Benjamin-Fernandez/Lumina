@@ -5,6 +5,7 @@ import CustomCard from "../../components/CustomCard";
 import { router } from "expo-router";
 import axios from "../../config/axiosConfig";
 import { useUser } from "../../context/UserContext";
+import { useChatbot } from "../../context/ChatbotContext";
 
 const Home = ({ username, onLogout }) => {
   // Onclick Handlers
@@ -55,10 +56,8 @@ const Home = ({ username, onLogout }) => {
 
   // Context
   const { email } = useUser();
-
-  // States
-  const [discoverChatbots, setDiscoverChatbots] = useState([]);
-  const [favouriteChatbots, setFavouriteChatbots] = useState([]);
+  const { favouriteChatbots, discoverChatbots } = useChatbot();
+  const { setFavouriteChatbots, setDiscoverChatbots } = useChatbot();
 
   // Database Queries
   const fetchChatbots = async () => {
@@ -123,7 +122,7 @@ const Home = ({ username, onLogout }) => {
       </TouchableOpacity>
       {/* Chatbots */}
       {favouriteChatbots.length === 0 ? (
-        <View className="flex-row justify-center items-center ml-2 mr-3 mt-4 border-dotted border-2 h-[140px] border-gray-300 p-4 rounded-lg">
+        <View className="flex-row justify-center items-center ml-2 mr-3 mt-4 border-dotted border-2 h-[15%] border-gray-300 p-4 rounded-lg">
           <Icon name="info" size={24} color="gray" />
           <Text className="font-lregular text-lg ml-2">
             No Favourite Chatbots
