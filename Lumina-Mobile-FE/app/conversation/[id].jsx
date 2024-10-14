@@ -21,6 +21,7 @@ import Icon from "react-native-vector-icons/Octicons";
 import { useLocalSearchParams, router } from "expo-router";
 import { useUser } from "../../context/UserContext";
 import axios from "../../config/axiosConfig";
+import Markdown from "react-native-markdown-display";
 
 const ChatScreen = ({ navigation }) => {
   const params = useLocalSearchParams();
@@ -234,9 +235,9 @@ const ChatScreen = ({ navigation }) => {
                     className="w-9 h-9 rounded-full mr-2"
                   />
                 )}
-                <Text className="font-llight text-base ">
+                <Markdown className="font-llight text-base ">
                   {message.content}
-                </Text>
+                </Markdown>
               </View>
             ))}
           </ScrollView>
