@@ -18,8 +18,8 @@ const Home = ({ username, onLogout }) => {
   handleDiscoverChatbot = () => {
     router.push("/chatbots/discover");
   };
-  handleChatbotDetail = () => {
-    router.push("/chatbots/1");
+  handleChatbotDetail = (chatbot) => {
+    router.push("/chatbots/" + chatbot._id);
   };
   handleFavourite = async (chatbot) => {
     // Add the chatbot to the user's favourite chatbots
@@ -134,7 +134,11 @@ const Home = ({ username, onLogout }) => {
             .slice(-3)
             .reverse()
             .map((chatbot, index) => (
-              <TouchableOpacity className="w-[30%] mr-5" key={index}>
+              <TouchableOpacity
+                className="w-[30%] mr-5"
+                key={index}
+                onPress={() => handleChatbotDetail(chatbot)}
+              >
                 <CustomCard
                   title={chatbot.name}
                   favourite={true}
@@ -175,7 +179,11 @@ const Home = ({ username, onLogout }) => {
               key={rowIndex}
             >
               {row.map((chatbot, index) => (
-                <TouchableOpacity className="w-[30%] mr-5" key={index}>
+                <TouchableOpacity
+                  className="w-[30%] mr-5"
+                  key={index}
+                  onPress={() => handleChatbotDetail(chatbot)}
+                >
                   <CustomCard
                     title={chatbot.name}
                     chatbot={chatbot}
