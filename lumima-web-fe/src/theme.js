@@ -167,7 +167,7 @@ export const themeSettings = (mode) => {
               main: colors.greenAccent[500],
             },
             background: {
-              default: colors.background[500],
+              default: colors.background[900],
             },
             secondary: {
               dark: colors.secondary[900],
@@ -199,5 +199,56 @@ export const themeSettings = (mode) => {
             },
           }),
     },
+    typography: {
+      fontFamily: ["Lexend", "sans-serif"].join(","),
+      fontSize: 12,
+      h1: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 40,
+      },
+      h2: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 32,
+      },
+      h3: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 24,
+      },
+      h4: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 20,
+      },
+      h5: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 16,
+      },
+      h6: {
+        fontFamily: ["Lexend", "sans-serif"].join(","),
+        fontSize: 14,
+      },
+    },
   };
+};
+
+// context for color mode
+export const ColorModeContext = createContext({
+  toggleColorMode: () => {},
+});
+
+export const useMode = () => {
+  // give easy access to the current mode and the ability to toggle it
+  const [mode, setMode] = useState("light"); // state that stores the current mode
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+  // creating theme from mui, passing in the mode, giving us the object of the proper formats
+
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]); // create theme based on light mode
+
+  return [theme, colorMode];
 };
