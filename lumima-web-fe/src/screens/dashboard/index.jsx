@@ -10,7 +10,7 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box px={3}>
+    <Box px={4}>
       <Box
         width="50%"
         display="flex"

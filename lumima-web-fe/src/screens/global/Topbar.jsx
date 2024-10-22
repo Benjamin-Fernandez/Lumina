@@ -1,10 +1,17 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  useTheme,
+  Button,
+  Icon,
+  Typography,
+} from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import FaceIcon from "@mui/icons-material/Face";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -17,25 +24,32 @@ const Topbar = () => {
   // Box components allows you to write CSS properties on the component
   // Other components you need to use sx prop
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      p={4}
+    >
       {/* Left side of the topbar */}
       <Box>
-        <Box display="flex">Screen Title</Box>
+        <Box display="flex" sx={{ fontSize: "20px" }}>
+          Screen Title
+        </Box>
       </Box>
       {/* Right side of the topbar */}
-      <Box display="flex">
+      <Box display="flex" gap="5px">
         <IconButton>
-          <NotificationsOutlinedIcon />
+          <NotificationsOutlinedIcon fontSize="large" />
         </IconButton>
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
-            <LightModeOutlinedIcon />
+            <LightModeOutlinedIcon fontSize="large" />
           ) : (
-            <DarkModeOutlinedIcon />
+            <DarkModeOutlinedIcon fontSize="large" />
           )}
         </IconButton>
-        <IconButton title="Username">
-          <KeyboardArrowDownIcon />
+        <IconButton>
+          <FaceIcon fontSize="large" />
         </IconButton>
       </Box>
     </Box>

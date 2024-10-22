@@ -18,12 +18,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.background[100],
+        color: colors.background[600],
+        marginBottom: "10px",
       }}
       onClick={() => setSelected(title)}
       icon={icon}
     >
-      <Typography>{title}</Typography>
+      <Typography variant="h5">{title}</Typography>
       <Link to={to} />
     </MenuItem>
   );
@@ -64,9 +65,9 @@ const Sidebar = () => {
           {/* Logo and Menu Icon*/}
           <MenuItem
             onClick={() => setCollapsed(!collapsed)}
-            icon={collapsed ? <MenuOutlinedIcon /> : undefined}
+            icon={collapsed ? <MenuOutlinedIcon fontSize="large" /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "20px 0 20px 0",
               color: colors.grey[100],
             }}
           >
@@ -80,25 +81,25 @@ const Sidebar = () => {
                 <Box display="flex" alignItems="center">
                   <img
                     src="../../assets/logo.png"
-                    width="25px"
-                    height="25px"
+                    width="30px"
+                    height="30px"
                     style={{ marginRight: "10px" }}
                   />
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     style={{ color: colors.background[100] }}
                   >
                     Lumina
                   </Typography>
                 </Box>
                 <IconButton onCluck={() => setCollapsed(!collapsed)}>
-                  <MenuOutlinedIcon />
+                  <MenuOutlinedIcon fontSize="large" />
                 </IconButton>
               </Box>
             )}
           </MenuItem>
 
-          {!collapsed && (
+          {/* {!collapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
@@ -123,42 +124,42 @@ const Sidebar = () => {
                 </Typography>
               </Box>
             </Box>
-          )}
+          )} */}
 
           {/* Menu Items */}
           <Box paddingLeft={collapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
               to="/"
-              icon={<WidgetsOutlinedIcon />}
+              icon={<WidgetsOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Plugin"
               to="/plugin"
-              icon={<ExtensionOutlinedIcon />}
+              icon={<ExtensionOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Request"
               to="/request"
-              icon={<ConfirmationNumberOutlinedIcon />}
+              icon={<ConfirmationNumberOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Contributor"
               to="/contributor"
-              icon={<PeopleOutlineOutlinedIcon />}
+              icon={<PeopleOutlineOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Setting"
               to="/setting"
-              icon={<SettingsOutlinedIcon />}
+              icon={<SettingsOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
