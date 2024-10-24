@@ -16,6 +16,7 @@ const Dashboard = () => {
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
+        gap={4}
       >
         <StatsCard
           icon={

@@ -1,7 +1,7 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../theme";
-import DashboardTableRows from "./DashboardTableRows";
+import DashboardRow from "./DashboardRow";
 
 const DashboardTable = () => {
   const theme = useTheme();
@@ -10,7 +10,7 @@ const DashboardTable = () => {
     <Box
       py={2}
       px={2}
-      my={2}
+      my={4}
       height="100%"
       width="100%"
       border={1}
@@ -39,14 +39,14 @@ const DashboardTable = () => {
         </Grid>
       </Grid>
       {/* Table data */}
-      <DashboardTableRows
+      <DashboardRow
         title="Plugin 1"
         author="Author 1"
         version="1.0.0"
         size="1MB"
         status="Approved"
       />
-      <DashboardTableRows
+      <DashboardRow
         title="Plugin 2"
         author="Author 2"
         version="1.0.0"

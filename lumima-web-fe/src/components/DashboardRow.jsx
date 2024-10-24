@@ -2,7 +2,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../theme";
 
-const DashboardTableRows = ({ title, author, version, size, status }) => {
+const DashboardRow = ({ title, author, version, size, status }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -41,4 +41,4 @@ const DashboardTableRows = ({ title, author, version, size, status }) => {
   );
 };
 
-export default DashboardTableRows;
+export default DashboardRow;
