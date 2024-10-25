@@ -8,7 +8,7 @@ import Sidebar from "./screens/global/Sidebar";
 import Dashboard from "./screens/dashboard";
 import Plugin from "./screens/plugin";
 import PluginDetails from "./screens/pluginDetails";
-// import Contributor from "./screens/contributor";
+import Contributor from "./screens/contributor";
 // import Setting from "./screens/setting";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/plugin" element={<Plugin />} />
               <Route path="/plugin/:id" element={<PluginDetails />} />
-              {/* <Route path="/contributor" element={<Contributor />} /> */}
+              <Route path="/contributor" element={<Contributor />} />
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>
