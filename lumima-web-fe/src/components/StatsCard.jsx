@@ -11,8 +11,8 @@ const StatsCard = ({ title, value, icon }) => {
       flexDirection="column"
       alignItems="start"
       justifyContent="start"
-      px={2}
-      pt={2}
+      px={3}
+      py={3}
       sx={{
         borderRadius: 2,
         border: 1,
@@ -30,7 +30,7 @@ const StatsCard = ({ title, value, icon }) => {
       <Typography variant="h3" fontWeight="bold" mb={2} mt={2}>
         {value}
       </Typography>
-      <Box borderTop={1} borderColor={colors.grey[800]} width="100%" py={1}>
+      <Box width="100%" py={1}>
         <Typography variant="body1" color="textSecondary">
           Updated: 2 days ago
         </Typography>

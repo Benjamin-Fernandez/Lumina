@@ -52,8 +52,8 @@ const PluginTable = () => {
 
   return (
     <Box
-      py={2}
-      px={2}
+      py={4}
+      px={4}
       mx={4}
       height="80%"
       width="95%"
@@ -147,7 +147,7 @@ const PluginTable = () => {
                 textAlign: "left",
                 borderTop: "1px solid",
                 borderColor: colors.grey[900],
-                padding: "15px",
+                paddingY: "15px",
               }}
             >
               <PluginRow

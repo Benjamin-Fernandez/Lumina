@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import PluginDetail from "../../components/PluginDetail";
+import PluginDetailTable from "../../components/PluginDetailTable";
 
 const PluginDetails = () => {
   const { id } = useParams();
   return (
     <div>
-      <PluginDetail />
+      <PluginDetailTable />
     </div>
   );
 };

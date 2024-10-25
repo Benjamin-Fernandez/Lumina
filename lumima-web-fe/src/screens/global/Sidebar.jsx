@@ -142,13 +142,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Request"
-              to="/request"
-              icon={<ConfirmationNumberOutlinedIcon fontSize="large" />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
             <Item
               title="Contributor"
               to="/contributor"

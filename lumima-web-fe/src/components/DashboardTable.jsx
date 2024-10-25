@@ -8,8 +8,8 @@ const DashboardTable = () => {
   const colors = tokens(theme.palette.mode);
   return (
     <Box
-      py={2}
-      px={2}
+      py={4}
+      px={4}
       my={4}
       height="100%"
       width="100%"
