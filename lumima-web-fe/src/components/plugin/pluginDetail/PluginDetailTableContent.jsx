@@ -5,7 +5,7 @@ import { useTheme, Grid } from "@mui/system";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import IconButton from "@mui/material/IconButton";
-import { tokens } from "../theme";
+import { tokens } from "../../../theme";
 
 const PluginDetailTableContent = ({ selectedSection }) => {
   const theme = useTheme();

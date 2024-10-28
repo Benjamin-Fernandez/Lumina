@@ -5,11 +5,11 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./screens/global/Topbar";
 import Sidebar from "./screens/global/Sidebar";
-import Dashboard from "./screens/dashboard";
-import Plugin from "./screens/plugin";
-import PluginDetails from "./screens/pluginDetails";
-import Contributor from "./screens/contributor";
-import ContributorDetails from "./screens/contributorDetails";
+import Dashboard from "./screens/dashboard/Dashboard";
+import Plugin from "./screens/plugin/Plugin";
+import PluginDetails from "./screens/plugin/PluginDetails";
+import Contributor from "./screens/contributor/Contributor";
+import ContributorDetails from "./screens/contributor/ContributorDetails";
 // import Setting from "./screens/setting";
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
               <Route path="/plugin/:id" element={<PluginDetails />} />
               <Route path="/contributor" element={<Contributor />} />
               <Route path="/contributor/:id" element={<ContributorDetails />} />
+              {/* <Route path="/add/contributor" element={<ContributorForm />} /> */}
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>

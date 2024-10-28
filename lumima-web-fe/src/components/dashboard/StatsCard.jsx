@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { border, useTheme } from "@mui/system";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 
 const StatsCard = ({ title, value, icon }) => {
   const theme = useTheme();

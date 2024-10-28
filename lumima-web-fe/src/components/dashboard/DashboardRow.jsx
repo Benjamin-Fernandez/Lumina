@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 
 const DashboardRow = ({ title, author, version, size, status }) => {
   const theme = useTheme();

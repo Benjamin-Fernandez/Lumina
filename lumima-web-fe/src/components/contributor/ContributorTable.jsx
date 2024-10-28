@@ -10,14 +10,15 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
-import { tokens } from "../theme";
-import PluginRow from "./PluginRow.jsx";
+import { tokens } from "../../theme.js";
+import ContributorRow from "./ContributorRow.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TuneIcon from "@mui/icons-material/Tune";
-import pluginData from "../data/pluginData.jsx";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import contributorData from "../../data/contributorData.jsx";
 
-const PluginTable = () => {
+const ContributorTable = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,10 +41,8 @@ const PluginTable = () => {
   };
 
   // Filter and paginate data
-  const filteredData = pluginData.filter(
-    (plugin) =>
-      plugin.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      plugin.author.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = contributorData.filter((contributor) =>
+    contributor.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
@@ -81,9 +80,28 @@ const PluginTable = () => {
             ),
           }}
           sx={{
-            width: "85%",
+            width: "70%",
           }}
         />
+
+        <Button
+          variant="outlined"
+          startIcon={<AddCircleOutlineIcon />}
+          color={colors.grey[800]}
+          sx={{
+            width: "20%",
+            padding: "15px",
+            textTransform: "none",
+            fontSize: "13px",
+            color: colors.grey[700],
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+          }}
+          component={Link}
+          to="/add/contributor" // Navigate to the new link
+        >
+          Add new contributor
+        </Button>
         <Button
           variant="outlined"
           startIcon={<TuneIcon />}
@@ -109,23 +127,17 @@ const PluginTable = () => {
       >
         <Grid container spacing={2} mb="15px">
           {/* Table headers */}
-          <Grid item size={2} mt={3}>
-            <Typography variant="body1">Plugin Title</Typography>
+          <Grid item size={4} mt={3}>
+            <Typography variant="body1">Name</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Author</Typography>
-          </Grid>
-          <Grid item size={1} mt={3}>
-            <Typography variant="body1">Version</Typography>
-          </Grid>
-          <Grid item size={1} mt={3}>
-            <Typography variant="body1">Size</Typography>
+            <Typography variant="body1">Domain</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Category</Typography>
+            <Typography variant="body1">Last Online</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Status</Typography>
+            <Typography variant="body1">Joined</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Action</Typography>
@@ -133,9 +145,9 @@ const PluginTable = () => {
         </Grid>
 
         {/* Table data */}
-        {paginatedData.map((plugin, index) => (
+        {paginatedData.map((contributor, index) => (
           <Link
-            to={`/plugin/${plugin.id}`}
+            to={`/contributor/${contributor.id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -150,15 +162,12 @@ const PluginTable = () => {
                 paddingY: "15px",
               }}
             >
-              <PluginRow
-                key={index}
-                title={plugin.title}
-                author={plugin.author}
-                version={plugin.version}
-                size={plugin.size}
-                category={plugin.category}
-                status={plugin.status}
-                action={plugin.action}
+              <ContributorRow
+                name={contributor.name}
+                domain={contributor.domain}
+                lastOnline={contributor.lastOnline}
+                joined={contributor.joined}
+                action={contributor.action}
               />
             </ButtonBase>
           </Link>
@@ -180,4 +189,4 @@ const PluginTable = () => {
   );
 };
 
-export default PluginTable;
+export default ContributorTable;

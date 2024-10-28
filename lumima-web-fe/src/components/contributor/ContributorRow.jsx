@@ -1,29 +1,21 @@
 import { Box, Divider, Typography, Button } from "@mui/material";
 import { Grid, textTransform, useTheme } from "@mui/system";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 
-const PluginRow = ({
-  title,
-  author,
-  version,
-  size,
-  category,
-  status,
-  action,
-}) => {
+const ContributorRow = ({ name, domain, lastOnline, joined }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   return (
     <Box justifyContent="center">
       <Grid container spacing={2} alignItems="center">
-        <Grid item size={2}>
+        <Grid item size={4}>
           <Typography
             variant="body1"
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {title}
+            {name}
           </Typography>
         </Grid>
         <Grid item size={2}>
@@ -32,25 +24,7 @@ const PluginRow = ({
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {author}
-          </Typography>
-        </Grid>
-        <Grid item size={1}>
-          <Typography
-            variant="body1"
-            noWrap
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {version}
-          </Typography>
-        </Grid>
-        <Grid item size={1}>
-          <Typography
-            variant="body1"
-            noWrap
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {size}
+            {domain}
           </Typography>
         </Grid>
         <Grid item size={2}>
@@ -59,24 +33,17 @@ const PluginRow = ({
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {category}
+            {lastOnline}
           </Typography>
         </Grid>
         <Grid item size={2}>
-          <Box>
-            <Typography
-              variant="body1"
-              bgcolor={colors.blueAccent[900]}
-              color={colors.blueAccent[300]}
-              borderRadius={2}
-              width="fit-content"
-              p={1}
-              noWrap
-              sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-            >
-              {status}
-            </Typography>
-          </Box>
+          <Typography
+            variant="body1"
+            noWrap
+            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+          >
+            {joined}
+          </Typography>
         </Grid>
         <Grid item size={2}>
           <Button
@@ -84,7 +51,7 @@ const PluginRow = ({
             color="error"
             sx={{ textTransform: "none", fontSize: "13px" }}
           >
-            {action}
+            TODO
           </Button>
         </Grid>
       </Grid>
@@ -92,4 +59,4 @@ const PluginRow = ({
   );
 };
 
-export default PluginRow;
+export default ContributorRow;

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-import ContributorTable from "../../components/ContributorTable";
+import ContributorTable from "../../components/contributor/ContributorTable";
 
 const Contributor = () => {
   const theme = useTheme();

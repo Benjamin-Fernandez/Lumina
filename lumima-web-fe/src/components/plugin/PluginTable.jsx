@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
-import { tokens } from "../theme";
-import ContributorRow from "./ContributorRow.jsx";
+import { tokens } from "../../theme.js";
+import PluginRow from "./PluginRow.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TuneIcon from "@mui/icons-material/Tune";
-import contributorData from "../data/contributorData";
+import pluginData from "../../data/pluginData.jsx";
 
-const ContributorTable = () => {
+const PluginTable = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,8 +40,10 @@ const ContributorTable = () => {
   };
 
   // Filter and paginate data
-  const filteredData = contributorData.filter((contributor) =>
-    contributor.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = pluginData.filter(
+    (plugin) =>
+      plugin.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      plugin.author.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
@@ -107,17 +109,23 @@ const ContributorTable = () => {
       >
         <Grid container spacing={2} mb="15px">
           {/* Table headers */}
-          <Grid item size={4} mt={3}>
-            <Typography variant="body1">Name</Typography>
+          <Grid item size={2} mt={3}>
+            <Typography variant="body1">Plugin Title</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Domain</Typography>
+            <Typography variant="body1">Author</Typography>
+          </Grid>
+          <Grid item size={1} mt={3}>
+            <Typography variant="body1">Version</Typography>
+          </Grid>
+          <Grid item size={1} mt={3}>
+            <Typography variant="body1">Size</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Last Online</Typography>
+            <Typography variant="body1">Category</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Joined</Typography>
+            <Typography variant="body1">Status</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Action</Typography>
@@ -125,9 +133,9 @@ const ContributorTable = () => {
         </Grid>
 
         {/* Table data */}
-        {paginatedData.map((contributor, index) => (
+        {paginatedData.map((plugin, index) => (
           <Link
-            to={`/contributor/${contributor.id}`}
+            to={`/plugin/${plugin.id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -142,12 +150,15 @@ const ContributorTable = () => {
                 paddingY: "15px",
               }}
             >
-              <ContributorRow
-                name={contributor.name}
-                domain={contributor.domain}
-                lastOnline={contributor.lastOnline}
-                joined={contributor.joined}
-                action={contributor.action}
+              <PluginRow
+                key={index}
+                title={plugin.title}
+                author={plugin.author}
+                version={plugin.version}
+                size={plugin.size}
+                category={plugin.category}
+                status={plugin.status}
+                action={plugin.action}
               />
             </ButtonBase>
           </Link>
@@ -169,4 +180,4 @@ const ContributorTable = () => {
   );
 };
 
-export default ContributorTable;
+export default PluginTable;

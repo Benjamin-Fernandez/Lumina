@@ -4,7 +4,7 @@ import { colors } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import { tokens } from "../theme";
+import { tokens } from "../../../theme";
 import { useTheme, Grid } from "@mui/system";
 
 const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {

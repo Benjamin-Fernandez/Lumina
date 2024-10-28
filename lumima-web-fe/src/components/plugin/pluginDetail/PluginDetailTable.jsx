@@ -8,13 +8,19 @@ import {
   IconButton,
 } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
-import { tokens } from "../theme";
-import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
-import SwitchAccessShortcutOutlinedIcon from "@mui/icons-material/SwitchAccessShortcutOutlined";
+import { tokens } from "../../../theme";
+import InfoIcon from "@mui/icons-material/Info";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ContributorDetailTableContent from "./ContributorDetailTableContent";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import PluginDetailTableSidebar from "./PluginDetailTableSidebar";
+import PluginDetailTableContent from "./PluginDetailTableContent";
 
-const ContributorDetailTable = () => {
+const PluginDetailTable = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -51,9 +57,28 @@ const ContributorDetailTable = () => {
         justifyContent="space-between"
       >
         <Box display="flex" flexDirection="row">
+          <Box
+            component="img"
+            src={"/assets/chatbot.jpg"}
+            sx={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "50%",
+            }}
+          />
           <Box display="flex" flexDirection="column">
-            <Typography variant="h4" sx={{ my: "20px" }} fontWeight="bold">
-              Contributor Information
+            <Typography
+              variant="h4"
+              sx={{ mx: "20px", my: "20px" }}
+              fontWeight="bold"
+            >
+              Plugin Name
+            </Typography>
+            <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
+              Author
+            </Typography>
+            <Typography variant="h6" sx={{ mx: "20px" }}>
+              Author Email
             </Typography>
           </Box>
         </Box>
@@ -69,9 +94,9 @@ const ContributorDetailTable = () => {
               mr: 2,
               borderRadius: 2,
             }}
-            startIcon={<SwitchAccessShortcutOutlinedIcon />}
+            startIcon={<TaskAltOutlinedIcon />}
           >
-            Promote
+            Approve
           </Button>
           <Button
             sx={{
@@ -84,9 +109,9 @@ const ContributorDetailTable = () => {
               mr: 2,
               borderRadius: 2,
             }}
-            startIcon={<LockResetOutlinedIcon />}
+            startIcon={<AddCommentOutlinedIcon />}
           >
-            Reset Password
+            Follow-up
           </Button>
           <Button
             sx={{
@@ -100,15 +125,19 @@ const ContributorDetailTable = () => {
             }}
             startIcon={<DeleteOutlineOutlinedIcon />}
           >
-            Delete
+            Deactivate
           </Button>
         </Box>
       </Box>
       <Box display="flex" flexDirection="row">
-        <ContributorDetailTableContent />
+        <PluginDetailTableSidebar
+          selectedSection={selectedSection}
+          handleSectionClick={handleSectionClick}
+        />
+        <PluginDetailTableContent selectedSection={selectedSection} />
       </Box>
     </Box>
   );
 };
 
-export default ContributorDetailTable;
+export default PluginDetailTable;
