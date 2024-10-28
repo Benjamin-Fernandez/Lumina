@@ -8,6 +8,9 @@ import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PluginDetailTableSidebar from "../../components/plugin/pluginDetail/PluginDetailTableSidebar";
 import PluginDetailTableContent from "../../components/plugin/pluginDetail/PluginDetailTableContent";
+import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
+import FollowupModal from "../../components/modal/FollowupModal";
+import DeactivateModal from "../../components/modal/DeactivateModal";
 
 const PluginDetails = () => {
   const { id } = useParams();
@@ -17,10 +20,32 @@ const PluginDetails = () => {
 
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("metadata");
+  const [approveModal, setApproveModal] = useState(false);
+  const [followUpModal, setFollowUpModal] = useState(false);
+  const [deactivateModal, setDeactivateModal] = useState(false);
 
   // Function to handle sidebar navigation
   const handleSectionClick = (section) => {
     setSelectedSection(section);
+  };
+
+  const handleOpenApprove = () => {
+    setApproveModal(true);
+  };
+  const handleCloseApprove = () => {
+    setApproveModal(false);
+  };
+  const handleOpenFollowUp = () => {
+    setFollowUpModal(true);
+  };
+  const handleCloseFollowUp = () => {
+    setFollowUpModal(false);
+  };
+  const handleOpenDeactivate = () => {
+    setDeactivateModal(true);
+  };
+  const handleCloseDeactivate = () => {
+    setDeactivateModal(false);
   };
 
   return (
@@ -83,6 +108,7 @@ const PluginDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
+            onClick={handleOpenApprove}
             startIcon={<TaskAltOutlinedIcon />}
           >
             Approve
@@ -98,6 +124,7 @@ const PluginDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
+            onClick={handleOpenFollowUp}
             startIcon={<AddCommentOutlinedIcon />}
           >
             Follow-up
@@ -112,6 +139,7 @@ const PluginDetails = () => {
               color: "white",
               borderRadius: 2,
             }}
+            onClick={handleOpenDeactivate}
             startIcon={<DeleteOutlineOutlinedIcon />}
           >
             Deactivate
@@ -126,6 +154,19 @@ const PluginDetails = () => {
         />
         <PluginDetailTableContent selectedSection={selectedSection} />
       </Box>
+      <ApproveUpdateModal
+        open={approveModal}
+        handleClose={handleCloseApprove}
+      />
+      <FollowupModal
+        open={followUpModal}
+        handleClose={handleCloseFollowUp}
+        email="LEEH0023@e.ntu.edu.sg"
+      />
+      <DeactivateModal
+        open={deactivateModal}
+        handleClose={handleCloseDeactivate}
+      />
     </Box>
   );
 };

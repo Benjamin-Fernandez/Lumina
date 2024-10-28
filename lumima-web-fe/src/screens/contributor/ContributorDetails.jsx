@@ -6,12 +6,39 @@ import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import SwitchAccessShortcutOutlinedIcon from "@mui/icons-material/SwitchAccessShortcutOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContributorDetailTableContent from "../../components/contributor/ContributorDetailTableContent";
+import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
+import PromoteModal from "../../components/modal/PromoteModal";
+import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
+import DeleteModal from "../../components/modal/DeleteModal";
+import { useState } from "react";
 
 const ContributorDetails = () => {
   const { id } = useParams();
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [promoteModal, setPromoteModal] = useState(false);
+  const [resetModal, setResetModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const handleOpenPromote = () => {
+    setPromoteModal(true);
+  };
+  const handleClosePromote = () => {
+    setPromoteModal(false);
+  };
+  const handleOpenReset = () => {
+    setResetModal(true);
+  };
+  const handleCloseReset = () => {
+    setResetModal(false);
+  };
+  const handleOpenDelete = () => {
+    setDeleteModal(true);
+  };
+  const handleCloseDelete = () => {
+    setDeleteModal(false);
+  };
 
   return (
     <Box
@@ -56,6 +83,7 @@ const ContributorDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
+            onClick={handleOpenPromote}
             startIcon={<SwitchAccessShortcutOutlinedIcon />}
           >
             Promote
@@ -71,6 +99,7 @@ const ContributorDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
+            onClick={handleOpenReset}
             startIcon={<LockResetOutlinedIcon />}
           >
             Reset Password
@@ -85,6 +114,7 @@ const ContributorDetails = () => {
               color: "white",
               borderRadius: 2,
             }}
+            onClick={handleOpenDelete}
             startIcon={<DeleteOutlineOutlinedIcon />}
           >
             Delete
@@ -94,6 +124,9 @@ const ContributorDetails = () => {
       <Box display="flex" flexDirection="row">
         <ContributorDetailTableContent />
       </Box>
+      <PromoteModal open={promoteModal} handleClose={handleClosePromote} />
+      <ResetPasswordModal open={resetModal} handleClose={handleCloseReset} />
+      <DeleteModal open={deleteModal} handleClose={handleCloseDelete} />
     </Box>
   );
 };

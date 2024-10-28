@@ -39,6 +39,13 @@ const Plugin = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleBaseClick = (event) => {
+    if (event.target.tagName === "BUTTON") {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   // Filter and paginate data
   const filteredData = pluginData.filter(
     (plugin) =>
@@ -141,6 +148,7 @@ const Plugin = () => {
           >
             <ButtonBase
               key={index}
+              onClick={handleBaseClick}
               sx={{
                 width: "100%",
                 display: "block",

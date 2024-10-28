@@ -1,6 +1,17 @@
-import { Box, Divider, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { Grid, textTransform, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
+import { useState } from "react";
+import DeactivateModal from "../modal/DeactivateModal";
 
 const PluginRow = ({
   title,
@@ -13,6 +24,17 @@ const PluginRow = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box justifyContent="center">
@@ -83,11 +105,13 @@ const PluginRow = ({
             variant="contained"
             color="error"
             sx={{ textTransform: "none", fontSize: "13px" }}
+            onClick={handleOpen}
           >
             {action}
           </Button>
         </Grid>
       </Grid>
+      <DeactivateModal open={open} handleClose={handleClose} />
     </Box>
   );
 };
