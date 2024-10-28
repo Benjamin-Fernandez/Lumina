@@ -9,6 +9,7 @@ import Dashboard from "./screens/dashboard";
 import Plugin from "./screens/plugin";
 import PluginDetails from "./screens/pluginDetails";
 import Contributor from "./screens/contributor";
+import ContributorDetails from "./screens/contributorDetails";
 // import Setting from "./screens/setting";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <Route path="/plugin" element={<Plugin />} />
               <Route path="/plugin/:id" element={<PluginDetails />} />
               <Route path="/contributor" element={<Contributor />} />
+              <Route path="/contributor/:id" element={<ContributorDetails />} />
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>
