@@ -12,7 +12,7 @@ const PluginDetailTableContent = ({ selectedSection }) => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box width="80%" height="100%" pl={3}>
+    <Box width="100%" height="70%" pl={3}>
       {selectedSection === "metadata" && (
         <Grid container spacing={2} mb="15px">
           <Grid item size={6}>

@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { useTheme, Grid } from "@mui/system";
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 
 const ContributorDetailTableContent = () => {
   const theme = useTheme();

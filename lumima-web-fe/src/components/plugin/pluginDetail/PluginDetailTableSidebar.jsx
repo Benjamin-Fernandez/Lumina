@@ -13,7 +13,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
 
   return (
     <Box display="flex" flexDirection="row">
-      <Box width="100%" height="100%" pr={2}>
+      <Box width="100%" height="70%" pr={2}>
         <Stack border={1} borderRadius={2} borderColor={colors.grey[800]}>
           <Button
             variant={selectedSection === "metadata" ? "contained" : "outlined"}
