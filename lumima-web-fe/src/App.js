@@ -10,6 +10,8 @@ import Plugin from "./screens/plugin/Plugin";
 import PluginDetails from "./screens/plugin/PluginDetails";
 import Contributor from "./screens/contributor/Contributor";
 import ContributorDetails from "./screens/contributor/ContributorDetails";
+import ContributorForm from "./screens/contributor/ContributorForm";
+import Notification from "./screens/notification/Notification";
 // import Setting from "./screens/setting";
 
 function App() {
@@ -34,7 +36,8 @@ function App() {
               <Route path="/plugin/:id" element={<PluginDetails />} />
               <Route path="/contributor" element={<Contributor />} />
               <Route path="/contributor/:id" element={<ContributorDetails />} />
-              {/* <Route path="/add/contributor" element={<ContributorForm />} /> */}
+              <Route path="/contributorform" element={<ContributorForm />} />
+              <Route path="/notification" element={<Notification />} />
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>

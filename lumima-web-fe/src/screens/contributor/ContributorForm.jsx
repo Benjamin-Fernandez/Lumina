@@ -1,17 +1,16 @@
-import { useParams } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Divider, TextField } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
+import { useState } from "react";
 import { tokens } from "../../theme";
-import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
-import SwitchAccessShortcutOutlinedIcon from "@mui/icons-material/SwitchAccessShortcutOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ContributorDetailTableContent from "../../components/contributor/ContributorDetailTableContent";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const ContributorDetails = () => {
-  const { id } = useParams();
-
+const ContributorForm = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [domain, setDomain] = useState("");
 
   return (
     <Box
@@ -40,7 +39,7 @@ const ContributorDetails = () => {
         <Box display="flex" flexDirection="row">
           <Box display="flex" flexDirection="column">
             <Typography variant="h4" sx={{ my: "20px" }} fontWeight="bold">
-              Contributor Information
+              Add Contributor
             </Typography>
           </Box>
         </Box>
@@ -56,13 +55,13 @@ const ContributorDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
-            startIcon={<SwitchAccessShortcutOutlinedIcon />}
+            startIcon={<AddCircleOutlineIcon />}
           >
-            Promote
+            Create
           </Button>
           <Button
             sx={{
-              bgcolor: colors.yellowAccent[500],
+              bgcolor: colors.grey[500],
               padding: "8px 16px", // Adjust padding to hug content
               alignSelf: "flex-end", // Position the button at the bottom of the Box
               textTransform: "none",
@@ -71,31 +70,50 @@ const ContributorDetails = () => {
               mr: 2,
               borderRadius: 2,
             }}
-            startIcon={<LockResetOutlinedIcon />}
+            startIcon={<CancelOutlinedIcon />}
           >
-            Reset Password
-          </Button>
-          <Button
-            sx={{
-              bgcolor: colors.redAccent[500],
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              color: "white",
-              borderRadius: 2,
-            }}
-            startIcon={<DeleteOutlineOutlinedIcon />}
-          >
-            Delete
+            Cancel
           </Button>
         </Box>
       </Box>
       <Box display="flex" flexDirection="row">
-        <ContributorDetailTableContent />
+        <Box width="100%" height="100%">
+          <Grid container spacing={2} mb="15px">
+            <Grid item size={6}>
+              <TextField
+                id="outlined-basic"
+                label="Contributor Name"
+                variant="outlined"
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item size={6}>
+              <FormControl fullWidth>
+                <InputLabel id="domain">Domain</InputLabel>
+                <Select
+                  labelId="domain"
+                  id="domain"
+                  value={domain}
+                  label="domain"
+                >
+                  <MenuItem value={"Developer"}>Developer</MenuItem>
+                  <MenuItem value={"Admin"}>Admin</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item size={12}>
+              <TextField
+                id="outlined-basic"
+                label="Email Address"
+                variant="outlined"
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+          </Grid>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default ContributorDetails;
+export default ContributorForm;

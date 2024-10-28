@@ -98,7 +98,7 @@ const Contributor = () => {
             overflow: "hidden",
           }}
           component={Link}
-          to="/add/contributor" // Navigate to the new link
+          to="/contributorform" // Navigate to the new link
         >
           Add new contributor
         </Button>
