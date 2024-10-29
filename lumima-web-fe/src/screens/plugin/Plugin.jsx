@@ -88,19 +88,18 @@ const Plugin = () => {
             ),
           }}
           sx={{
-            width: "85%",
+            width: "90%",
           }}
         />
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<TuneIcon />}
-          color={colors.grey[800]}
           sx={{
             width: "10%",
             padding: "15px",
             textTransform: "none",
             fontSize: "13px",
-            color: colors.grey[700],
+            bgcolor: colors.yellowAccent[500],
           }}
         >
           Filter

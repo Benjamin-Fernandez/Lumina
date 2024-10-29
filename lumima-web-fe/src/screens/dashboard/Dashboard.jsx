@@ -29,7 +29,7 @@ const Dashboard = () => {
             />
           }
           title="Total Plugins"
-          value="10"
+          value="548"
         />
 
         <StatsCard
@@ -43,7 +43,7 @@ const Dashboard = () => {
             />
           }
           title="Approval Requests"
-          value="20"
+          value="23"
         />
       </Box>
       <DashboardTable />

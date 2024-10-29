@@ -85,15 +85,14 @@ const Contributor = () => {
         />
 
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<AddCircleOutlineIcon />}
-          color={colors.grey[800]}
           sx={{
             width: "20%",
             padding: "15px",
             textTransform: "none",
             fontSize: "13px",
-            color: colors.grey[700],
+            bgcolor: colors.blueAccent[400],
             textOverflow: "ellipsis",
             overflow: "hidden",
           }}
@@ -103,15 +102,14 @@ const Contributor = () => {
           Add new contributor
         </Button>
         <Button
-          variant="outlined"
+          variant="contained"
           startIcon={<TuneIcon />}
-          color={colors.grey[800]}
           sx={{
             width: "10%",
             padding: "15px",
             textTransform: "none",
             fontSize: "13px",
-            color: colors.grey[700],
+            bgcolor: colors.yellowAccent[500],
           }}
         >
           Filter

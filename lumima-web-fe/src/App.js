@@ -2,9 +2,10 @@ import { ColorModeContext, useMode } from "./theme";
 // CssBaseline --> resets the css to the default
 // ThemeProvider --> let us pass the themes into mui
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Topbar from "./screens/global/Topbar";
 import Sidebar from "./screens/global/Sidebar";
+import Login from "./screens/auth/Login";
 import Dashboard from "./screens/dashboard/Dashboard";
 import Plugin from "./screens/plugin/Plugin";
 import PluginDetails from "./screens/plugin/PluginDetails";
@@ -16,6 +17,8 @@ import Notification from "./screens/notification/Notification";
 
 function App() {
   const [themeMode, colorMode] = useMode();
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/";
   return (
     /* Setting up the color context */
     <ColorModeContext.Provider value={colorMode}>
@@ -25,13 +28,14 @@ function App() {
         <CssBaseline />
         <div className="app">
           {/* Sidebar */}
-          <Sidebar />
+          {!isLoginPage && <Sidebar />}
           {/* Main content */}
           <main className="content">
             {/* Topbar */}
-            <Topbar />
+            {!isLoginPage && <Topbar />}
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/plugin" element={<Plugin />} />
               <Route path="/plugin/:id" element={<PluginDetails />} />
               <Route path="/contributor" element={<Contributor />} />

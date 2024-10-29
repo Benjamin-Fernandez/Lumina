@@ -12,7 +12,7 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import FaceIcon from "@mui/icons-material/Face";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -21,6 +21,8 @@ const Topbar = () => {
     */
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const location = useLocation();
+  const path = location.pathname;
 
   // Box components allows you to write CSS properties on the component
   // Other components you need to use sx prop
@@ -31,10 +33,17 @@ const Topbar = () => {
       alignItems="center"
       p={4}
     >
-      {/* Left side of the topbar */}
       <Box>
         <Box display="flex" sx={{ fontSize: "20px" }}>
-          Screen Title
+          {path.includes("/dashboard") ? (
+            <Typography variant="h4">Dashboard</Typography>
+          ) : path.includes("/contributor") ? (
+            <Typography variant="h4">Contributors</Typography>
+          ) : path.includes("/notification") ? (
+            <Typography variant="h4">Notifications</Typography>
+          ) : (
+            <Typography variant="h4">Plugins</Typography>
+          )}
         </Box>
       </Box>
       {/* Right side of the topbar */}
