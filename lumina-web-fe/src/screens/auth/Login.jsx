@@ -1,10 +1,47 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
+import { config } from "../../config";
+import { PublicClientApplication } from "@azure/msal-browser";
 
 const Login = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleLogin = async () => {
+    const msalConfig = {
+      auth: {
+        clientId: config.appId,
+        redirectUri: config.redirectUri,
+      },
+      cache: {
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: true,
+      },
+    };
+
+    const msalInstance = new PublicClientApplication(msalConfig);
+
+    try {
+      // Ensure the instance is initialized
+      await msalInstance.initialize();
+      console.log("MSAL initialized successfully.");
+
+      const loginRequest = {
+        scopes: config.scopes,
+      };
+
+      // Proceed with the login popup
+      const response = await msalInstance.loginPopup(loginRequest);
+      console.log("Login successful:", response);
+      if (response) {
+        window.location.href = "/dashboard";
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed: " + error.message);
+    }
+  };
 
   return (
     <Box display="flex" flexDirection="row">
@@ -69,7 +106,7 @@ const Login = () => {
             fontSize: "14px",
             width: "100%",
           }}
-          // onClick={handleLogin}
+          onClick={handleLogin}
         >
           Sign in with Outlook
         </Button>

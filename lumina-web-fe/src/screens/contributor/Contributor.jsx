@@ -40,6 +40,14 @@ const Contributor = () => {
     setSearchTerm(event.target.value);
   };
 
+  // Handle base click
+  const handleBaseClick = (event) => {
+    if (event.target.tagName === "BUTTON") {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   // Filter and paginate data
   const filteredData = contributorData.filter((contributor) =>
     contributor.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -151,6 +159,7 @@ const Contributor = () => {
           >
             <ButtonBase
               key={index}
+              onClick={handleBaseClick}
               sx={{
                 width: "100%",
                 display: "block",
