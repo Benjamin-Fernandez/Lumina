@@ -56,6 +56,10 @@ const FavouriteChatbots = () => {
 
   const { email } = useUser();
 
+  handleChatbotDetail = (chatbot) => {
+    router.push("/chatbots/" + chatbot._id);
+  };
+
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
@@ -93,7 +97,11 @@ const FavouriteChatbots = () => {
                 key={rowIndex}
               >
                 {row.map((chatbot, index) => (
-                  <TouchableOpacity className="w-[30%] mr-5" key={index}>
+                  <TouchableOpacity
+                    className="w-[30%] mr-5"
+                    key={index}
+                    onPress={() => handleChatbotDetail(chatbot)}
+                  >
                     <CustomCard
                       title={chatbot.name}
                       chatbot={chatbot}

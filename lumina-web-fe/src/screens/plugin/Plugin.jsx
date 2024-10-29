@@ -166,6 +166,7 @@ const Plugin = () => {
                 category={plugin.category}
                 status={plugin.status}
                 action={plugin.action}
+                displayPic={plugin.displayPic}
               />
             </ButtonBase>
           </Link>

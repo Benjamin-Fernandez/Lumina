@@ -21,6 +21,7 @@ const PluginRow = ({
   category,
   status,
   action,
+  displayPic,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,7 +40,21 @@ const PluginRow = ({
   return (
     <Box justifyContent="center">
       <Grid container spacing={2} alignItems="center">
-        <Grid item size={2}>
+        <Grid
+          item
+          size={2}
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+        >
+          <Box
+            component="img"
+            src={displayPic}
+            width={40}
+            height={40}
+            borderRadius="50%"
+            mr={1}
+          />
           <Typography
             variant="body1"
             noWrap

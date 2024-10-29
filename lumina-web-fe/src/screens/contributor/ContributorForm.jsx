@@ -95,6 +95,7 @@ const ContributorForm = () => {
                   id="domain"
                   value={domain}
                   label="domain"
+                  onChange={(e) => setDomain(e.target.value)}
                 >
                   <MenuItem value={"Developer"}>Developer</MenuItem>
                   <MenuItem value={"Admin"}>Admin</MenuItem>
