@@ -5,15 +5,24 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
+import { config } from "../../config";
 
-const RejectModal = ({ open, handleClose, email }) => {
+const LogOutModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleLogout = () => {
+    // Clear tokens or user session data stored in localStorage
+    localStorage.removeItem("msal." + config.appId + ".idtoken"); // Example MSAL token clear, adjust based on storage keys
+    localStorage.removeItem("user_session"); // Remove any custom session data if you have any
+
+    // Redirect to the login page or home page
+    window.location.href = "/"; // Change this to any desired page
+  };
 
   return (
     <Dialog
@@ -24,24 +33,17 @@ const RejectModal = ({ open, handleClose, email }) => {
           borderRadius: 3, // Adds border radius
           padding: 2, // Increases padding inside the dialog
           width: 400, // Sets width of the dialog
+          height: 200, // Sets height of the dialog
         },
       }}
     >
       <DialogTitle>
         <Typography variant="h5" fontWeight="bold">
-          Reject Plugin Request
+          Logout
         </Typography>
       </DialogTitle>
       <DialogContent>
-        <Typography variant="body1">Sent to: {email}</Typography>
-        <TextField
-          variant="outlined"
-          label="Enter message"
-          multiline
-          rows={8}
-          fullWidth
-          sx={{ mt: 3 }}
-        />
+        <Typography variant="body1">Confirm to logout?</Typography>
       </DialogContent>
       <DialogActions>
         <Button
@@ -57,19 +59,19 @@ const RejectModal = ({ open, handleClose, email }) => {
           Cancel
         </Button>
         <Button
-          onClick={handleClose}
+          onClick={handleLogout}
           variant="contained"
-          color="error"
           sx={{
             textTransform: "none",
             fontSize: "13px",
+            bgcolor: colors.redAccent[500],
           }}
         >
-          Reject
+          Logout
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default RejectModal;
+export default LogOutModal;

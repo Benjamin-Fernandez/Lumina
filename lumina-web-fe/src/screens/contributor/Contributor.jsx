@@ -7,6 +7,9 @@ import {
   Button,
   TablePagination,
   ButtonBase,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
@@ -14,7 +17,6 @@ import { tokens } from "../../theme.js";
 import ContributorRow from "../../components/contributor/ContributorRow.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import TuneIcon from "@mui/icons-material/Tune";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import contributorData from "../../data/contributorData.jsx";
 
@@ -22,6 +24,7 @@ const Contributor = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(0); // Current page number
   const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
 
@@ -40,6 +43,10 @@ const Contributor = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleFilterChange = (event) => {
+    setFilterTerm(event.target.value);
+  };
+
   // Handle base click
   const handleBaseClick = (event) => {
     if (event.target.tagName === "BUTTON") {
@@ -49,8 +56,10 @@ const Contributor = () => {
   };
 
   // Filter and paginate data
-  const filteredData = contributorData.filter((contributor) =>
-    contributor.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = contributorData.filter(
+    (contributor) =>
+      contributor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (filterTerm === "" || contributor.domain === filterTerm)
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
@@ -91,7 +100,29 @@ const Contributor = () => {
             width: "70%",
           }}
         />
-
+        <FormControl>
+          <InputLabel htmlFor="category">Filter</InputLabel>
+          <Select
+            native
+            defaultValue=""
+            id="filter-button"
+            label="Filter"
+            sx={{
+              width: "100%",
+              textTransform: "none",
+              fontSize: "13px",
+            }}
+            onChange={handleFilterChange}
+          >
+            <option aria-label="None" value="" />
+            <optgroup label="Domain">
+              <option value="Developer">Developer</option>
+              <option value="Admin">Admin</option>
+              {/* <option value="text">Text</option>
+                <option value="utility">Utility</option> */}
+            </optgroup>
+          </Select>
+        </FormControl>
         <Button
           variant="contained"
           startIcon={<AddCircleOutlineIcon />}
@@ -100,7 +131,7 @@ const Contributor = () => {
             padding: "15px",
             textTransform: "none",
             fontSize: "13px",
-            bgcolor: colors.blueAccent[400],
+            bgcolor: colors.blueAccent[500],
             textOverflow: "ellipsis",
             overflow: "hidden",
           }}
@@ -108,19 +139,6 @@ const Contributor = () => {
           to="/contributorform" // Navigate to the new link
         >
           Add new contributor
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<TuneIcon />}
-          sx={{
-            width: "10%",
-            padding: "15px",
-            textTransform: "none",
-            fontSize: "13px",
-            bgcolor: colors.yellowAccent[500],
-          }}
-        >
-          Filter
         </Button>
       </Stack>
       <Box

@@ -29,6 +29,7 @@ const Login = () => {
 
       const loginRequest = {
         scopes: config.scopes,
+        prompt: "login", // Forces credential prompt on login
       };
 
       // Proceed with the login popup

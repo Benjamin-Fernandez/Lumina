@@ -11,6 +11,9 @@ const ContributorForm = () => {
   const colors = tokens(theme.palette.mode);
 
   const [domain, setDomain] = useState("");
+  const handleCancel = () => {
+    window.history.back();
+  };
 
   return (
     <Box
@@ -70,6 +73,7 @@ const ContributorForm = () => {
               mr: 2,
               borderRadius: 2,
             }}
+            onClick={handleCancel}
             startIcon={<CancelOutlinedIcon />}
           >
             Cancel

@@ -44,7 +44,7 @@ const Dashboard = () => {
                   }}
                 />
               }
-              title="Total Plugins"
+              title="Deployed Plugins"
               value="548"
             />
           </ButtonBase>

@@ -6,7 +6,7 @@ import {
   Icon,
   Typography,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -23,6 +23,23 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
   const location = useLocation();
   const path = location.pathname;
+  const [selected, setSelected] = useState("");
+
+  useEffect(() => {
+    if (path.includes("/dashboard")) {
+      setSelected("Dashboard");
+    } else if (path.includes("/contributor")) {
+      setSelected("Contributor");
+    } else if (path.includes("/request")) {
+      setSelected("Request");
+    } else if (path.includes("/plugin")) {
+      setSelected("Plugin");
+    } else if (path.includes("/profile")) {
+      setSelected("Profile");
+    } else if (path.includes("/notification")) {
+      setSelected("Notification");
+    }
+  }, [path]);
 
   // Box components allows you to write CSS properties on the component
   // Other components you need to use sx prop
@@ -43,6 +60,8 @@ const Topbar = () => {
             <Typography variant="h4">Notifications</Typography>
           ) : path.includes("/request") ? (
             <Typography variant="h4">Requests</Typography>
+          ) : path.includes("/profile") ? (
+            <Typography variant="h4">Profile</Typography>
           ) : (
             <Typography variant="h4">Plugins</Typography>
           )}
@@ -52,7 +71,12 @@ const Topbar = () => {
       <Box display="flex" gap="5px">
         <Link to="/notification">
           <IconButton>
-            <NotificationsOutlinedIcon fontSize="large" />
+            <NotificationsOutlinedIcon
+              fontSize="large"
+              sx={{
+                color: selected === "Notification" ? "#6870fa" : "inherit",
+              }}
+            />
           </IconButton>
         </Link>
         <IconButton onClick={colorMode.toggleColorMode}>
@@ -62,9 +86,16 @@ const Topbar = () => {
             <DarkModeOutlinedIcon fontSize="large" />
           )}
         </IconButton>
-        <IconButton>
-          <FaceIcon fontSize="large" />
-        </IconButton>
+        <Link to="/profile">
+          <IconButton>
+            <FaceIcon
+              fontSize="large"
+              sx={{
+                color: selected === "Profile" ? "#6870fa" : "inherit",
+              }}
+            />
+          </IconButton>
+        </Link>
       </Box>
     </Box>
   );

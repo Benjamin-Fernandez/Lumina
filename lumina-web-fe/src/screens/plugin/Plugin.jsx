@@ -7,6 +7,10 @@ import {
   Button,
   TablePagination,
   ButtonBase,
+  FormControl,
+  Input,
+  InputLabel,
+  Select,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
@@ -21,6 +25,7 @@ const Plugin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(0); // Current page number
   const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
 
@@ -39,6 +44,11 @@ const Plugin = () => {
     setSearchTerm(event.target.value);
   };
 
+  // Handle filter term
+  const handleFilterChange = (event) => {
+    setFilterTerm(event.target.value);
+  };
+
   const handleBaseClick = (event) => {
     if (event.target.tagName === "BUTTON") {
       event.preventDefault();
@@ -48,9 +58,10 @@ const Plugin = () => {
 
   // Filter and paginate data
   const filteredData = pluginData.filter(
-    (plugin) =>
-      plugin.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      plugin.author.toLowerCase().includes(searchTerm.toLowerCase())
+    (request) =>
+      (request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (filterTerm === "" || request.category === filterTerm)
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
@@ -91,19 +102,30 @@ const Plugin = () => {
             width: "90%",
           }}
         />
-        <Button
-          variant="contained"
-          startIcon={<TuneIcon />}
-          sx={{
-            width: "10%",
-            padding: "15px",
-            textTransform: "none",
-            fontSize: "13px",
-            bgcolor: colors.yellowAccent[500],
-          }}
-        >
-          Filter
-        </Button>
+        <FormControl>
+          <InputLabel htmlFor="category">Filter</InputLabel>
+          <Select
+            native
+            defaultValue=""
+            id="filter-button"
+            label="Filter"
+            sx={{
+              width: "100%",
+              textTransform: "none",
+              fontSize: "13px",
+            }}
+            onChange={handleFilterChange}
+          >
+            <option aria-label="None" value="" />
+            <optgroup label="Category">
+              <option value="Planning">Planning</option>
+              <option value="Help">Help</option>
+              <option value="Module">Modules</option>
+              {/* <option value="text">Text</option>
+                <option value="utility">Utility</option> */}
+            </optgroup>
+          </Select>
+        </FormControl>
       </Stack>
       <Box
         sx={{

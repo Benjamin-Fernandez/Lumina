@@ -9,7 +9,6 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import PluginDetailTableSidebar from "../../components/plugin/pluginDetail/PluginDetailTableSidebar";
 import PluginDetailTableContent from "../../components/plugin/pluginDetail/PluginDetailTableContent";
 import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
-import FollowupModal from "../../components/modal/FollowupModal";
 import RejectModal from "../../components/modal/RejectModal";
 import RequestDetailTableSidebar from "../../components/request/requestDetail/RequestDetailTableSidebar";
 import RequestDetailTableContent from "../../components/request/requestDetail/RequestDetailTableContent";
@@ -23,7 +22,6 @@ const RequestDetails = () => {
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("metadata");
   const [approveModal, setApproveModal] = useState(false);
-  const [followUpModal, setFollowUpModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
 
   // Function to handle sidebar navigation
@@ -36,12 +34,6 @@ const RequestDetails = () => {
   };
   const handleCloseApprove = () => {
     setApproveModal(false);
-  };
-  const handleOpenFollowUp = () => {
-    setFollowUpModal(true);
-  };
-  const handleCloseFollowUp = () => {
-    setFollowUpModal(false);
   };
   const handleOpenReject = () => {
     setRejectModal(true);
@@ -115,30 +107,15 @@ const RequestDetails = () => {
           >
             Approve
           </Button>
+
           <Button
+            variant="contained"
+            color="error"
             sx={{
-              bgcolor: colors.yellowAccent[500],
               padding: "8px 16px", // Adjust padding to hug content
               alignSelf: "flex-end", // Position the button at the bottom of the Box
               textTransform: "none",
               fontSize: "13px",
-              color: "white",
-              mr: 2,
-              borderRadius: 2,
-            }}
-            onClick={handleOpenFollowUp}
-            startIcon={<AddCommentOutlinedIcon />}
-          >
-            Follow-up
-          </Button>
-          <Button
-            sx={{
-              bgcolor: colors.redAccent[500],
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              color: "white",
               borderRadius: 2,
             }}
             onClick={handleOpenReject}
@@ -160,12 +137,11 @@ const RequestDetails = () => {
         open={approveModal}
         handleClose={handleCloseApprove}
       />
-      <FollowupModal
-        open={followUpModal}
-        handleClose={handleCloseFollowUp}
+      <RejectModal
+        open={rejectModal}
+        handleClose={handleCloseReject}
         email="LEEH0023@e.ntu.edu.sg"
       />
-      <RejectModal open={rejectModal} handleClose={handleCloseReject} />
     </Box>
   );
 };

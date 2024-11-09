@@ -5,13 +5,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   Typography,
+  TextField,
 } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const FollowupModal = ({ open, handleClose, email }) => {
+const ChangePasswordModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -29,16 +29,19 @@ const FollowupModal = ({ open, handleClose, email }) => {
     >
       <DialogTitle>
         <Typography variant="h5" fontWeight="bold">
-          Follow-Up
+          Change Password
         </Typography>
       </DialogTitle>
       <DialogContent>
-        <Typography variant="body1">Sent to: {email}</Typography>
         <TextField
           variant="outlined"
-          label="Enter Message"
-          multiline
-          rows={8}
+          label="Current Password"
+          fullWidth
+          sx={{ mt: 1 }}
+        />
+        <TextField
+          variant="outlined"
+          label="New Password (min. 8 characters)"
           fullWidth
           sx={{ mt: 3 }}
         />
@@ -65,11 +68,11 @@ const FollowupModal = ({ open, handleClose, email }) => {
             bgcolor: colors.yellowAccent[500],
           }}
         >
-          Send
+          Change Password
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default FollowupModal;
+export default ChangePasswordModal;

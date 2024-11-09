@@ -15,6 +15,7 @@ import Contributor from "./screens/contributor/Contributor";
 import ContributorDetails from "./screens/contributor/ContributorDetails";
 import ContributorForm from "./screens/contributor/ContributorForm";
 import Notification from "./screens/notification/Notification";
+import Profile from "./screens/profile/Profile";
 // import Setting from "./screens/setting";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/contributor/:id" element={<ContributorDetails />} />
               <Route path="/contributorform" element={<ContributorForm />} />
               <Route path="/notification" element={<Notification />} />
+              <Route path="/profile" element={<Profile />} />
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>

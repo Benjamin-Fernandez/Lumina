@@ -49,6 +49,10 @@ const Sidebar = () => {
       setSelected("Contributor");
     } else if (path.includes("/setting")) {
       setSelected("Setting");
+    } else if (path.includes("/profile")) {
+      setSelected("Profile");
+    } else if (path.includes("/notification")) {
+      setSelected("Notification");
     }
   }, [path]);
 
