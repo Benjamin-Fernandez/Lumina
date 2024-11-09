@@ -41,6 +41,8 @@ const Topbar = () => {
             <Typography variant="h4">Contributors</Typography>
           ) : path.includes("/notification") ? (
             <Typography variant="h4">Notifications</Typography>
+          ) : path.includes("/request") ? (
+            <Typography variant="h4">Requests</Typography>
           ) : (
             <Typography variant="h4">Plugins</Typography>
           )}

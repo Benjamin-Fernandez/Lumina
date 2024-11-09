@@ -9,6 +9,8 @@ import Login from "./screens/auth/Login";
 import Dashboard from "./screens/dashboard/Dashboard";
 import Plugin from "./screens/plugin/Plugin";
 import PluginDetails from "./screens/plugin/PluginDetails";
+import Request from "./screens/request/Request";
+import RequestDetails from "./screens/request/RequestDetails";
 import Contributor from "./screens/contributor/Contributor";
 import ContributorDetails from "./screens/contributor/ContributorDetails";
 import ContributorForm from "./screens/contributor/ContributorForm";
@@ -38,6 +40,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/plugin" element={<Plugin />} />
               <Route path="/plugin/:id" element={<PluginDetails />} />
+              <Route path="/request" element={<Request />} />
+              <Route path="/request/:id" element={<RequestDetails />} />
               <Route path="/contributor" element={<Contributor />} />
               <Route path="/contributor/:id" element={<ContributorDetails />} />
               <Route path="/contributorform" element={<ContributorForm />} />

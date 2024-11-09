@@ -6,9 +6,8 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
-import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import AllInboxOutlinedIcon from "@mui/icons-material/AllInboxOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -115,7 +114,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+            <Item
+              title="Request"
+              to="/request"
+              icon={<AllInboxOutlinedIcon fontSize="large" />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Contributor"
               to="/contributor"
