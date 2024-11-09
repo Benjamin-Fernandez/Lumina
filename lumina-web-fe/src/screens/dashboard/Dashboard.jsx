@@ -1,5 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, ButtonBase } from "@mui/material";
 import { useTheme } from "@mui/system";
+import { Link } from "react-router-dom";
+
 import { tokens } from "../../theme";
 import StatsCard from "../../components/dashboard/StatsCard";
 import DashboardTable from "../../components/dashboard/DashboardTable";
@@ -9,6 +11,8 @@ import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumb
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const handlePlugin = () => {};
+  const handleRequest = () => {};
   return (
     <Box px={4}>
       <Box
@@ -18,33 +22,60 @@ const Dashboard = () => {
         justifyContent="space-between"
         gap={4}
       >
-        <StatsCard
-          icon={
-            <ExtensionOutlinedIcon
-              style={{
-                height: "30px",
-                width: "30px",
-                color: colors.blueAccent[500],
-              }}
+        <Link
+          to={`/plugin`}
+          style={{ textDecoration: "none", color: "inherit", width: "100%" }}
+        >
+          <ButtonBase
+            onClick={handlePlugin}
+            sx={{
+              width: "100%",
+              display: "block",
+              textAlign: "left",
+            }}
+          >
+            <StatsCard
+              icon={
+                <ExtensionOutlinedIcon
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    color: colors.blueAccent[500],
+                  }}
+                />
+              }
+              title="Total Plugins"
+              value="548"
             />
-          }
-          title="Total Plugins"
-          value="548"
-        />
-
-        <StatsCard
-          icon={
-            <ConfirmationNumberOutlinedIcon
-              style={{
-                height: "30px",
-                width: "30px",
-                color: colors.blueAccent[500],
-              }}
+          </ButtonBase>
+        </Link>
+        <Link
+          to={`/request`}
+          style={{ textDecoration: "none", color: "inherit", width: "100%" }}
+        >
+          <ButtonBase
+            onClick={handleRequest}
+            sx={{
+              width: "100%",
+              display: "block",
+              textAlign: "left",
+            }}
+          >
+            <StatsCard
+              icon={
+                <ConfirmationNumberOutlinedIcon
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    color: colors.blueAccent[500],
+                  }}
+                />
+              }
+              title="Approval Requests"
+              value="23"
             />
-          }
-          title="Approval Requests"
-          value="23"
-        />
+          </ButtonBase>
+        </Link>
       </Box>
       <DashboardTable />
     </Box>

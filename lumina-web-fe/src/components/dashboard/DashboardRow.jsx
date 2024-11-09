@@ -2,7 +2,14 @@ import { Box, Divider, Typography } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const DashboardRow = ({ title, author, version, size, status, displayPic }) => {
+const DashboardRow = ({
+  title,
+  author,
+  version,
+  size,
+  category,
+  displayPic,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -37,18 +44,7 @@ const DashboardRow = ({ title, author, version, size, status, displayPic }) => {
           <Typography variant="body1">{size}</Typography>
         </Grid>
         <Grid item size={2}>
-          <Box>
-            <Typography
-              variant="body1"
-              bgcolor={colors.blueAccent[900]}
-              color={colors.blueAccent[300]}
-              borderRadius={2}
-              width="fit-content"
-              p={1}
-            >
-              {status}
-            </Typography>
-          </Box>
+          <Typography variant="body1">{category}</Typography>
         </Grid>
       </Grid>
     </Box>

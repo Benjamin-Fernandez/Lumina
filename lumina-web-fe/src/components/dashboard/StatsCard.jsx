@@ -17,7 +17,7 @@ const StatsCard = ({ title, value, icon }) => {
         borderRadius: 2,
         border: 1,
         borderColor: colors.grey[800],
-        width: "48%",
+        width: "100%",
         height: "auto", // Adjust the height as needed
       }}
     >

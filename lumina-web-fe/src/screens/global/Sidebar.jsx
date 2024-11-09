@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
@@ -32,8 +33,24 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const location = useLocation();
+  const path = location.pathname;
   const [collapsed, setCollapsed] = useState(false); // keep state of sidebar collapse
   const [selected, setSelected] = useState("Dashboard"); // keep state of selected menu item
+
+  useEffect(() => {
+    if (path.includes("/dashboard")) {
+      setSelected("Dashboard");
+    } else if (path.includes("/plugin")) {
+      setSelected("Plugin");
+    } else if (path.includes("/request")) {
+      setSelected("Request");
+    } else if (path.includes("/contributor")) {
+      setSelected("Contributor");
+    } else if (path.includes("/setting")) {
+      setSelected("Setting");
+    }
+  }, [path]);
 
   return (
     <Box

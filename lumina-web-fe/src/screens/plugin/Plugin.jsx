@@ -115,7 +115,7 @@ const Plugin = () => {
       >
         <Grid container spacing={2} mb="15px">
           {/* Table headers */}
-          <Grid item size={2} mt={3}>
+          <Grid item size={4} mt={3}>
             <Typography variant="body1">Plugin Title</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
@@ -130,9 +130,7 @@ const Plugin = () => {
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Category</Typography>
           </Grid>
-          <Grid item size={2} mt={3}>
-            <Typography variant="body1">Status</Typography>
-          </Grid>
+
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Action</Typography>
           </Grid>

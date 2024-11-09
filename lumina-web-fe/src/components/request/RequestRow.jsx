@@ -121,6 +121,7 @@ const RequestRow = ({
               bgcolor: colors.blueAccent[500],
               width: "65%",
               mr: 1,
+              borderRadius: 2,
             }}
             onClick={handleOpenApprove}
           >
@@ -129,7 +130,7 @@ const RequestRow = ({
           <Button
             variant="contained"
             color="error"
-            sx={{ textTransform: "none", fontSize: "13px" }}
+            sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
             onClick={handleOpenReject}
           >
             Reject

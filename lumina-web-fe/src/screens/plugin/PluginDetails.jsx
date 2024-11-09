@@ -3,13 +3,9 @@ import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
-import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PluginDetailTableSidebar from "../../components/plugin/pluginDetail/PluginDetailTableSidebar";
 import PluginDetailTableContent from "../../components/plugin/pluginDetail/PluginDetailTableContent";
-import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
-import FollowupModal from "../../components/modal/FollowupModal";
 import DeactivateModal from "../../components/modal/DeactivateModal";
 
 const PluginDetails = () => {
@@ -20,8 +16,6 @@ const PluginDetails = () => {
 
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("metadata");
-  const [approveModal, setApproveModal] = useState(false);
-  const [followUpModal, setFollowUpModal] = useState(false);
   const [deactivateModal, setDeactivateModal] = useState(false);
 
   // Function to handle sidebar navigation
@@ -29,18 +23,6 @@ const PluginDetails = () => {
     setSelectedSection(section);
   };
 
-  const handleOpenApprove = () => {
-    setApproveModal(true);
-  };
-  const handleCloseApprove = () => {
-    setApproveModal(false);
-  };
-  const handleOpenFollowUp = () => {
-    setFollowUpModal(true);
-  };
-  const handleCloseFollowUp = () => {
-    setFollowUpModal(false);
-  };
   const handleOpenDeactivate = () => {
     setDeactivateModal(true);
   };
@@ -98,45 +80,13 @@ const PluginDetails = () => {
         </Box>
         <Box display="flex" flexDirection="row">
           <Button
+            variant="contained"
+            color="error"
             sx={{
-              bgcolor: colors.blueAccent[500],
               padding: "8px 16px", // Adjust padding to hug content
               alignSelf: "flex-end", // Position the button at the bottom of the Box
               textTransform: "none",
               fontSize: "13px",
-              color: "white",
-              mr: 2,
-              borderRadius: 2,
-            }}
-            onClick={handleOpenApprove}
-            startIcon={<TaskAltOutlinedIcon />}
-          >
-            Approve
-          </Button>
-          <Button
-            sx={{
-              bgcolor: colors.yellowAccent[500],
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              color: "white",
-              mr: 2,
-              borderRadius: 2,
-            }}
-            onClick={handleOpenFollowUp}
-            startIcon={<AddCommentOutlinedIcon />}
-          >
-            Follow-up
-          </Button>
-          <Button
-            sx={{
-              bgcolor: colors.redAccent[500],
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              color: "white",
               borderRadius: 2,
             }}
             onClick={handleOpenDeactivate}
@@ -154,15 +104,6 @@ const PluginDetails = () => {
         />
         <PluginDetailTableContent selectedSection={selectedSection} />
       </Box>
-      <ApproveUpdateModal
-        open={approveModal}
-        handleClose={handleCloseApprove}
-      />
-      <FollowupModal
-        open={followUpModal}
-        handleClose={handleCloseFollowUp}
-        email="LEEH0023@e.ntu.edu.sg"
-      />
       <DeactivateModal
         open={deactivateModal}
         handleClose={handleCloseDeactivate}

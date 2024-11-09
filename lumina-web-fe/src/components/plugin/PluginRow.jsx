@@ -42,7 +42,7 @@ const PluginRow = ({
       <Grid container spacing={2} alignItems="center">
         <Grid
           item
-          size={2}
+          size={4}
           display="flex"
           flexDirection="row"
           alignItems="center"
@@ -100,26 +100,10 @@ const PluginRow = ({
           </Typography>
         </Grid>
         <Grid item size={2}>
-          <Box>
-            <Typography
-              variant="body1"
-              bgcolor={colors.blueAccent[900]}
-              color={colors.blueAccent[300]}
-              borderRadius={2}
-              width="fit-content"
-              p={1}
-              noWrap
-              sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-            >
-              {status}
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid item size={2}>
           <Button
             variant="contained"
             color="error"
-            sx={{ textTransform: "none", fontSize: "13px" }}
+            sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
             onClick={handleOpen}
           >
             {action}
