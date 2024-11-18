@@ -7,7 +7,7 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
+import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
 const PromoteModal = ({ open, handleClose }) => {

@@ -1,15 +1,6 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
-import { Grid, textTransform, useTheme } from "@mui/system";
-import { tokens } from "../../theme";
+import { Box, Typography, Button } from "@mui/material";
+import { Grid } from "@mui/system";
+// import { tokens } from "../../theme";
 import { useState } from "react";
 import DeactivateModal from "../modal/DeactivateModal";
 
@@ -19,12 +10,11 @@ const PluginRow = ({
   version,
   size,
   category,
-  status,
   action,
   displayPic,
 }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
   const [open, setOpen] = useState(false);
 
   const handleOpen = (event) => {

@@ -1,21 +1,15 @@
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PluginDetailTableSidebar from "../../components/plugin/pluginDetail/PluginDetailTableSidebar";
-import PluginDetailTableContent from "../../components/plugin/pluginDetail/PluginDetailTableContent";
 import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
 import RejectModal from "../../components/modal/RejectModal";
 import RequestDetailTableSidebar from "../../components/request/requestDetail/RequestDetailTableSidebar";
 import RequestDetailTableContent from "../../components/request/requestDetail/RequestDetailTableContent";
 
 const RequestDetails = () => {
-  const { id } = useParams();
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 

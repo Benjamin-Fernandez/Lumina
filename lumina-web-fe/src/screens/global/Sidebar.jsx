@@ -101,6 +101,7 @@ const Sidebar = () => {
                 <Box display="flex" alignItems="center">
                   <img
                     src="../../assets/logo.png"
+                    alt="logo"
                     width="30px"
                     height="30px"
                     style={{ marginRight: "10px" }}

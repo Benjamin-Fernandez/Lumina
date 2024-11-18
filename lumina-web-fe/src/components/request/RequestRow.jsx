@@ -1,14 +1,5 @@
-import {
-  Box,
-  Divider,
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
-import { Grid, textTransform, useTheme } from "@mui/system";
+import { Box, Typography, Button } from "@mui/material";
+import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import { useState } from "react";
 import ApproveDeployModal from "../modal/ApproveDeployModal";
@@ -27,7 +18,6 @@ const RequestRow = ({
   const colors = tokens(theme.palette.mode);
   const [approveModal, setApproveModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const handleOpenApprove = (event) => {
     event.stopPropagation();

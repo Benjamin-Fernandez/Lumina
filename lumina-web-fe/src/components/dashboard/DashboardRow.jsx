@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
-import { tokens } from "../../theme";
+import { Grid } from "@mui/system";
+// import { tokens } from "../../theme";
 
 const DashboardRow = ({
   title,
@@ -10,8 +10,8 @@ const DashboardRow = ({
   category,
   displayPic,
 }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
 
   return (
     <Box justifyContent="center">

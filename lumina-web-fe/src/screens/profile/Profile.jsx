@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
+import { Box, Button } from "@mui/material";
+import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -10,8 +9,6 @@ import { useState } from "react";
 import ChangePasswordModal from "../../components/modal/ChangePasswordModal";
 
 const Profile = () => {
-  const { id } = useParams();
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resetModal, setResetModal] = useState(false);

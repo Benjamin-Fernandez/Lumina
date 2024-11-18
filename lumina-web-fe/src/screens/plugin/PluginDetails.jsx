@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
@@ -9,8 +8,6 @@ import PluginDetailTableContent from "../../components/plugin/pluginDetail/Plugi
 import DeactivateModal from "../../components/modal/DeactivateModal";
 
 const PluginDetails = () => {
-  const { id } = useParams();
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 

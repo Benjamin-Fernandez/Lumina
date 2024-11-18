@@ -1,5 +1,5 @@
-import { Box, Divider, Typography, Button } from "@mui/material";
-import { Grid, textTransform, useTheme } from "@mui/system";
+import { Box, Typography, Button } from "@mui/material";
+import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import DeleteModal from "../modal/DeleteModal";
 import PromoteModal from "../modal/PromoteModal";

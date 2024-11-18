@@ -1,13 +1,6 @@
-import {
-  Box,
-  IconButton,
-  useTheme,
-  Button,
-  Icon,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, useTheme, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { ColorModeContext, tokens } from "../../theme";
+import { ColorModeContext } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -16,10 +9,10 @@ import { Link, useLocation } from "react-router-dom";
 
 const Topbar = () => {
   const theme = useTheme();
-  /* anytime we want to use the colour mode in MUI, 
+  /* anytime we want to use the colour mode in MUI,
     we can grab it from MUI and pass to the tokens function
     */
-  const colors = tokens(theme.palette.mode);
+  // const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const location = useLocation();
   const path = location.pathname;

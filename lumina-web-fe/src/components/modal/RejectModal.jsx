@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
+import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
 const RejectModal = ({ open, handleClose, email }) => {

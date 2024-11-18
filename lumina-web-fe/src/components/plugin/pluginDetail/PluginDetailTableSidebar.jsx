@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { colors } from "@mui/material";
+import React from "react";
+import { Box, Button, Stack } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { tokens } from "../../../theme";
-import { useTheme, Grid } from "@mui/system";
+import { useTheme } from "@mui/system";
 
 const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
   const theme = useTheme();

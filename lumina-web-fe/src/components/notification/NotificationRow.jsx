@@ -1,13 +1,11 @@
 import { Box, Typography } from "@mui/material";
 
-{
-  /**
-   * 1. Approval requests
-   * 2. Update requests
-   * 3. Deployed successful
-   * 4. Deployed failed
-   */
-}
+/**
+ * 1. Approval requests
+ * 2. Update requests
+ * 3. Deployed successful
+ * 4. Deployed failed
+ */
 
 const NotificationRow = ({ notificationType, author, chatbot }) => {
   return (

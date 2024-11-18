@@ -8,7 +8,7 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
+import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
 const ChangePasswordModal = ({ open, handleClose }) => {

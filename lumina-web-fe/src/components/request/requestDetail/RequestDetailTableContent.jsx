@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Divider, Typography } from "@mui/material";
-import { colors } from "@mui/material";
 import { useTheme, Grid } from "@mui/system";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";

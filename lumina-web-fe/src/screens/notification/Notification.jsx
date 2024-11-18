@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Divider, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import NotificationRow from "../../components/notification/NotificationRow";
 

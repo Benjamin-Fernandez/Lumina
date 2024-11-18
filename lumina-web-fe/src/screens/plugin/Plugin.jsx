@@ -1,14 +1,11 @@
 import {
   Box,
-  Divider,
   Typography,
   TextField,
   InputAdornment,
-  Button,
   TablePagination,
   ButtonBase,
   FormControl,
-  Input,
   InputLabel,
   Select,
 } from "@mui/material";
@@ -18,7 +15,6 @@ import { tokens } from "../../theme.js";
 import PluginRow from "../../components/plugin/PluginRow.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import TuneIcon from "@mui/icons-material/Tune";
 import pluginData from "../../data/pluginData.jsx";
 
 const Plugin = () => {

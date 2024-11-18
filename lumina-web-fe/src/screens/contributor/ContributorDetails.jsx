@@ -1,20 +1,16 @@
-import { useParams } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
-import { Grid, useTheme } from "@mui/system";
+import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import SwitchAccessShortcutOutlinedIcon from "@mui/icons-material/SwitchAccessShortcutOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ContributorDetailTableContent from "../../components/contributor/ContributorDetailTableContent";
-import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
 import PromoteModal from "../../components/modal/PromoteModal";
 import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
 import DeleteModal from "../../components/modal/DeleteModal";
 import { useState } from "react";
 
 const ContributorDetails = () => {
-  const { id } = useParams();
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [promoteModal, setPromoteModal] = useState(false);

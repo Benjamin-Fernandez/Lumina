@@ -15,7 +15,7 @@ const Login = () => {
         redirectUri: config.redirectUri,
       },
       cache: {
-        cacheLocation: "localStorage",
+        cacheLocation: "sessionStorage",
         storeAuthStateInCookie: true,
       },
     };
