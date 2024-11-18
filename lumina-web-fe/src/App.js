@@ -16,12 +16,23 @@ import ContributorDetails from "./screens/contributor/ContributorDetails";
 import ContributorForm from "./screens/contributor/ContributorForm";
 import Notification from "./screens/notification/Notification";
 import Profile from "./screens/profile/Profile";
+import NotFound from "./screens/NotFound";
 // import Setting from "./screens/setting";
 
 function App() {
   const [themeMode, colorMode] = useMode();
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
+  const BarPresent =
+    location.pathname === "/dashboard" ||
+    location.pathname.match("^/plugin/([a-zA-Z0-9]+)$") ||
+    location.pathname.match("^/request/([a-zA-Z0-9]+)$") ||
+    location.pathname.match("^/contributor/([a-zA-Z0-9]+)$") ||
+    location.pathname === "/plugin" ||
+    location.pathname === "/request" ||
+    location.pathname === "/contributor" ||
+    location.pathname === "/contributorform" ||
+    location.pathname === "/notification" ||
+    location.pathname === "/profile";
   return (
     /* Setting up the color context */
     <ColorModeContext.Provider value={colorMode}>
@@ -31,11 +42,11 @@ function App() {
         <CssBaseline />
         <div className="app">
           {/* Sidebar */}
-          {!isLoginPage && <Sidebar />}
+          {BarPresent && <Sidebar />}
           {/* Main content */}
           <main className="content">
             {/* Topbar */}
-            {!isLoginPage && <Topbar />}
+            {BarPresent && <Topbar />}
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
@@ -48,6 +59,7 @@ function App() {
               <Route path="/contributorform" element={<ContributorForm />} />
               <Route path="/notification" element={<Notification />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="*" element={<NotFound />} />
               {/* <Route path="/setting" element={<Setting />} /> */}
             </Routes>
           </main>
