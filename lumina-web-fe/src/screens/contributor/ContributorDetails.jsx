@@ -84,7 +84,7 @@ const ContributorDetails = () => {
           >
             Promote
           </Button>
-          <Button
+          {/* <Button
             sx={{
               bgcolor: colors.yellowAccent[500],
               padding: "8px 16px", // Adjust padding to hug content
@@ -99,7 +99,7 @@ const ContributorDetails = () => {
             startIcon={<LockResetOutlinedIcon />}
           >
             Reset Password
-          </Button>
+          </Button> */}
           <Button
             sx={{
               bgcolor: colors.redAccent[500],
@@ -121,7 +121,7 @@ const ContributorDetails = () => {
         <ContributorDetailTableContent />
       </Box>
       <PromoteModal open={promoteModal} handleClose={handleClosePromote} />
-      <ResetPasswordModal open={resetModal} handleClose={handleCloseReset} />
+      {/* <ResetPasswordModal open={resetModal} handleClose={handleCloseReset} /> */}
       <DeleteModal open={deleteModal} handleClose={handleCloseDelete} />
     </Box>
   );

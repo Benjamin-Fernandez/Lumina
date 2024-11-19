@@ -111,7 +111,7 @@ const Profile = () => {
       <Box display="flex" flexDirection="row">
         <ContributorDetailTableContent />
       </Box>
-      <Button
+      {/* <Button
         sx={{
           bgcolor: colors.yellowAccent[500],
           width: "100%",
@@ -127,7 +127,7 @@ const Profile = () => {
         startIcon={<LockResetOutlinedIcon />}
       >
         Change Password
-      </Button>
+      </Button> */}
       <Button
         sx={{
           bgcolor: colors.redAccent[500],
@@ -138,13 +138,14 @@ const Profile = () => {
           fontSize: "13px",
           color: "white",
           borderRadius: 2,
+          mt: 4,
         }}
         onClick={handleOpenLogout}
         startIcon={<LogoutOutlinedIcon />}
       >
         Logout
       </Button>
-      <ChangePasswordModal open={resetModal} handleClose={handleCloseReset} />
+      {/* <ChangePasswordModal open={resetModal} handleClose={handleCloseReset} /> */}
       <LogOutModal open={logoutModal} handleClose={handleCloseLogout} />
     </Box>
   );
