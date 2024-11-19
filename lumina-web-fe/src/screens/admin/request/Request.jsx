@@ -3,7 +3,6 @@ import {
   Typography,
   TextField,
   InputAdornment,
-  Button,
   TablePagination,
   ButtonBase,
   FormControl,
@@ -12,14 +11,13 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
-import { tokens } from "../../theme.js";
-import ContributorRow from "../../components/contributor/ContributorRow.jsx";
+import { tokens } from "../../../theme.js";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import contributorData from "../../data/contributorData.jsx";
+import requestData from "../../../data/requestData.jsx";
+import RequestRow from "../../../components/request/RequestRow.jsx";
 
-const Contributor = () => {
+const Request = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +44,6 @@ const Contributor = () => {
     setFilterTerm(event.target.value);
   };
 
-  // Handle base click
   const handleBaseClick = (event) => {
     if (event.target.tagName === "BUTTON") {
       event.preventDefault();
@@ -55,11 +52,13 @@ const Contributor = () => {
   };
 
   // Filter and paginate data
-  const filteredData = contributorData.filter(
-    (contributor) =>
-      contributor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterTerm === "" || contributor.domain === filterTerm)
+  const filteredData = requestData.filter(
+    (request) =>
+      (request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (filterTerm === "" || request.category === filterTerm)
   );
+
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -96,7 +95,7 @@ const Contributor = () => {
             ),
           }}
           sx={{
-            width: "70%",
+            width: "90%",
           }}
         />
         <FormControl>
@@ -114,31 +113,19 @@ const Contributor = () => {
             onChange={handleFilterChange}
           >
             <option aria-label="None" value="" />
-            <optgroup label="Domain">
-              <option value="Developer">Developer</option>
-              <option value="Admin">Admin</option>
+            <optgroup label="Category">
+              <option value="Planning">Planning</option>
+              <option value="Help">Help</option>
+              <option value="Modules">Modules</option>
               {/* <option value="text">Text</option>
                 <option value="utility">Utility</option> */}
             </optgroup>
+            <optgroup label="Request Type">
+              <option value="Deployment">Deployment</option>
+              <option value="Update">Update</option>
+            </optgroup>
           </Select>
         </FormControl>
-        <Button
-          variant="contained"
-          startIcon={<AddCircleOutlineIcon />}
-          sx={{
-            width: "20%",
-            padding: "15px",
-            textTransform: "none",
-            fontSize: "13px",
-            bgcolor: colors.blueAccent[500],
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-          }}
-          component={Link}
-          to="/contributorform" // Navigate to the new link
-        >
-          Add new contributor
-        </Button>
       </Stack>
       <Box
         sx={{
@@ -150,27 +137,30 @@ const Contributor = () => {
       >
         <Grid container spacing={2} mb="15px">
           {/* Table headers */}
-          <Grid item size={4} mt={3}>
-            <Typography variant="body1">Name</Typography>
+          <Grid item size={3} mt={3}>
+            <Typography variant="body1">Plugin Title</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Domain</Typography>
+            <Typography variant="body1">Author</Typography>
+          </Grid>
+          <Grid item size={1} mt={3}>
+            <Typography variant="body1">Version</Typography>
+          </Grid>
+          <Grid item size={1} mt={3}>
+            <Typography variant="body1">Size</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
-            <Typography variant="body1">Last Online</Typography>
+            <Typography variant="body1">Category</Typography>
           </Grid>
-          <Grid item size={2} mt={3}>
-            <Typography variant="body1">Joined</Typography>
-          </Grid>
-          <Grid item size={2} mt={3}>
+          <Grid item size={3} mt={3}>
             <Typography variant="body1">Action</Typography>
           </Grid>
         </Grid>
 
         {/* Table data */}
-        {paginatedData.map((contributor, index) => (
+        {paginatedData.map((request, index) => (
           <Link
-            to={`/contributor/${contributor.id}`}
+            to={`/request/${request.id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -186,12 +176,16 @@ const Contributor = () => {
                 paddingY: "15px",
               }}
             >
-              <ContributorRow
-                name={contributor.name}
-                domain={contributor.domain}
-                lastOnline={contributor.lastOnline}
-                joined={contributor.joined}
-                action={contributor.action}
+              <RequestRow
+                key={index}
+                title={request.title}
+                author={request.author}
+                version={request.version}
+                size={request.size}
+                category={request.category}
+                status={request.status}
+                action={request.action}
+                displayPic={request.displayPic}
               />
             </ButtonBase>
           </Link>
@@ -213,4 +207,4 @@ const Contributor = () => {
   );
 };
 
-export default Contributor;
+export default Request;

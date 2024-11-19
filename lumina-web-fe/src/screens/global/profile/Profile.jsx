@@ -1,12 +1,12 @@
 import { Box, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { tokens } from "../../theme";
+import { tokens } from "../../../theme";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ContributorDetailTableContent from "../../components/contributor/ContributorDetailTableContent";
-import LogOutModal from "../../components/modal/LogOutModal";
+import ContributorDetailTableContent from "../../../components/contributor/ContributorDetailTableContent";
+import LogOutModal from "../../../components/modal/LogOutModal";
 import { useState } from "react";
-import ChangePasswordModal from "../../components/modal/ChangePasswordModal";
+import ChangePasswordModal from "../../../components/modal/ChangePasswordModal";
 
 const Profile = () => {
   const theme = useTheme();

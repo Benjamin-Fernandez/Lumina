@@ -1,6 +1,6 @@
 import { Box, Divider, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import NotificationRow from "../../components/notification/NotificationRow";
+import { tokens } from "../../../theme";
+import NotificationRow from "../../../components/notification/NotificationRow";
 
 const Notification = () => {
   const theme = useTheme();

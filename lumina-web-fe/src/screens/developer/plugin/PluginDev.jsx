@@ -11,13 +11,13 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
-import { tokens } from "../../theme.js";
-import PluginRow from "../../components/plugin/PluginRow.jsx";
+import { tokens } from "../../../theme.js";
+import PluginRowDev from "../../../components/plugin/PluginRowDev.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import pluginData from "../../data/pluginData.jsx";
+import pluginData from "../../../data/pluginData.jsx";
 
-const Plugin = () => {
+const PluginDev = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,7 +57,9 @@ const Plugin = () => {
     (request) =>
       (request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (filterTerm === "" || request.category === filterTerm)
+      (filterTerm === "" ||
+        request.category === filterTerm ||
+        request.status === filterTerm)
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
@@ -117,6 +119,10 @@ const Plugin = () => {
               <option value="Planning">Planning</option>
               <option value="Help">Help</option>
               <option value="Module">Modules</option>
+            </optgroup>
+            <optgroup label="Status">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
               {/* <option value="text">Text</option>
                 <option value="utility">Utility</option> */}
             </optgroup>
@@ -136,9 +142,7 @@ const Plugin = () => {
           <Grid item size={4} mt={3}>
             <Typography variant="body1">Plugin Title</Typography>
           </Grid>
-          <Grid item size={2} mt={3}>
-            <Typography variant="body1">Author</Typography>
-          </Grid>
+
           <Grid item size={1} mt={3}>
             <Typography variant="body1">Version</Typography>
           </Grid>
@@ -148,7 +152,9 @@ const Plugin = () => {
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Category</Typography>
           </Grid>
-
+          <Grid item size={2} mt={3}>
+            <Typography variant="body1">Status</Typography>
+          </Grid>
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Action</Typography>
           </Grid>
@@ -157,7 +163,7 @@ const Plugin = () => {
         {/* Table data */}
         {paginatedData.map((plugin, index) => (
           <Link
-            to={`/plugin/${plugin.id}`}
+            to={`/pluginDev/${plugin.id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -173,7 +179,7 @@ const Plugin = () => {
                 paddingY: "15px",
               }}
             >
-              <PluginRow
+              <PluginRowDev
                 key={index}
                 title={plugin.title}
                 author={plugin.author}
@@ -204,4 +210,4 @@ const Plugin = () => {
   );
 };
 
-export default Plugin;
+export default PluginDev;

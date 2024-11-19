@@ -11,13 +11,13 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
-import { tokens } from "../../theme.js";
+import { tokens } from "../../../theme.js";
+import PluginRowAdmin from "../../../components/plugin/PluginRowAdmin.jsx";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import requestData from "../../data/requestData.jsx";
-import RequestRow from "../../components/request/RequestRow.jsx";
+import pluginData from "../../../data/pluginData.jsx";
 
-const Request = () => {
+const PluginAdmin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,6 +40,7 @@ const Request = () => {
     setSearchTerm(event.target.value);
   };
 
+  // Handle filter term
   const handleFilterChange = (event) => {
     setFilterTerm(event.target.value);
   };
@@ -52,13 +53,12 @@ const Request = () => {
   };
 
   // Filter and paginate data
-  const filteredData = requestData.filter(
+  const filteredData = pluginData.filter(
     (request) =>
       (request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (filterTerm === "" || request.category === filterTerm)
   );
-
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -116,13 +116,9 @@ const Request = () => {
             <optgroup label="Category">
               <option value="Planning">Planning</option>
               <option value="Help">Help</option>
-              <option value="Modules">Modules</option>
+              <option value="Module">Modules</option>
               {/* <option value="text">Text</option>
                 <option value="utility">Utility</option> */}
-            </optgroup>
-            <optgroup label="Request Type">
-              <option value="Deployment">Deployment</option>
-              <option value="Update">Update</option>
             </optgroup>
           </Select>
         </FormControl>
@@ -137,7 +133,7 @@ const Request = () => {
       >
         <Grid container spacing={2} mb="15px">
           {/* Table headers */}
-          <Grid item size={3} mt={3}>
+          <Grid item size={4} mt={3}>
             <Typography variant="body1">Plugin Title</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
@@ -152,15 +148,16 @@ const Request = () => {
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Category</Typography>
           </Grid>
-          <Grid item size={3} mt={3}>
+
+          <Grid item size={2} mt={3}>
             <Typography variant="body1">Action</Typography>
           </Grid>
         </Grid>
 
         {/* Table data */}
-        {paginatedData.map((request, index) => (
+        {paginatedData.map((plugin, index) => (
           <Link
-            to={`/request/${request.id}`}
+            to={`/plugin/${plugin.id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -176,16 +173,16 @@ const Request = () => {
                 paddingY: "15px",
               }}
             >
-              <RequestRow
+              <PluginRowAdmin
                 key={index}
-                title={request.title}
-                author={request.author}
-                version={request.version}
-                size={request.size}
-                category={request.category}
-                status={request.status}
-                action={request.action}
-                displayPic={request.displayPic}
+                title={plugin.title}
+                author={plugin.author}
+                version={plugin.version}
+                size={plugin.size}
+                category={plugin.category}
+                status={plugin.status}
+                action={plugin.action}
+                displayPic={plugin.displayPic}
               />
             </ButtonBase>
           </Link>
@@ -207,4 +204,4 @@ const Request = () => {
   );
 };
 
-export default Request;
+export default PluginAdmin;

@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
+// import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
-import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+// import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import AllInboxOutlinedIcon from "@mui/icons-material/AllInboxOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -36,20 +37,28 @@ const Sidebar = () => {
   const location = useLocation();
   const path = location.pathname;
   const [collapsed, setCollapsed] = useState(false); // keep state of sidebar collapse
-  const [selected, setSelected] = useState("Dashboard"); // keep state of selected menu item
+  const [selected, setSelected] = useState("View Plugins"); // keep state of selected menu item
 
   useEffect(() => {
-    if (path.includes("/dashboard")) {
-      setSelected("Dashboard");
-    } else if (path.includes("/plugin")) {
-      setSelected("Plugin");
-    } else if (path.includes("/request")) {
-      setSelected("Request");
-    } else if (path.includes("/contributor")) {
-      setSelected("Contributor");
-    } else if (path.includes("/setting")) {
-      setSelected("Setting");
-    } else if (path.includes("/profile")) {
+    // if (path.includes("/dashboard")) {
+    //   setSelected("Dashboard");
+    // } else
+    if (path.includes("/pluginDev")) {
+      setSelected("View Plugins");
+    }
+    // else if (path.includes("/request")) {
+    //   setSelected("Request");
+    // }
+    else if (path.includes("/create")) {
+      setSelected("Create Plugins");
+    }
+    // else if (path.includes("/contributor")) {
+    //   setSelected("Contributor");
+    // }
+    // else if (path.includes("/setting")) {
+    //   setSelected("Setting");
+    // }
+    else if (path.includes("/profile")) {
       setSelected("Profile");
     } else if (path.includes("/notification")) {
       setSelected("Notification");
@@ -122,34 +131,42 @@ const Sidebar = () => {
 
           {/* Menu Items */}
           <Box paddingLeft={collapsed ? undefined : "10%"}>
-            <Item
+            {/* <Item
               title="Dashboard"
               to="/dashboard"
               icon={<WidgetsOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             <Item
-              title="Plugin"
-              to="/plugin"
+              title="View Plugins"
+              to="/pluginDev"
               icon={<ExtensionOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
+              title="Create Plugins"
+              to="/create"
+              icon={<AddCircleOutlineOutlinedIcon fontSize="large" />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            {/* <Item
               title="Request"
               to="/request"
               icon={<AllInboxOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
-            />
-            <Item
+            /> */}
+            {/* <Item
               title="Contributor"
               to="/contributor"
               icon={<PeopleOutlineOutlinedIcon fontSize="large" />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             {/* <Item
               title="Setting"
               to="/setting"

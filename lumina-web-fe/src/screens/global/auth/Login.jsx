@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { tokens } from "../../theme";
-import { config } from "../../config";
+import { tokens } from "../../../theme";
+import { config } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 

@@ -1,39 +1,30 @@
 import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { tokens } from "../../theme";
-import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import { tokens } from "../../../theme";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ApproveUpdateModal from "../../components/modal/ApproveUpdateModal";
-import RejectModal from "../../components/modal/RejectModal";
-import RequestDetailTableSidebar from "../../components/request/requestDetail/RequestDetailTableSidebar";
-import RequestDetailTableContent from "../../components/request/requestDetail/RequestDetailTableContent";
+import PluginDetailTableSidebar from "../../../components/plugin/pluginDetail/PluginDetailTableSidebar";
+import PluginDetailTableContent from "../../../components/plugin/pluginDetail/PluginDetailTableContent";
+import DeactivateModal from "../../../components/modal/DeactivateModal";
 
-const RequestDetails = () => {
+const PluginDetailsDev = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("metadata");
-  const [approveModal, setApproveModal] = useState(false);
-  const [rejectModal, setRejectModal] = useState(false);
+  const [deactivateModal, setDeactivateModal] = useState(false);
 
   // Function to handle sidebar navigation
   const handleSectionClick = (section) => {
     setSelectedSection(section);
   };
 
-  const handleOpenApprove = () => {
-    setApproveModal(true);
+  const handleOpenDeactivate = () => {
+    setDeactivateModal(true);
   };
-  const handleCloseApprove = () => {
-    setApproveModal(false);
-  };
-  const handleOpenReject = () => {
-    setRejectModal(true);
-  };
-  const handleCloseReject = () => {
-    setRejectModal(false);
+  const handleCloseDeactivate = () => {
+    setDeactivateModal(false);
   };
 
   return (
@@ -86,23 +77,6 @@ const RequestDetails = () => {
         </Box>
         <Box display="flex" flexDirection="row">
           <Button
-            sx={{
-              bgcolor: colors.blueAccent[500],
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              color: "white",
-              mr: 2,
-              borderRadius: 2,
-            }}
-            onClick={handleOpenApprove}
-            startIcon={<TaskAltOutlinedIcon />}
-          >
-            Approve
-          </Button>
-
-          <Button
             variant="contained"
             color="error"
             sx={{
@@ -112,32 +86,27 @@ const RequestDetails = () => {
               fontSize: "13px",
               borderRadius: 2,
             }}
-            onClick={handleOpenReject}
+            onClick={handleOpenDeactivate}
             startIcon={<DeleteOutlineOutlinedIcon />}
           >
-            Reject
+            Deactivate
           </Button>
         </Box>
       </Box>
 
       <Box display="flex" flexDirection="row" py={4}>
-        <RequestDetailTableSidebar
+        <PluginDetailTableSidebar
           selectedSection={selectedSection}
           handleSectionClick={handleSectionClick}
         />
-        <RequestDetailTableContent selectedSection={selectedSection} />
+        <PluginDetailTableContent selectedSection={selectedSection} />
       </Box>
-      <ApproveUpdateModal
-        open={approveModal}
-        handleClose={handleCloseApprove}
-      />
-      <RejectModal
-        open={rejectModal}
-        handleClose={handleCloseReject}
-        email="LEEH0023@e.ntu.edu.sg"
+      <DeactivateModal
+        open={deactivateModal}
+        handleClose={handleCloseDeactivate}
       />
     </Box>
   );
 };
 
-export default RequestDetails;
+export default PluginDetailsDev;

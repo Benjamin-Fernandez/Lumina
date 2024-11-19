@@ -19,15 +19,25 @@ const Topbar = () => {
   const [selected, setSelected] = useState("");
 
   useEffect(() => {
-    if (path.includes("/dashboard")) {
-      setSelected("Dashboard");
-    } else if (path.includes("/contributor")) {
-      setSelected("Contributor");
-    } else if (path.includes("/request")) {
-      setSelected("Request");
-    } else if (path.includes("/plugin")) {
+    // if (path.includes("/dashboard")) {
+    //   setSelected("Dashboard");
+    // } else
+    if (path.includes("/pluginDev")) {
       setSelected("Plugin");
-    } else if (path.includes("/profile")) {
+    }
+    // else if (path.includes("/request")) {
+    //   setSelected("Request");
+    // }
+    else if (path.includes("/create")) {
+      setSelected("Create");
+    }
+    // else if (path.includes("/contributor")) {
+    //   setSelected("Contributor");
+    // }
+    // else if (path.includes("/setting")) {
+    //   setSelected("Setting");
+    // }
+    else if (path.includes("/profile")) {
       setSelected("Profile");
     } else if (path.includes("/notification")) {
       setSelected("Notification");
@@ -55,6 +65,8 @@ const Topbar = () => {
             <Typography variant="h4">Requests</Typography>
           ) : path.includes("/profile") ? (
             <Typography variant="h4">Profile</Typography>
+          ) : path.includes("/create") ? (
+            <Typography variant="h4">Create New Plugin</Typography>
           ) : (
             <Typography variant="h4">Plugins</Typography>
           )}

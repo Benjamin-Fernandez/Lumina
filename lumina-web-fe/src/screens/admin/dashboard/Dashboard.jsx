@@ -2,9 +2,9 @@ import { Box, ButtonBase } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Link } from "react-router-dom";
 
-import { tokens } from "../../theme";
-import StatsCard from "../../components/dashboard/StatsCard";
-import DashboardTable from "../../components/dashboard/DashboardTable";
+import { tokens } from "../../../theme";
+import StatsCard from "../../../components/dashboard/StatsCard";
+import DashboardTable from "../../../components/dashboard/DashboardTable";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
 

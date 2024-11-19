@@ -5,21 +5,24 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Topbar from "./screens/global/Topbar";
 import Sidebar from "./screens/global/Sidebar";
-import Login from "./screens/auth/Login";
-import Dashboard from "./screens/dashboard/Dashboard";
-import Plugin from "./screens/plugin/Plugin";
-import PluginDetails from "./screens/plugin/PluginDetails";
-import Request from "./screens/request/Request";
-import RequestDetails from "./screens/request/RequestDetails";
-import Contributor from "./screens/contributor/Contributor";
-import ContributorDetails from "./screens/contributor/ContributorDetails";
-import ContributorForm from "./screens/contributor/ContributorForm";
-import Notification from "./screens/notification/Notification";
-import Profile from "./screens/profile/Profile";
-import NotFound from "./screens/NotFound";
+import Login from "./screens/global/auth/Login";
+import Dashboard from "./screens/admin/dashboard/Dashboard";
+import PluginAdmin from "./screens/admin/plugin/PluginAdmin";
+import PluginDetailsAdmin from "./screens/admin/plugin/PluginDetailsAdmin";
+// import Request from "./screens/admin/request/Request";
+// import RequestDetails from "./screens/admin/request/RequestDetails";
+// import Contributor from "./screens/admin/contributor/Contributor";
+// import ContributorDetails from "./screens/admin/contributor/ContributorDetails";
+// import ContributorForm from "./screens/admin/contributor/ContributorForm";
+import Notification from "./screens/global/notification/Notification";
+import Profile from "./screens/global/profile/Profile";
+import NotFound from "./screens/global/NotFound";
 import ProtectedRoute from "./helpers/ProtectedRoute";
+import Create from "./screens/developer/create/Create";
 import { MsalProvider } from "@azure/msal-react";
 import { msalInstance } from "../src/config";
+import PluginDev from "./screens/developer/plugin/PluginDev";
+import PluginDetailsDev from "./screens/developer/plugin/PluginDetailsDev";
 
 // import Setting from "./screens/setting";
 
@@ -36,7 +39,10 @@ function App() {
     location.pathname === "/contributor" ||
     location.pathname === "/contributorform" ||
     location.pathname === "/notification" ||
-    location.pathname === "/profile";
+    location.pathname === "/profile" ||
+    location.pathname === "/pluginDev" ||
+    location.pathname.match("^/pluginDev/([a-zA-Z0-9]+)$") ||
+    location.pathname === "/create";
   return (
     <MsalProvider instance={msalInstance}>
       <ColorModeContext.Provider value={colorMode}>
@@ -54,7 +60,7 @@ function App() {
               {/* Routes */}
               <Routes>
                 <Route path="/" element={<Login />} />
-                <Route
+                {/* <Route
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
@@ -66,7 +72,7 @@ function App() {
                   path="/plugin"
                   element={
                     <ProtectedRoute>
-                      <Plugin />
+                      <PluginAdmin />
                     </ProtectedRoute>
                   }
                 />
@@ -74,7 +80,7 @@ function App() {
                   path="/plugin/:id"
                   element={
                     <ProtectedRoute>
-                      <PluginDetails />
+                      <PluginDetailsAdmin />
                     </ProtectedRoute>
                   }
                 />
@@ -117,7 +123,7 @@ function App() {
                       <ContributorForm />
                     </ProtectedRoute>
                   }
-                />
+                /> */}
                 <Route
                   path="/notification"
                   element={
@@ -134,6 +140,31 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/create"
+                  element={
+                    <ProtectedRoute>
+                      <Create />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/pluginDev"
+                  element={
+                    <ProtectedRoute>
+                      <PluginDev />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/pluginDev/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PluginDetailsDev />
+                    </ProtectedRoute>
+                  }
+                />
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

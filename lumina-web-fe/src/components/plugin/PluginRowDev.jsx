@@ -1,12 +1,13 @@
 import { Box, Typography, Button } from "@mui/material";
 import { Grid } from "@mui/system";
 // import { tokens } from "../../theme";
-import { useState } from "react";
+import React, { useState } from "react";
 import DeactivateModal from "../modal/DeactivateModal";
+import ReactivateModal from "../modal/ReactivateModal";
 
-const PluginRow = ({
+const PluginRowDev = ({
   title,
-  author,
+  status,
   version,
   size,
   category,
@@ -15,16 +16,26 @@ const PluginRow = ({
 }) => {
   // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
-  const [open, setOpen] = useState(false);
+  const [deactivateModal, setDeactivateModal] = useState(false);
+  const [reactivateModal, setReactivateModal] = useState(false);
 
-  const handleOpen = (event) => {
+  const handleOpenDeactivate = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    setOpen(true);
+    setDeactivateModal(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDeactivate = () => {
+    setDeactivateModal(false);
+  };
+  const handleOpenReactivate = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setReactivateModal(true);
+  };
+
+  const handleCloseReactivate = () => {
+    setReactivateModal(false);
   };
 
   return (
@@ -51,15 +62,6 @@ const PluginRow = ({
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
             {title}
-          </Typography>
-        </Grid>
-        <Grid item size={2}>
-          <Typography
-            variant="body1"
-            noWrap
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {author}
           </Typography>
         </Grid>
         <Grid item size={1}>
@@ -90,19 +92,47 @@ const PluginRow = ({
           </Typography>
         </Grid>
         <Grid item size={2}>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
-            onClick={handleOpen}
+          <Typography
+            variant="body1"
+            noWrap
+            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {action}
-          </Button>
+            {status}
+          </Typography>
+        </Grid>
+        <Grid item size={2}>
+          {action === "Deactivate" && (
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
+              onClick={handleOpenDeactivate}
+            >
+              {action}
+            </Button>
+          )}
+          {action === "Reactivate" && (
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
+              onClick={handleOpenReactivate}
+            >
+              {action}
+            </Button>
+          )}
         </Grid>
       </Grid>
-      <DeactivateModal open={open} handleClose={handleClose} />
+      <DeactivateModal
+        open={deactivateModal}
+        handleClose={handleCloseDeactivate}
+      />
+      <ReactivateModal
+        open={reactivateModal}
+        handleClose={handleCloseReactivate}
+      />
     </Box>
   );
 };
 
-export default PluginRow;
+export default PluginRowDev;
