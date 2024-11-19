@@ -19,9 +19,7 @@ const LogOutModal = ({ open, handleClose }) => {
 
   const handleLogout = () => {
     // Clear tokens or user session data stored in localStorage
-    instance.logoutRedirect({
-      postLogoutRedirectUri: "/", // Redirect here after logout
-    });
+    sessionStorage.clear();
     // Redirect to the login page or home page
     window.location.href = "/"; // Change this to any desired page
   };
