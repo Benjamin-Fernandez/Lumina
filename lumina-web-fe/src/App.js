@@ -17,6 +17,10 @@ import ContributorForm from "./screens/contributor/ContributorForm";
 import Notification from "./screens/notification/Notification";
 import Profile from "./screens/profile/Profile";
 import NotFound from "./screens/NotFound";
+import ProtectedRoute from "./helpers/ProtectedRoute";
+import { MsalProvider } from "@azure/msal-react";
+import { msalInstance } from "../src/config";
+
 // import Setting from "./screens/setting";
 
 function App() {
@@ -34,38 +38,109 @@ function App() {
     location.pathname === "/notification" ||
     location.pathname === "/profile";
   return (
-    /* Setting up the color context */
-    <ColorModeContext.Provider value={colorMode}>
-      {/* Setting up the theme provider */}
-      <ThemeProvider theme={themeMode}>
-        {/* CssBaseline --> resets the css to the default [FROM MUI] */}
-        <CssBaseline />
-        <div className="app">
-          {/* Sidebar */}
-          {BarPresent && <Sidebar />}
-          {/* Main content */}
-          <main className="content">
-            {/* Topbar */}
-            {BarPresent && <Topbar />}
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/plugin" element={<Plugin />} />
-              <Route path="/plugin/:id" element={<PluginDetails />} />
-              <Route path="/request" element={<Request />} />
-              <Route path="/request/:id" element={<RequestDetails />} />
-              <Route path="/contributor" element={<Contributor />} />
-              <Route path="/contributor/:id" element={<ContributorDetails />} />
-              <Route path="/contributorform" element={<ContributorForm />} />
-              <Route path="/notification" element={<Notification />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<NotFound />} />
-              {/* <Route path="/setting" element={<Setting />} /> */}
-            </Routes>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <MsalProvider instance={msalInstance}>
+      <ColorModeContext.Provider value={colorMode}>
+        {/* Setting up the theme provider */}
+        <ThemeProvider theme={themeMode}>
+          {/* CssBaseline --> resets the css to the default [FROM MUI] */}
+          <CssBaseline />
+          <div className="app">
+            {/* Sidebar */}
+            {BarPresent && <Sidebar />}
+            {/* Main content */}
+            <main className="content">
+              {/* Topbar */}
+              {BarPresent && <Topbar />}
+              {/* Routes */}
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/plugin"
+                  element={
+                    <ProtectedRoute>
+                      <Plugin />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/plugin/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PluginDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/request"
+                  element={
+                    <ProtectedRoute>
+                      <Request />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/request/:id"
+                  element={
+                    <ProtectedRoute>
+                      <RequestDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/contributor"
+                  element={
+                    <ProtectedRoute>
+                      <Contributor />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/contributor/:id"
+                  element={
+                    <ProtectedRoute>
+                      <ContributorDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/contributorform"
+                  element={
+                    <ProtectedRoute>
+                      <ContributorForm />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/notification"
+                  element={
+                    <ProtectedRoute>
+                      <Notification />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </MsalProvider>
   );
 }
 

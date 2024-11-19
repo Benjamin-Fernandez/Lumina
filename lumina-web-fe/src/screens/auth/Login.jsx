@@ -2,29 +2,24 @@ import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import { config } from "../../config";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { useMsal } from "@azure/msal-react";
+import { useEffect } from "react";
 
 const Login = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { instance } = useMsal();
+
+  useEffect(() => {
+    if (instance.getActiveAccount()) {
+      window.location.href = "/dashboard";
+    }
+  }, [instance]);
 
   const handleLogin = async () => {
-    const msalConfig = {
-      auth: {
-        clientId: config.appId,
-        redirectUri: config.redirectUri,
-      },
-      cache: {
-        cacheLocation: "sessionStorage",
-        storeAuthStateInCookie: true,
-      },
-    };
-
-    const msalInstance = new PublicClientApplication(msalConfig);
-
     try {
       // Ensure the instance is initialized
-      await msalInstance.initialize();
+      await instance.initialize();
       console.log("MSAL initialized successfully.");
 
       const loginRequest = {
@@ -33,9 +28,11 @@ const Login = () => {
       };
 
       // Proceed with the login popup
-      const response = await msalInstance.loginPopup(loginRequest);
+      const response = await instance.loginPopup(loginRequest);
       console.log("Login successful:", response);
-      if (response) {
+      if (response && response.account) {
+        instance.setActiveAccount(response.account);
+        console.log("Active Account Set:", response.account);
         window.location.href = "/dashboard";
       }
     } catch (error) {

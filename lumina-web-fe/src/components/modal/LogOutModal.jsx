@@ -10,16 +10,18 @@ import {
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 import { config } from "../../config";
+import { useMsal } from "@azure/msal-react";
 
 const LogOutModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { instance } = useMsal();
 
   const handleLogout = () => {
     // Clear tokens or user session data stored in localStorage
-    localStorage.removeItem("msal." + config.appId + ".idtoken"); // Example MSAL token clear, adjust based on storage keys
-    localStorage.removeItem("user_session"); // Remove any custom session data if you have any
-
+    instance.logoutRedirect({
+      postLogoutRedirectUri: "/", // Redirect here after logout
+    });
     // Redirect to the login page or home page
     window.location.href = "/"; // Change this to any desired page
   };

@@ -113,7 +113,7 @@ const Sidebar = () => {
                     Lumina
                   </Typography>
                 </Box>
-                <IconButton onCluck={() => setCollapsed(!collapsed)}>
+                <IconButton onClick={() => setCollapsed(!collapsed)}>
                   <MenuOutlinedIcon fontSize="large" />
                 </IconButton>
               </Box>
