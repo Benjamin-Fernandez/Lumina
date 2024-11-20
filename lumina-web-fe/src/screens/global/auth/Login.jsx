@@ -12,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if (instance.getActiveAccount()) {
-      window.location.href = "/dashboard";
+      window.location.href = "/pluginDev";
     }
   }, [instance]);
 

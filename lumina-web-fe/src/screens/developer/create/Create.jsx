@@ -53,7 +53,7 @@ const Create = () => {
       flexDirection="column"
     >
       <Box sx={{ width: "100%" }}>
-        <Stepper activeStep={activeStep}>
+        <Stepper activeStep={activeStep} sx={{ mb: "20px" }}>
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
@@ -64,107 +64,111 @@ const Create = () => {
             );
           })}
         </Stepper>
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button>Done</Button>
+        <Box p={2} display="flex" flexDirection="column">
+          {activeStep === steps.length ? (
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button>Done</Button>
+              </Box>
+            </React.Fragment>
+          ) : activeStep === 0 ? (
+            <Box sx={{ overflowY: "auto", height: "60vh" }}>
+              <Instruction />
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
             </Box>
-          </React.Fragment>
-        ) : activeStep === 0 ? (
-          <React.Fragment>
-            <Instruction />
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
+          ) : activeStep === 1 ? (
+            <Box sx={{ overflowY: "auto", height: "60vh" }}>
+              <PluginDetailsForm />
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
             </Box>
-          </React.Fragment>
-        ) : activeStep === 1 ? (
-          <React.Fragment>
-            <PluginDetailsForm />
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        ) : activeStep === 2 ? (
-          <React.Fragment>
-            <PluginEndpointForm />
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        ) : activeStep === 3 ? (
-          <React.Fragment>
-            <ReviewForm />
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </React.Fragment>
-        )}
+          ) : activeStep === 2 ? (
+            <React.Fragment>
+              <PluginEndpointForm />
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
+            </React.Fragment>
+          ) : activeStep === 3 ? (
+            <React.Fragment>
+              <ReviewForm />
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                Step {activeStep + 1}
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
+            </React.Fragment>
+          )}
+        </Box>
       </Box>
     </Box>
   );

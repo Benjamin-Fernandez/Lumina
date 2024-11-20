@@ -1,15 +1,25 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  TextField,
+  Typography,
+  Input,
+  MuiFileInput,
+} from "@mui/material";
 
 const PluginDetailsForm = () => {
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Plugin Details Form
+    <Box display="flex" flexDirection="column" gap={2}>
+      <Typography variant="h4">Enter Plugin Details 📝</Typography>
+      <Typography variant="body1">
+        Plugin details lets students learn more about your chatbot in Lumina
+        Store! Fill in the details below to make your chatbot stand out and help
+        students discover its value:
       </Typography>
-      <Typography variant="body1" gutterBottom>
-        This is the plugin details form.
-      </Typography>
+      <FormControl>
+        <TextField label={"Name of plugin"} />
+      </FormControl>
     </Box>
   );
 };
