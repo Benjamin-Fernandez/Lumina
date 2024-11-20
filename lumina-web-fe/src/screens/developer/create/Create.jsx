@@ -30,6 +30,16 @@ const Create = () => {
   ];
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [file, setFile] = useState(null);
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [endpoint, setEndpoint] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [responseType, setResponseType] = useState("");
+  const [requestFormat, setRequestFormat] = useState("");
+  const [requestKey, setRequestKey] = useState("");
+  const [responseKey, setResponseKey] = useState("");
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -67,8 +77,14 @@ const Create = () => {
         <Box p={2} display="flex" flexDirection="column">
           {activeStep === steps.length ? (
             <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
+              <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+                You're all set! 🎉
+              </Typography>
+              <Typography variant="h5">
+                Your plugin has been successfully submitted to the Lumina store!
+              </Typography>
+              <Typography variant="h5">
+                Thank you for contributing to the big Lumina ecosystem!🥰
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Box sx={{ flex: "1 1 auto" }} />
@@ -76,7 +92,7 @@ const Create = () => {
               </Box>
             </React.Fragment>
           ) : activeStep === 0 ? (
-            <Box sx={{ overflowY: "auto", height: "60vh" }}>
+            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
               <Instruction />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -94,8 +110,17 @@ const Create = () => {
               </Box>
             </Box>
           ) : activeStep === 1 ? (
-            <Box sx={{ overflowY: "auto", height: "60vh" }}>
-              <PluginDetailsForm />
+            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
+              <PluginDetailsForm
+                file={file}
+                name={name}
+                category={category}
+                description={description}
+                setFile={setFile}
+                setName={setName}
+                setCategory={setCategory}
+                setDescription={setDescription}
+              />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -112,8 +137,21 @@ const Create = () => {
               </Box>
             </Box>
           ) : activeStep === 2 ? (
-            <React.Fragment>
-              <PluginEndpointForm />
+            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
+              <PluginEndpointForm
+                endpoint={endpoint}
+                requestType={requestType}
+                responseType={responseType}
+                requestFormat={requestFormat}
+                requestKey={requestKey}
+                responseKey={responseKey}
+                setEndpoint={setEndpoint}
+                setRequestType={setRequestType}
+                setResponseType={setResponseType}
+                setRequestFormat={setRequestFormat}
+                setRequestKey={setRequestKey}
+                setResponseKey={setResponseKey}
+              />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -128,10 +166,21 @@ const Create = () => {
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
-            </React.Fragment>
+            </Box>
           ) : activeStep === 3 ? (
-            <React.Fragment>
-              <ReviewForm />
+            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
+              <ReviewForm
+                file={file}
+                name={name}
+                category={category}
+                description={description}
+                endpoint={endpoint}
+                requestType={requestType}
+                responseType={responseType}
+                requestFormat={requestFormat}
+                requestKey={requestKey}
+                responseKey={responseKey}
+              />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -146,7 +195,7 @@ const Create = () => {
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
-            </React.Fragment>
+            </Box>
           ) : (
             <React.Fragment>
               <Typography sx={{ mt: 2, mb: 1 }}>
