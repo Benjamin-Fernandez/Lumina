@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const Instruction = () => {
+const Instruction = ({ checked, setChecked }) => {
   return (
     <Box display="flex" flexDirection="column" gap={2}>
       <Typography variant="h4">
@@ -117,7 +117,12 @@ const Instruction = () => {
       <FormGroup>
         <FormControlLabel
           required
-          control={<Checkbox />}
+          control={
+            <Checkbox
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
+          }
           label="I have read and acknowledge the guide."
         />
       </FormGroup>

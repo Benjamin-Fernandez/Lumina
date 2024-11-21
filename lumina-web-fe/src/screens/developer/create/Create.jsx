@@ -28,7 +28,7 @@ const Create = () => {
     //   { label: "Enter Plugin Endpoint", component: <PluginEndpointForm /> },
     //   { label: "Review and Submit", component: <ReviewForm /> },
   ];
-
+  const [checked, setChecked] = useState();
   const [activeStep, setActiveStep] = React.useState(0);
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
@@ -77,13 +77,13 @@ const Create = () => {
         <Box p={2} display="flex" flexDirection="column">
           {activeStep === steps.length ? (
             <React.Fragment>
-              <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+              <Typography variant="h2" sx={{ my: 5, alignSelf: "center" }}>
                 You're all set! 🎉
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" sx={{ mb: 2, alignSelf: "center" }}>
                 Your plugin has been successfully submitted to the Lumina store!
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" sx={{ alignSelf: "center" }}>
                 Thank you for contributing to the big Lumina ecosystem!🥰
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -93,7 +93,7 @@ const Create = () => {
             </React.Fragment>
           ) : activeStep === 0 ? (
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
-              <Instruction />
+              <Instruction checked={checked} setChecked={setChecked} />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -104,7 +104,7 @@ const Create = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
+                <Button onClick={handleNext} disabled={!checked}>
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
@@ -131,7 +131,17 @@ const Create = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    !(
+                      file !== null &&
+                      name !== "" &&
+                      category !== "" &&
+                      description !== ""
+                    )
+                  }
+                >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
@@ -162,7 +172,19 @@ const Create = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    !(
+                      endpoint !== "" &&
+                      requestType !== "" &&
+                      responseType !== "" &&
+                      requestFormat !== "" &&
+                      requestKey !== "" &&
+                      responseKey !== ""
+                    )
+                  }
+                >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>

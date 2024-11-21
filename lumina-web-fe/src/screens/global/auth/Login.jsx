@@ -33,7 +33,7 @@ const Login = () => {
       if (response && response.account) {
         instance.setActiveAccount(response.account);
         console.log("Active Account Set:", response.account);
-        window.location.href = "/dashboard";
+        window.location.href = "/pluginDev";
       }
     } catch (error) {
       console.error("Login failed:", error);

@@ -84,10 +84,11 @@ const PluginDetailsForm = ({
             label={"Name of plugin"}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </Grid>
         <Grid item size={6}>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <InputLabel id="category">Category</InputLabel>
             <Select
               fullWidth
@@ -111,6 +112,7 @@ const PluginDetailsForm = ({
             value={description}
             multiline={true}
             rows={4}
+            required
             onChange={(e) => setDescription(e.target.value)}
           />
         </Grid>

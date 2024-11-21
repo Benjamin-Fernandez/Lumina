@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import {
   Box,
   FormControl,
@@ -40,13 +39,14 @@ const PluginEndpointForm = ({
             helperText="E.g. https://your-chatbot-endpoint.com"
             value={endpoint}
             onChange={(e) => setEndpoint(e.target.value)}
+            required
           />
         </Grid>
       </Grid>
       <Typography variant="body1">Request</Typography>
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <InputLabel id="requestType">Request Type</InputLabel>
             <Select
               fullWidth
@@ -63,7 +63,7 @@ const PluginEndpointForm = ({
           </FormControl>
         </Grid>
         <Grid item size={6}>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <InputLabel id="requestFormat">Request Format</InputLabel>
             <Select
               fullWidth
@@ -82,6 +82,7 @@ const PluginEndpointForm = ({
           <TextField
             fullWidth
             label={"Key"}
+            required
             helperText={
               <>
                 Specifies the key associated with the user query in the JSON
@@ -98,7 +99,7 @@ const PluginEndpointForm = ({
       <Typography variant="body1">Response</Typography>
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <InputLabel id="responseType">Response Type</InputLabel>
             <Select
               fullWidth
@@ -116,6 +117,7 @@ const PluginEndpointForm = ({
         </Grid>
         <Grid item size={6}>
           <TextField
+            required
             fullWidth
             label={"Key"}
             helperText={
