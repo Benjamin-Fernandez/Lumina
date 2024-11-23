@@ -9,11 +9,17 @@ const ReviewForm = ({
   category,
   description,
   endpoint,
-  requestType,
-  responseType,
+  path,
+  httpMethod,
+  parametersRequired,
+  parameters,
+  requestBodyRequired,
   requestFormat,
-  requestKey,
-  responseKey,
+  requestContentType,
+  requestBodySchema,
+  responseStatusCode,
+  responseContentType,
+  responseSchema,
 }) => {
   const [imageSrc, setImageSrc] = useState("");
   useEffect(() => {
@@ -80,39 +86,75 @@ const ReviewForm = ({
       </Typography>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
-          Endpoint:
+          Server URL:
         </Typography>
         <Typography variant="body1">{endpoint}</Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
-          Request Type:
+          Path:
         </Typography>
-        <Typography variant="body1"> {requestType}</Typography>
+        <Typography variant="body1"> {path}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          HTTP Method:
+        </Typography>
+        <Typography variant="body1"> {httpMethod}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          Parameters Required:
+        </Typography>
+        <Typography variant="body1">{parametersRequired}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          Parameters:
+        </Typography>
+        <Typography variant="body1">{parameters}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          Request Body Required:
+        </Typography>
+        <Typography variant="body1">{requestBodyRequired}</Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
           Request Format:
         </Typography>
-        <Typography variant="body1"> {requestFormat}</Typography>
+        <Typography variant="body1">{requestFormat}</Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
-          Request Key:
+          Request Body Content Type:
         </Typography>
-        <Typography variant="body1">{requestKey}</Typography>
+        <Typography variant="body1">{requestContentType}</Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
-          Response Type:
+          Request Body Schema:
         </Typography>
-        <Typography variant="body1">{responseType}</Typography>
+        <Typography variant="body1">{requestBodySchema}</Typography>
       </Box>
       <Box display="flex" flexDirection="row" gap={2}>
         <Typography variant="body1" fontWeight="bold">
-          Response Key:{" "}
+          Response Status Code:
         </Typography>
-        <Typography variant="body1">{responseKey}</Typography>
+        <Typography variant="body1">{responseStatusCode}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          Response Content Type:
+        </Typography>
+        <Typography variant="body1">{responseContentType}</Typography>
+      </Box>
+      <Box display="flex" flexDirection="row" gap={2}>
+        <Typography variant="body1" fontWeight="bold">
+          Response Schema:
+        </Typography>
+        <Typography variant="body1">{responseSchema}</Typography>
       </Box>
     </Box>
   );

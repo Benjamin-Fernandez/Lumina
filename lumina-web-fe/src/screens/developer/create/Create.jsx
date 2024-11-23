@@ -35,11 +35,17 @@ const Create = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [endpoint, setEndpoint] = useState("");
-  const [requestType, setRequestType] = useState("");
-  const [responseType, setResponseType] = useState("");
+  const [path, setPath] = useState("");
+  const [httpMethod, setHttpMethod] = useState("");
+  const [parametersRequired, setParametersRequired] = useState("false");
+  const [parameters, setParameters] = useState("");
+  const [requestBodyRequired, setRequestBodyRequired] = useState("false");
   const [requestFormat, setRequestFormat] = useState("");
-  const [requestKey, setRequestKey] = useState("");
-  const [responseKey, setResponseKey] = useState("");
+  const [requestBodySchema, setRequestBodySchema] = useState("");
+  const [requestContentType, setRequestContentType] = useState("");
+  const [responseStatusCode, setResponseStatusCode] = useState("");
+  const [responseContentType, setResponseContentType] = useState("");
+  const [responseSchema, setResponseSchema] = useState("");
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -150,17 +156,29 @@ const Create = () => {
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
               <PluginEndpointForm
                 endpoint={endpoint}
-                requestType={requestType}
-                responseType={responseType}
+                path={path}
+                httpMethod={httpMethod}
+                parametersRequired={parametersRequired}
+                parameters={parameters}
+                requestBodyRequired={requestBodyRequired}
                 requestFormat={requestFormat}
-                requestKey={requestKey}
-                responseKey={responseKey}
+                requestContentType={requestContentType}
+                requestBodySchema={requestBodySchema}
+                responseStatusCode={responseStatusCode}
+                responseContentType={responseContentType}
+                responseSchema={responseSchema}
                 setEndpoint={setEndpoint}
-                setRequestType={setRequestType}
-                setResponseType={setResponseType}
+                setPath={setPath}
+                setHttpMethod={setHttpMethod}
+                setParametersRequired={setParametersRequired}
+                setParameters={setParameters}
+                setRequestBodyRequired={setRequestBodyRequired}
                 setRequestFormat={setRequestFormat}
-                setRequestKey={setRequestKey}
-                setResponseKey={setResponseKey}
+                setRequestContentType={setRequestContentType}
+                setRequestBodySchema={setRequestBodySchema}
+                setResponseStatusCode={setResponseStatusCode}
+                setResponseContentType={setResponseContentType}
+                setResponseSchema={setResponseSchema}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -177,11 +195,16 @@ const Create = () => {
                   disabled={
                     !(
                       endpoint !== "" &&
-                      requestType !== "" &&
-                      responseType !== "" &&
-                      requestFormat !== "" &&
-                      requestKey !== "" &&
-                      responseKey !== ""
+                      path !== "" &&
+                      httpMethod !== "" &&
+                      responseStatusCode !== "" &&
+                      responseContentType !== "" &&
+                      responseSchema !== "" &&
+                      (parametersRequired !== "true" || parameters !== "") &&
+                      (requestBodyRequired !== "true" ||
+                        (requestFormat !== "" &&
+                          requestContentType !== "" &&
+                          requestBodySchema !== ""))
                     )
                   }
                 >
@@ -197,11 +220,16 @@ const Create = () => {
                 category={category}
                 description={description}
                 endpoint={endpoint}
-                requestType={requestType}
-                responseType={responseType}
+                path={path}
+                httpMethod={httpMethod}
+                parametersRequired={parametersRequired}
+                parameters={parameters}
+                requestBodyRequired={requestBodyRequired}
                 requestFormat={requestFormat}
-                requestKey={requestKey}
-                responseKey={responseKey}
+                requestContentType={requestContentType}
+                responseStatusCode={responseStatusCode}
+                responseContentType={responseContentType}
+                responseSchema={responseSchema}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button

@@ -26,7 +26,7 @@ const Instruction = ({ checked, setChecked }) => {
         students discover its value:
         <ul>
           <li>
-            Name:
+            Name
             <ul>
               <li>Choose a catchy and descriptive name for your chatbot.</li>
               <li>
@@ -36,14 +36,14 @@ const Instruction = ({ checked, setChecked }) => {
             </ul>
           </li>
           <li>
-            Category:
+            Category
             <ul>
               <li>Select the category that best represents your chatbot.</li>
               <li>Options include: Modules, Career, School, or General.</li>
             </ul>
           </li>
           <li>
-            Description:
+            Description
             <ul>
               <li>
                 Highlight what makes your chatbot unique and why students should
@@ -52,7 +52,7 @@ const Instruction = ({ checked, setChecked }) => {
             </ul>
           </li>
           <li>
-            Image:
+            Image
             <ul>
               <li>
                 Upload an eye-catching image that visually represents your
@@ -66,36 +66,85 @@ const Instruction = ({ checked, setChecked }) => {
         Step 2: Fill in your plugin endpoint! 🌐
       </Typography>
       <Typography variant="body1">
-        Plugin endpoint is where your chatbot lives! Make sure to provide the
-        correct endpoint so students can interact with your chatbot!
+        Plugin endpoint is where your chatbot lives! Fill in the details below
+        to ensure a seamless integration with Lumina:
         <ul>
-          <li>
-            Your fine-tuned models and any complementary knowledge bases should
-            have been deployed to cloud prior to adding to Lumina Store.
-          </li>
-          <li>
-            Provide the single endpoint to call to generate response from the
-            model.
-          </li>
-          <li>
-            Specify the format of the request and response clearly.
-            <ul>
-              <li>For request:</li>
-              <ul>
-                <li>Choose request type: GET, PUT, POST</li>
-                <li>
-                  Specify the expected response format: via request body or
-                  parameters
-                </li>
-                <li>Specify the key to which the response is tagged to</li>
-              </ul>
-              <li>For response:</li>
-              <ul>
-                <li>Choose response type: JSON, XML, HTML</li>
-                <li>Specify the key to which the response is tagged to</li>
-              </ul>
-            </ul>
-          </li>
+          <li>Server URL</li>
+          <ul>
+            <li>The base URL where the API is hosted.</li>
+            <pre>
+              Example: <code>{`"https://api.example.com"`}</code>
+            </pre>
+          </ul>
+          <li>Paths</li>
+          <ul>
+            <li>
+              Relative endpoint path that Lumina will use to send user queries
+              and receive responses.
+            </li>
+            <pre>
+              Example: <code>{`"/getResponse"`}</code>
+            </pre>
+          </ul>
+          <li>HTTP Method</li>
+          <ul>
+            <li>Type of HTTP request.</li>
+            <pre>
+              Example: <code>{`"GET" or "PUT" or "POST"`}</code>
+            </pre>
+          </ul>
+          <li>Parameters (Optional)</li>
+          <ul>
+            <li>
+              List of parameters, their location (query, header, etc.), types,
+              and if they’re required.
+            </li>
+            <pre>
+              Example: <code>{`{ "query": "string", "header": "JWT" }`}</code>
+            </pre>
+          </ul>
+          <li>Request Body Format (Optional)</li>
+          <ul>
+            <li>Format of the response (JSON, text/plain, etc.).</li>
+            <pre>
+              Example: <code>{`"application/json"`}</code>
+            </pre>
+          </ul>
+          <li>Request Body Content Type (Optional)</li>
+          <ul>
+            <li>Data type of the request payload, if applicable.</li>
+            <pre>
+              Example: <code>{`"object"`}</code>
+            </pre>
+          </ul>
+          <li>Request Body Schema (Optional)</li>
+          <ul>
+            <li>Structure of the request payload, if applicable.</li>
+            <pre>
+              Example: <code>{`{ "name": "string", "age": "integer" }`}</code>
+            </pre>
+          </ul>
+          <li>Response Status Code</li>
+          <ul>
+            <li>HTTP status code for successful response</li>
+            <pre>
+              Example: <code>{`"200"`}</code>
+            </pre>
+          </ul>
+          <li>Response Content Type</li>
+          <ul>
+            <li>Format of the response payload</li>
+            <pre>
+              Example: <code>{`"text/plain"`}</code>
+            </pre>
+          </ul>
+          <li>Response Schema</li>
+          <ul>
+            <li>Structure of the response payload</li>
+            <pre>
+              Example: <code>{`{ "type": "string" }`}</code>
+            </pre>
+          </ul>
         </ul>
       </Typography>
       <Typography variant="h5" fontWeight="bold">
