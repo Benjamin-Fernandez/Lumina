@@ -143,11 +143,8 @@ const PluginDev = () => {
             <Typography variant="body1">Plugin Title</Typography>
           </Grid>
 
-          <Grid item size={1} mt={3}>
+          <Grid item size={2} mt={3}>
             <Typography variant="body1">Version</Typography>
-          </Grid>
-          <Grid item size={1} mt={3}>
-            <Typography variant="body1">Size</Typography>
           </Grid>
           <Grid item size={2} mt={3}>
             <Typography variant="body1">Category</Typography>

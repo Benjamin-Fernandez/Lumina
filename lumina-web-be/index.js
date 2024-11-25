@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 
+app.use(express.json()); // So that we can pass in JSON data in the body of the request
+
 mongoose
   .connect(
     "mongodb://lumina-web:FBZAlH4Ljxo2pgaZ9s2qRYnibC2YFBhr6gfJntrPvGTBipL9ZUnxXWvkKGBFHSnY5g5ZcSgBvNwqACDbIG2Fng==@lumina-web.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@lumina-web@"

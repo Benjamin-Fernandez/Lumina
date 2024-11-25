@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Link } from "@mui/material";
 import { useTheme, Grid } from "@mui/system";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
@@ -11,8 +11,8 @@ const PluginDetailTableContent = ({ selectedSection }) => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box width="100%" height="70%" pl={3}>
-      {selectedSection === "metadata" && (
+    <Box width="100%" height="50vh" pl={3} sx={{ overflowY: "auto" }}>
+      {selectedSection === "details" && (
         <Grid container spacing={2} mb="15px">
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
@@ -66,67 +66,141 @@ const PluginDetailTableContent = ({ selectedSection }) => {
           </Grid>
         </Grid>
       )}
-      {selectedSection === "capabilities" && (
+      {selectedSection === "endpoints" && (
         <Grid container spacing={2} mb="15px">
           <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Schema
+              OpenAPI 3.0 Schema
             </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde nam
-              explicabo atque hic amet minus maxime, voluptatibus minima soluta
-              perspiciatis doloribus ipsum iste officia. Quibusdam commodi,
-              quisquam amet cumque aliquid repellendus, laborum reprehenderit
-              sint possimus, error cupiditate deleniti praesentium fugit.
-            </Typography>
+            <Link
+              // href={URL.createObjectURL(yamlFile)}
+              // download={yamlFile.name}
+              alignSelf="center"
+              sx={{ mt: 2 }}
+            >
+              yamlFile
+            </Link>
           </Grid>
           <Grid item size={12}>
             <Divider />
           </Grid>
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Authentication
+              Server URL
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              OAuth
-            </Typography>{" "}
+              https://api.example.com
+            </Typography>
+          </Grid>
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Path
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              /getResponse
+            </Typography>
+          </Grid>
+
+          <Grid item size={12}>
+            <Divider />
+          </Grid>
+          <Grid item size={12}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Request
+            </Typography>
+          </Grid>
+          <Grid item size={12}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              HTTP Method
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              POST
+            </Typography>
+          </Grid>
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Parameters Required
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              True
+            </Typography>
+          </Grid>
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Parameters
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              &#123; "query": "string", "header": "JWT" &#125;
+            </Typography>
+          </Grid>
+
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Request Body Required
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              False
+            </Typography>
+          </Grid>
+
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Request Format
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              -
+            </Typography>
+          </Grid>
+
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Request Body Content Type
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              -
+            </Typography>
+          </Grid>
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Request Body Schema
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              -
+            </Typography>
           </Grid>
           <Grid item size={12}>
             <Divider />
           </Grid>
           <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Actions
+              Response
             </Typography>
-            <Grid container spacing={2}>
-              <Grid item size={4}>
-                <Typography
-                  variant="body1"
-                  sx={{ mt: 2 }}
-                  color={colors.grey[700]}
-                >
-                  Name
-                </Typography>
-              </Grid>
-              <Grid item size={4}>
-                <Typography
-                  variant="body1"
-                  sx={{ mt: 2 }}
-                  color={colors.grey[700]}
-                >
-                  Method
-                </Typography>
-              </Grid>
-              <Grid item size={4}>
-                <Typography
-                  variant="body1"
-                  sx={{ mt: 2 }}
-                  color={colors.grey[700]}
-                >
-                  Path
-                </Typography>
-              </Grid>
-            </Grid>
+          </Grid>
+
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Response Status Code
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              200
+            </Typography>
+          </Grid>
+
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Response Content Type
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              application/json
+            </Typography>
+          </Grid>
+          <Grid item size={6}>
+            <Typography variant="body1" color={colors.grey[700]}>
+              Response Schema
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              &#123; "query": "string", "header": "JWT" &#125;
+            </Typography>
           </Grid>
         </Grid>
       )}

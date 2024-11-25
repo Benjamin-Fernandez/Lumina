@@ -5,6 +5,7 @@ import { tokens } from "../../../theme";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PluginDetailTableSidebar from "../../../components/plugin/pluginDetail/PluginDetailTableSidebar";
 import PluginDetailTableContent from "../../../components/plugin/pluginDetail/PluginDetailTableContent";
+import EditIcon from "@mui/icons-material/Edit";
 import DeactivateModal from "../../../components/modal/DeactivateModal";
 
 const PluginDetailsDev = () => {
@@ -12,7 +13,7 @@ const PluginDetailsDev = () => {
   const colors = tokens(theme.palette.mode);
 
   // State to track which section is selected
-  const [selectedSection, setSelectedSection] = useState("metadata");
+  const [selectedSection, setSelectedSection] = useState("details");
   const [deactivateModal, setDeactivateModal] = useState(false);
 
   // Function to handle sidebar navigation
@@ -67,15 +68,31 @@ const PluginDetailsDev = () => {
             >
               Plugin Name
             </Typography>
-            {/* <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
+            <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
               Author
-            </Typography> */}
+            </Typography>
             <Typography variant="h6" sx={{ mx: "20px" }}>
               Author Email
             </Typography>
           </Box>
         </Box>
         <Box display="flex" flexDirection="row">
+          <Button
+            variant="contained"
+            sx={{
+              padding: "8px 16px", // Adjust padding to hug content
+              alignSelf: "flex-end", // Position the button at the bottom of the Box
+              textTransform: "none",
+              fontSize: "13px",
+              borderRadius: 2,
+              mr: 2,
+              bgcolor: colors.yellowAccent[500],
+            }}
+            // onClick={handleOpenDeactivate}
+            startIcon={<EditIcon />}
+          >
+            Edit
+          </Button>
           <Button
             variant="contained"
             color="error"

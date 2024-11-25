@@ -64,7 +64,7 @@ const PluginRowDev = ({
             {title}
           </Typography>
         </Grid>
-        <Grid item size={1}>
+        <Grid item size={2}>
           <Typography
             variant="body1"
             noWrap
@@ -73,15 +73,7 @@ const PluginRowDev = ({
             {version}
           </Typography>
         </Grid>
-        <Grid item size={1}>
-          <Typography
-            variant="body1"
-            noWrap
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {size}
-          </Typography>
-        </Grid>
+
         <Grid item size={2}>
           <Typography
             variant="body1"

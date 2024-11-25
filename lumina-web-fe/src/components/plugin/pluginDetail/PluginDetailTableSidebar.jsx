@@ -15,8 +15,8 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
       <Box width="100%" height="70%" pr={2}>
         <Stack border={1} borderRadius={2} borderColor={colors.grey[800]}>
           <Button
-            variant={selectedSection === "metadata" ? "contained" : "outlined"}
-            onClick={() => handleSectionClick("metadata")}
+            variant={selectedSection === "details" ? "contained" : "outlined"}
+            onClick={() => handleSectionClick("details")}
             sx={{
               textTransform: "none",
               fontSize: "14px",
@@ -30,7 +30,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
               borderColor: colors.grey[800],
               border: "0",
               justifyContent: "flex-start",
-              ...(selectedSection === "metadata" && {
+              ...(selectedSection === "details" && {
                 backgroundColor: colors.blueAccent[400],
               }),
 
@@ -46,13 +46,11 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
             }}
             startIcon={<InfoIcon />}
           >
-            Metadata
+            Details
           </Button>
           <Button
-            variant={
-              selectedSection === "capabilities" ? "contained" : "outlined"
-            }
-            onClick={() => handleSectionClick("capabilities")}
+            variant={selectedSection === "endpoints" ? "contained" : "outlined"}
+            onClick={() => handleSectionClick("endpoints")}
             sx={{
               textTransform: "none",
               paddingY: 2,
@@ -68,7 +66,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
               borderColor: colors.grey[800],
               border: "0",
               justifyContent: "flex-start",
-              ...(selectedSection === "capabilities" && {
+              ...(selectedSection === "endpoints" && {
                 backgroundColor: colors.blueAccent[400],
               }),
 
@@ -84,7 +82,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
             }}
             startIcon={<DiamondOutlinedIcon />}
           >
-            Capabilities
+            Endpoints
           </Button>
           {/* <Button
             variant={selectedSection === "documents" ? "contained" : "outlined"}

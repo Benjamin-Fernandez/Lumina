@@ -28,14 +28,7 @@ const ContributorDetailTableContent = () => {
         <Grid item size={12}>
           <Divider />
         </Grid>
-        <Grid item size={6}>
-          <Typography variant="body1" color={colors.grey[700]}>
-            Last Online
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 2 }}>
-            23 minutes ago
-          </Typography>
-        </Grid>
+
         <Grid item size={6}>
           <Typography variant="body1" color={colors.grey[700]}>
             Joined
@@ -44,10 +37,7 @@ const ContributorDetailTableContent = () => {
             16 September 2024
           </Typography>
         </Grid>
-        <Grid item size={12}>
-          <Divider />
-        </Grid>
-        <Grid item size={12}>
+        <Grid item size={6}>
           <Typography variant="body1" color={colors.grey[700]}>
             Email Address
           </Typography>
