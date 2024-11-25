@@ -67,9 +67,9 @@ const PluginDetailsDev = () => {
             >
               Plugin Name
             </Typography>
-            <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
+            {/* <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
               Author
-            </Typography>
+            </Typography> */}
             <Typography variant="h6" sx={{ mx: "20px" }}>
               Author Email
             </Typography>

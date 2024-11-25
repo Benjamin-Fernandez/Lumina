@@ -8,7 +8,6 @@ import { tokens } from "../../theme";
 // import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 // import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
-import AllInboxOutlinedIcon from "@mui/icons-material/AllInboxOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 

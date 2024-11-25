@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: #TODO: Add title (e.g. Sample API)
+  version: 1.0.0
+servers:
+  - url: #TODO: Add Server URL (e.g. http://api.example.com)
+paths:
+  /getResponse:
+    post:
+      operationId: #TODO: Add Operation ID. This can be any string for the client to call the path (e.g. getResponse)
+      requestBody:
+        required: #TODO: Add specification if the request body is required or not (e.g. true / false)
+        content:
+          application/json: #TODO: Change content type if needed (e.g. application/json OR application/x-www-form-urlencoded OR text/plain)
+            schema:
+              type: #TODO: Add type of the request body (e.g. object OR string)
+              properties:
+                query: #TODO: Change name of properties of the request body (e.g. query for {"query": "Hello"})
+                  type: #TODO: Add type of the property (e.g. string OR number)
+      responses:
+        "200":
+          content:
+            text/plain: #TODO: Change content type if needed (e.g. text/plain OR application/json)
+              schema:
+                type: #TODO: Add type of the response (e.g. string OR object)
+
+# SAMPLE COMPLETE SCHEMA
+# openapi: 3.0.0
+# info:
+#   title: Simple API
+#   version: 1.0.0
+# servers:
+#   - url: http://127.0.0.1:8000
+# paths:
+#   /getResponse:
+#     post:
+#       operationId: sayHello
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               properties:
+#                 query:
+#                   type: string
+#       responses:
+#         "200":
+#           content:
+#             text/plain:
+#               schema:
+#                 type: string

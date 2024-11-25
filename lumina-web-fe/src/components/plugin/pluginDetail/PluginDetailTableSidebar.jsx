@@ -60,8 +60,8 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
               fontSize: "14px",
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
+              // borderBottomLeftRadius: 0,
+              // borderBottomRightRadius: 0,
               borderTop: "1px solid",
               borderLeft: "1px solid",
               borderRight: "1px solid",
@@ -86,7 +86,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
           >
             Capabilities
           </Button>
-          <Button
+          {/* <Button
             variant={selectedSection === "documents" ? "contained" : "outlined"}
             onClick={() => handleSectionClick("documents")}
             sx={{
@@ -119,7 +119,7 @@ const PluginDetailTableSidebar = ({ selectedSection, handleSectionClick }) => {
             startIcon={<DescriptionOutlinedIcon />}
           >
             Documents
-          </Button>
+          </Button> */}
         </Stack>
       </Box>
     </Box>

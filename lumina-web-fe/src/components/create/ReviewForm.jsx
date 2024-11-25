@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Link } from "@mui/material";
 import { Grid } from "@mui/system";
 import { useState, useEffect } from "react";
 
@@ -8,6 +8,7 @@ const ReviewForm = ({
   name,
   category,
   description,
+  yamlFile,
   endpoint,
   path,
   httpMethod,
@@ -84,78 +85,100 @@ const ReviewForm = ({
       <Typography variant="h5" fontWeight="bold">
         Plugin Endpoint
       </Typography>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Server URL:
-        </Typography>
-        <Typography variant="body1">{endpoint}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Path:
-        </Typography>
-        <Typography variant="body1"> {path}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          HTTP Method:
-        </Typography>
-        <Typography variant="body1"> {httpMethod}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Parameters Required:
-        </Typography>
-        <Typography variant="body1">{parametersRequired}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Parameters:
-        </Typography>
-        <Typography variant="body1">{parameters}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Request Body Required:
-        </Typography>
-        <Typography variant="body1">{requestBodyRequired}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Request Format:
-        </Typography>
-        <Typography variant="body1">{requestFormat}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Request Body Content Type:
-        </Typography>
-        <Typography variant="body1">{requestContentType}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Request Body Schema:
-        </Typography>
-        <Typography variant="body1">{requestBodySchema}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Response Status Code:
-        </Typography>
-        <Typography variant="body1">{responseStatusCode}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Response Content Type:
-        </Typography>
-        <Typography variant="body1">{responseContentType}</Typography>
-      </Box>
-      <Box display="flex" flexDirection="row" gap={2}>
-        <Typography variant="body1" fontWeight="bold">
-          Response Schema:
-        </Typography>
-        <Typography variant="body1">{responseSchema}</Typography>
-      </Box>
+      {!yamlFile && (
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Server URL:
+            </Typography>
+            <Typography variant="body1">{endpoint}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Path:
+            </Typography>
+            <Typography variant="body1"> {path}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              HTTP Method:
+            </Typography>
+            <Typography variant="body1"> {httpMethod}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Parameters Required:
+            </Typography>
+            <Typography variant="body1">{parametersRequired}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Parameters:
+            </Typography>
+            <Typography variant="body1">{parameters}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Request Body Required:
+            </Typography>
+            <Typography variant="body1">{requestBodyRequired}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Request Format:
+            </Typography>
+            <Typography variant="body1">{requestFormat}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Request Body Content Type:
+            </Typography>
+            <Typography variant="body1">{requestContentType}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Request Body Schema:
+            </Typography>
+            <Typography variant="body1">{requestBodySchema}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Response Status Code:
+            </Typography>
+            <Typography variant="body1">{responseStatusCode}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Response Content Type:
+            </Typography>
+            <Typography variant="body1">{responseContentType}</Typography>
+          </Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Typography variant="body1" fontWeight="bold">
+              Response Schema:
+            </Typography>
+            <Typography variant="body1">{responseSchema}</Typography>
+          </Box>
+        </Box>
+      )}
+      {yamlFile && (
+        <Box>
+          <Box display="flex" flexDirection="row" gap={2}>
+            <Box display="flex" flexDirection="row">
+              <Typography variant="h6" alignSelf="center" mr={1}>
+                File Uploaded:
+              </Typography>
+              <Link
+                href={URL.createObjectURL(yamlFile)}
+                download={yamlFile.name}
+                alignSelf="center"
+              >
+                {yamlFile.name}
+              </Link>
+            </Box>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };

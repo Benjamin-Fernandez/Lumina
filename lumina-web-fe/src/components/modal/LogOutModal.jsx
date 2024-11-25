@@ -9,13 +9,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
-import { config } from "../../config";
-import { useMsal } from "@azure/msal-react";
 
 const LogOutModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { instance } = useMsal();
 
   const handleLogout = () => {
     // Clear tokens or user session data stored in localStorage

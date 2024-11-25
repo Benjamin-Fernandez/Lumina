@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import {
   Box,
   FormControl,
@@ -10,7 +9,6 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Grid } from "@mui/system";
-import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 // Import the Image EXIF Orientation and Image Preview plugins
@@ -20,12 +18,14 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 // Register the plugins
 registerPlugin(
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview,
-  FilePondPluginImageCrop
+  FilePondPluginImageCrop,
+  FilePondPluginFileValidateType
 );
 
 const PluginDetailsForm = ({
@@ -52,14 +52,14 @@ const PluginDetailsForm = ({
           onupdatefiles={(fileItems) =>
             setFile(fileItems.map((fileItem) => fileItem.file))
           }
-          allowMultiple={false}
-          allowImageCrop={true}
-          allowImagePreview={true}
-          imageCropAspectRatio="1:1" // Crop image to square
-          style-panel-layout="compact circle"
+          acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]} // File type validation for upload
+          allowMultiple={false} // Allow only 1 file
+          allowImageCrop={true} // Allow cropping
+          allowImagePreview={true} // Preview images
+          imageCropAspectRatio="1:1" // Crop to square
           name="profilePicture"
           labelIdle="+"
-          stylePanelAspectRatio="1:1" // Ensures the container remains square
+          stylePanelAspectRatio="1:1"
           stylePanelLayout="compact circle"
           styleButtonRemoveItemPosition="center bottom"
         />
