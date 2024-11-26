@@ -7,6 +7,9 @@ import PluginDetailTableSidebar from "../../../components/plugin/pluginDetail/Pl
 import PluginDetailTableContent from "../../../components/plugin/pluginDetail/PluginDetailTableContent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeactivateModal from "../../../components/modal/DeactivateModal";
+import CancelModal from "../../../components/modal/CancelModal";
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
@@ -15,6 +18,8 @@ const PluginDetailsDev = () => {
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("details");
   const [deactivateModal, setDeactivateModal] = useState(false);
+  const [cancelModal, setCancelModal] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   // Function to handle sidebar navigation
   const handleSectionClick = (section) => {
@@ -26,6 +31,16 @@ const PluginDetailsDev = () => {
   };
   const handleCloseDeactivate = () => {
     setDeactivateModal(false);
+  };
+  const handleOpenCancel = () => {
+    setCancelModal(true);
+  };
+  const handleCloseCancel = () => {
+    setEdit(false);
+    setCancelModal(false);
+  };
+  const handleEdit = () => {
+    setEdit(!edit);
   };
 
   return (
@@ -77,37 +92,76 @@ const PluginDetailsDev = () => {
           </Box>
         </Box>
         <Box display="flex" flexDirection="row">
-          <Button
-            variant="contained"
-            sx={{
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              borderRadius: 2,
-              mr: 2,
-              bgcolor: colors.yellowAccent[500],
-            }}
-            // onClick={handleOpenDeactivate}
-            startIcon={<EditIcon />}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{
-              padding: "8px 16px", // Adjust padding to hug content
-              alignSelf: "flex-end", // Position the button at the bottom of the Box
-              textTransform: "none",
-              fontSize: "13px",
-              borderRadius: 2,
-            }}
-            onClick={handleOpenDeactivate}
-            startIcon={<DeleteOutlineOutlinedIcon />}
-          >
-            Deactivate
-          </Button>
+          {!edit && (
+            <Button
+              variant="contained"
+              sx={{
+                padding: "8px 16px", // Adjust padding to hug content
+                alignSelf: "flex-end", // Position the button at the bottom of the Box
+                textTransform: "none",
+                fontSize: "13px",
+                borderRadius: 2,
+                mr: 2,
+                bgcolor: colors.yellowAccent[500],
+              }}
+              onClick={handleEdit}
+              startIcon={<EditIcon />}
+            >
+              Edit
+            </Button>
+          )}
+          {edit && (
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                padding: "8px 16px", // Adjust padding to hug content
+                alignSelf: "flex-end", // Position the button at the bottom of the Box
+                textTransform: "none",
+                fontSize: "13px",
+                borderRadius: 2,
+                mr: 2,
+              }}
+              onClick={handleEdit}
+              startIcon={<DoneIcon />}
+            >
+              Done
+            </Button>
+          )}
+          {!edit && (
+            <Button
+              variant="contained"
+              color="error"
+              sx={{
+                padding: "8px 16px", // Adjust padding to hug content
+                alignSelf: "flex-end", // Position the button at the bottom of the Box
+                textTransform: "none",
+                fontSize: "13px",
+                borderRadius: 2,
+              }}
+              onClick={handleOpenDeactivate}
+              startIcon={<DeleteOutlineOutlinedIcon />}
+            >
+              Deactivate
+            </Button>
+          )}
+          {edit && (
+            <Button
+              variant="contained"
+              color="inherit"
+              sx={{
+                padding: "8px 16px", // Adjust padding to hug content
+                alignSelf: "flex-end", // Position the button at the bottom of the Box
+                textTransform: "none",
+                fontSize: "13px",
+                borderRadius: 2,
+              }}
+              onClick={handleOpenCancel}
+              startIcon={<CloseIcon />}
+            >
+              Cancel
+            </Button>
+          )}
         </Box>
       </Box>
 
@@ -116,12 +170,16 @@ const PluginDetailsDev = () => {
           selectedSection={selectedSection}
           handleSectionClick={handleSectionClick}
         />
-        <PluginDetailTableContent selectedSection={selectedSection} />
+        <PluginDetailTableContent
+          selectedSection={selectedSection}
+          edit={edit}
+        />
       </Box>
       <DeactivateModal
         open={deactivateModal}
         handleClose={handleCloseDeactivate}
       />
+      <CancelModal open={cancelModal} handleClose={handleCloseCancel} />
     </Box>
   );
 };
