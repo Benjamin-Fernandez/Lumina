@@ -5,7 +5,8 @@ import { config } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
-import { Buffer } from "buffer";
+import { useUser } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const theme = useTheme();
@@ -14,9 +15,11 @@ const Login = () => {
 
   useEffect(() => {
     if (instance.getActiveAccount()) {
-      window.location.href = "/pluginDev";
+      navigate("/pluginDev");
     }
   }, [instance]);
+  const { setEmail } = useUser();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -54,8 +57,9 @@ const Login = () => {
             console.error("Error fetching user by email:", error);
           });
         instance.setActiveAccount(response.account);
+        setEmail(email);
         console.log("Active Account Set:", response.account);
-        window.location.href = "/pluginDev";
+        navigate("/pluginDev");
       }
     } catch (error) {
       console.error("Login failed:", error);
