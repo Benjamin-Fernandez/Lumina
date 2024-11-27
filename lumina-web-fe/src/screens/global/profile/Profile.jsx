@@ -5,11 +5,18 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ContributorDetailTableContent from "../../../components/contributor/ContributorDetailTableContent";
 import LogOutModal from "../../../components/modal/LogOutModal";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "../../../config/axiosConfig";
+import { useUser } from "../../../context/UserContext";
+import Loading from "../Loading";
 
 const Profile = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [logoutModal, setLogoutModal] = useState(false);
+  const { email } = useUser();
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleOpenLogout = () => {
     setLogoutModal(true);
@@ -18,7 +25,36 @@ const Profile = () => {
     setLogoutModal(false);
   };
 
-  return (
+  useEffect(() => {
+    axios
+      .get("/user/email/" + email)
+      .then((res) => {
+        setUser(res.data.user);
+        console.log("User details:", res.data.user);
+        console.log("Loading done.");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user by email:", error);
+      });
+  }, []);
+
+  return loading ? (
+    <Box
+      py={4}
+      px={4}
+      mx={4}
+      height="80%"
+      width="95%"
+      border={1}
+      borderRadius={2}
+      borderColor={colors.grey[800]}
+      display="flex"
+      flexDirection="column"
+    >
+      <Loading />
+    </Box>
+  ) : (
     <Box
       py={4}
       px={4}
@@ -100,7 +136,7 @@ const Profile = () => {
         </Box>
       </Box> */}
       <Box display="flex" flexDirection="row">
-        <ContributorDetailTableContent />
+        <ContributorDetailTableContent user={user} />
       </Box>
       {/* <Button
         sx={{
