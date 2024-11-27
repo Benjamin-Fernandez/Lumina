@@ -5,9 +5,6 @@ const app = express();
 // Middleware -> needed to parse the request body which is in JSON format
 app.use(express.json());
 
-// Importing models
-const User = require("./models/user.model");
-
 // Importing routes
 const userRoute = require("./routes/user.route");
 const conversationRoute = require("./routes/conversation.route");
@@ -15,8 +12,8 @@ const messageRoute = require("./routes/message.route");
 const openaiRoute = require("./routes/openai.route");
 const chatbotRoute = require("./routes/chatbot.route");
 
-/* 1. Insert routes in index.js 
-2. Create a new file in routes folder 
+/* 1. Insert routes in index.js
+2. Create a new file in routes folder
 3. Create a new file in controllers folder */
 app.use("/user", userRoute);
 app.use("/conversation", conversationRoute);
@@ -35,7 +32,7 @@ mongoose
     res -> response object
     '/' -> root route
     Whenever we visit the root route, the callback function is executed
-    res.send() sends a response to the client 
+    res.send() sends a response to the client
     */
     app.listen(3000, () => {
       console.log("Server running on port 3000");

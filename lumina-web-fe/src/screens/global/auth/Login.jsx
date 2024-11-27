@@ -4,6 +4,8 @@ import { tokens } from "../../../theme";
 import { config } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
+import axios from "../../../config/axiosConfig";
+import { Buffer } from "buffer";
 
 const Login = () => {
   const theme = useTheme();
@@ -29,8 +31,28 @@ const Login = () => {
 
       // Proceed with the login popup
       const response = await instance.loginPopup(loginRequest);
+
       console.log("Login successful:", response);
       if (response && response.account) {
+        const email = response.account.username;
+        axios
+          .get("/user/email/" + email)
+          .then((res) => {
+            if (res.data.user === null) {
+              axios
+                .post("user/", {
+                  name: response.account.name.slice(1, -1),
+                  email: email,
+                  domain: "Developer",
+                })
+                .catch((error) => {
+                  console.error("Error creating user:", error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching user by email:", error);
+          });
         instance.setActiveAccount(response.account);
         console.log("Active Account Set:", response.account);
         window.location.href = "/pluginDev";

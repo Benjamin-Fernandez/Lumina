@@ -74,7 +74,7 @@ const Topbar = () => {
       </Box>
       {/* Right side of the topbar */}
       <Box display="flex" gap="5px">
-        <Link to="/notification">
+        {/* <Link to="/notification">
           <IconButton>
             <NotificationsOutlinedIcon
               fontSize="large"
@@ -83,7 +83,7 @@ const Topbar = () => {
               }}
             />
           </IconButton>
-        </Link>
+        </Link> */}
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <LightModeOutlinedIcon fontSize="large" />

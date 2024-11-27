@@ -35,7 +35,7 @@ function App() {
     // location.pathname === "/request" ||
     // location.pathname === "/contributor" ||
     // location.pathname === "/contributorform" ||
-    location.pathname === "/notification" ||
+    // location.pathname === "/notification" ||
     location.pathname === "/profile" ||
     location.pathname === "/pluginDev" ||
     location.pathname.match("^/pluginDev/([a-zA-Z0-9]+)$") ||
@@ -120,7 +120,7 @@ function App() {
                       <ContributorForm />
                     </ProtectedRoute>
                   }
-                /> */}
+                />
                 <Route
                   path="/notification"
                   element={
@@ -128,7 +128,7 @@ function App() {
                       <Notification />
                     </ProtectedRoute>
                   }
-                />
+                /> */}
                 <Route
                   path="/profile"
                   element={
