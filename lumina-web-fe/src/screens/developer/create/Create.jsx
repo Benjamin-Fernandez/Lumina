@@ -7,7 +7,7 @@ import {
   StepLabel,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as React from "react";
 import { tokens } from "../../../theme";
 import Instruction from "../../../components/create/Instruction";
@@ -15,6 +15,11 @@ import PluginDetailsForm from "../../../components/create/PluginDetailsForm";
 import PluginEndpointForm from "../../../components/create/PluginEndpointForm";
 import ReviewForm from "../../../components/create/ReviewForm";
 import TestEndpoint from "../../../components/create/TestEndpoint";
+import { useUser } from "../../../context/UserContext";
+import axios from "../../../config/axiosConfig";
+import * as yaml from "js-yaml";
+import testEndpoint from "../../../helpers/TestEndpoint";
+import { Navigate } from "react-router-dom";
 
 const Create = () => {
   const theme = useTheme();
@@ -30,30 +35,234 @@ const Create = () => {
     //   { label: "Enter Plugin Endpoint", component: <PluginEndpointForm /> },
     //   { label: "Review and Submit", component: <ReviewForm /> },
   ];
+  const email = useUser();
+  const formRef = useRef();
+
   const [checked, setChecked] = useState();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [endpointSuccess, setEndpointSuccess] = useState(false);
+  const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [yamlFile, setYamlFile] = useState(null);
+  const [yamlString, setYamlString] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [path, setPath] = useState("");
-  const [httpMethod, setHttpMethod] = useState("");
-  const [parametersRequired, setParametersRequired] = useState("false");
-  const [parameters, setParameters] = useState("");
-  const [requestBodyRequired, setRequestBodyRequired] = useState("false");
   const [requestFormat, setRequestFormat] = useState("");
-  const [requestBodySchema, setRequestBodySchema] = useState("");
+  const [requestBodyQueryKey, setRequestBodyQueryKey] = useState("");
   const [requestContentType, setRequestContentType] = useState("");
   const [responseStatusCode, setResponseStatusCode] = useState("");
-  const [responseContentType, setResponseContentType] = useState("");
-  const [responseSchema, setResponseSchema] = useState("");
+  const [responseFormat, setResponseFormat] = useState("");
+  const [responseBodyKey, setResponseBodyKey] = useState("");
+
+  useEffect(() => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [activeStep]);
+
+  useEffect(() => {
+    setEndpointSuccess(false);
+  }, [
+    endpoint,
+    path,
+    requestFormat,
+    requestBodyQueryKey,
+    requestContentType,
+    responseStatusCode,
+    responseFormat,
+    responseBodyKey,
+  ]);
+
+  useEffect(() => {
+    setRequestBodyQueryKey("");
+    setRequestContentType("");
+  }, [requestFormat]);
+
+  const generateYaml = ({
+    name,
+    endpoint,
+    path,
+    requestFormat,
+    requestContentType,
+    requestBodyQueryKey,
+    responseStatusCode,
+    responseFormat,
+    responseBodyKey,
+  }) => {
+    if (requestFormat == "application/json") {
+      // Create a basic structure for the YAML file
+      const yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
+          },
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: requestContentType,
+                      properties: requestBodyQueryKey,
+                    },
+                  },
+                },
+              },
+              responses: {
+                [responseStatusCode]: {
+                  content: {
+                    [responseFormat]: {
+                      schema: {
+                        type: responseBodyKey || "string", // Default type to string if not provided
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
+
+      return yamlString;
+    } else {
+      const yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
+          },
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+              responses: {
+                [responseStatusCode]: {
+                  content: {
+                    [responseFormat]: {
+                      schema: {
+                        type: responseBodyKey || "string", // Default type to string if not provided
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
+
+      return yamlString;
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log("Retrieving user information...");
+    console.log("User email:", email.email);
+    axios
+      .get("/user/email/" + email.email)
+      .then((res) => {
+        console.log(res);
+        console.log("Submitting plugin...");
+        console.log("User:", res.data.user);
+        axios.post("/plugin/", {
+          userEmail: email,
+          userName: res.data.user.name,
+          name: name,
+          image: file,
+          category: category,
+          description: description,
+          activated: false, // will change to true once deployed
+          schema: yamlString,
+          endpoint: endpoint,
+          path: path,
+          requestBodyQueryKey: requestBodyQueryKey,
+          requestFormat: requestFormat,
+          requestContentType: requestContentType,
+          responseStatusCode: responseStatusCode,
+          responseFormat: responseFormat,
+          responseBodyKey: responseBodyKey,
+        });
+      })
+
+      .catch((error) => {
+        console.error("Error submitting plugin:", error);
+      });
+  };
 
   const handleNext = () => {
+    if (activeStep === 2 && yamlFile === null) {
+      console.log(
+        "Generating YAML file... with endpoint:",
+        endpoint,
+        "path:",
+        path,
+        "requestFormat:",
+        requestFormat,
+        "requestContentType:",
+        requestContentType,
+        "requestBodyQueryKey:",
+        requestBodyQueryKey,
+        "responseStatusCode:",
+        responseStatusCode,
+        "responseFormat:",
+        responseFormat,
+        "responseBodyKey:",
+        responseBodyKey
+      );
+      const yamlString = generateYaml({
+        name,
+        endpoint,
+        path,
+        requestFormat,
+        requestContentType,
+        requestBodyQueryKey,
+        responseStatusCode,
+        responseFormat,
+        responseBodyKey,
+      });
+      setYamlString(yamlString);
+      console.log("Generated YAML file:", yamlString);
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+  const handleDone = () => {
+    Navigate("/pluginDev");
+  };
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -97,7 +306,7 @@ const Create = () => {
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button>Done</Button>
+                <Button onClick={handleDone}>Done</Button>
               </Box>
             </React.Fragment>
           ) : activeStep === 0 ? (
@@ -121,6 +330,7 @@ const Create = () => {
           ) : activeStep === 1 ? (
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
               <PluginDetailsForm
+                formRef={formRef}
                 file={file}
                 name={name}
                 category={category}
@@ -158,32 +368,25 @@ const Create = () => {
           ) : activeStep === 2 ? (
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
               <PluginEndpointForm
+                formRef={formRef}
                 yamlFile={yamlFile}
                 endpoint={endpoint}
                 path={path}
-                httpMethod={httpMethod}
-                parametersRequired={parametersRequired}
-                parameters={parameters}
-                requestBodyRequired={requestBodyRequired}
                 requestFormat={requestFormat}
                 requestContentType={requestContentType}
-                requestBodySchema={requestBodySchema}
+                requestBodyQueryKey={requestBodyQueryKey}
                 responseStatusCode={responseStatusCode}
-                responseContentType={responseContentType}
-                responseSchema={responseSchema}
+                responseFormat={responseFormat}
+                responseBodyKey={responseBodyKey}
                 setYamlFile={setYamlFile}
                 setEndpoint={setEndpoint}
                 setPath={setPath}
-                setHttpMethod={setHttpMethod}
-                setParametersRequired={setParametersRequired}
-                setParameters={setParameters}
-                setRequestBodyRequired={setRequestBodyRequired}
                 setRequestFormat={setRequestFormat}
                 setRequestContentType={setRequestContentType}
-                setRequestBodySchema={setRequestBodySchema}
+                setRequestBodyQueryKey={setRequestBodyQueryKey}
                 setResponseStatusCode={setResponseStatusCode}
-                setResponseContentType={setResponseContentType}
-                setResponseSchema={setResponseSchema}
+                setResponseFormat={setResponseFormat}
+                setResponseBodyKey={setResponseBodyKey}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -198,19 +401,19 @@ const Create = () => {
                 <Button
                   onClick={handleNext}
                   disabled={
-                    !(
+                    (!(
                       endpoint !== "" &&
                       path !== "" &&
-                      httpMethod !== "" &&
+                      requestFormat !== "" &&
                       responseStatusCode !== "" &&
-                      responseContentType !== "" &&
-                      responseSchema !== "" &&
-                      (parametersRequired !== "true" || parameters !== "") &&
-                      (requestBodyRequired !== "true" ||
-                        (requestFormat !== "" &&
-                          requestContentType !== "" &&
-                          requestBodySchema !== ""))
-                    ) && yamlFile === null
+                      responseFormat !== "" &&
+                      responseBodyKey !== ""
+                    ) &&
+                      yamlFile === null) ||
+                    (requestFormat === "application/json" &&
+                      requestBodyQueryKey === "") ||
+                    (requestFormat === "application/json" &&
+                      requestBodyQueryKey === "")
                   }
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
@@ -219,42 +422,10 @@ const Create = () => {
             </Box>
           ) : activeStep === 3 ? (
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
-              <TestEndpoint />
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </Box>
-            </Box>
-          ) : activeStep === 4 ? (
-            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
-              <ReviewForm
-                file={file}
-                name={name}
-                category={category}
-                description={description}
-                yamlFile={yamlFile}
-                endpoint={endpoint}
-                path={path}
-                httpMethod={httpMethod}
-                parametersRequired={parametersRequired}
-                parameters={parameters}
-                requestBodyRequired={requestBodyRequired}
-                requestBodySchema={requestBodySchema}
-                requestFormat={requestFormat}
-                requestContentType={requestContentType}
-                responseStatusCode={responseStatusCode}
-                responseContentType={responseContentType}
-                responseSchema={responseSchema}
+              <TestEndpoint
+                testEndpoint={testEndpoint}
+                yamlString={yamlString}
+                setEndpointSuccess={setEndpointSuccess}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -266,7 +437,40 @@ const Create = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext}>
+                <Button onClick={handleNext} disabled={!endpointSuccess}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
+            </Box>
+          ) : activeStep === 4 ? (
+            <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
+              <ReviewForm
+                formRef={formRef}
+                file={file}
+                name={name}
+                category={category}
+                description={description}
+                yamlFile={yamlFile}
+                endpoint={endpoint}
+                path={path}
+                requestBodyQueryKey={requestBodyQueryKey}
+                requestFormat={requestFormat}
+                requestContentType={requestContentType}
+                responseStatusCode={responseStatusCode}
+                responseFormat={responseFormat}
+                responseBodyKey={responseBodyKey}
+              />
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleSubmit}>
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>

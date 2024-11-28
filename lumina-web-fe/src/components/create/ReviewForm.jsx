@@ -4,6 +4,7 @@ import { Grid } from "@mui/system";
 import { useState, useEffect } from "react";
 
 const ReviewForm = ({
+  formRef,
   file,
   name,
   category,
@@ -11,16 +12,12 @@ const ReviewForm = ({
   yamlFile,
   endpoint,
   path,
-  httpMethod,
-  parametersRequired,
-  parameters,
-  requestBodyRequired,
   requestFormat,
   requestContentType,
-  requestBodySchema,
+  requestBodyQueryKey,
   responseStatusCode,
-  responseContentType,
-  responseSchema,
+  responseFormat,
+  responseBodyKey,
 }) => {
   const [imageSrc, setImageSrc] = useState("");
   useEffect(() => {
@@ -36,7 +33,9 @@ const ReviewForm = ({
 
   return (
     <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="h4">Review and submit! 💻</Typography>
+      <Typography ref={formRef} variant="h4">
+        Review and submit! 💻
+      </Typography>
       <Typography variant="body1">
         Review your plugin details and endpoint before submitting it to the
         Lumina store!
@@ -101,30 +100,6 @@ const ReviewForm = ({
           </Box>
           <Box display="flex" flexDirection="row" gap={2}>
             <Typography variant="body1" fontWeight="bold">
-              HTTP Method:
-            </Typography>
-            <Typography variant="body1"> {httpMethod}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Parameters Required:
-            </Typography>
-            <Typography variant="body1">{parametersRequired}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Parameters:
-            </Typography>
-            <Typography variant="body1">{parameters}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Request Body Required:
-            </Typography>
-            <Typography variant="body1">{requestBodyRequired}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
               Request Format:
             </Typography>
             <Typography variant="body1">{requestFormat}</Typography>
@@ -139,7 +114,7 @@ const ReviewForm = ({
             <Typography variant="body1" fontWeight="bold">
               Request Body Schema:
             </Typography>
-            <Typography variant="body1">{requestBodySchema}</Typography>
+            <Typography variant="body1">{requestBodyQueryKey}</Typography>
           </Box>
           <Box display="flex" flexDirection="row" gap={2}>
             <Typography variant="body1" fontWeight="bold">
@@ -151,13 +126,13 @@ const ReviewForm = ({
             <Typography variant="body1" fontWeight="bold">
               Response Content Type:
             </Typography>
-            <Typography variant="body1">{responseContentType}</Typography>
+            <Typography variant="body1">{responseFormat}</Typography>
           </Box>
           <Box display="flex" flexDirection="row" gap={2}>
             <Typography variant="body1" fontWeight="bold">
               Response Schema:
             </Typography>
-            <Typography variant="body1">{responseSchema}</Typography>
+            <Typography variant="body1">{responseBodyKey}</Typography>
           </Box>
         </Box>
       )}

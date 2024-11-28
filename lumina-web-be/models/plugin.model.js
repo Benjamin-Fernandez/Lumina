@@ -17,7 +17,7 @@ const PluginSchema = mongoose.Schema({
     required: [true, "Please provide a version"],
   },
   image: {
-    type: Buffer,
+    type: String,
     required: [true, "Please provide an image"],
   },
   category: {
@@ -60,27 +60,27 @@ const PluginSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  requestBodySchema: {
+  requestBodyQueryKey: {
     type: String,
     required: false,
   },
   requestFormat: {
     type: String,
-    required: [true, "Please provide a request format"],
+    required: false,
   },
   requestContentType: {
     type: String,
-    required: [true, "Please provide a request content type"],
+    required: false,
   },
   responseStatusCode: {
     type: String,
     required: [true, "Please provide a response status code"],
   },
-  responseContentType: {
+  responseFormat: {
     type: String,
     required: [true, "Please provide a response content type"],
   },
-  responseSchema: {
+  responseBodyKey: {
     type: String,
     required: [true, "Please provide a response schema"],
   },

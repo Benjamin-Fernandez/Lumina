@@ -51,12 +51,12 @@ const updatePluginById = async (req, res) => {
       parametersRequired,
       parameters,
       requestBodyRequired,
-      requestBodySchema,
+      requestBodyQueryKey,
       requestFormat,
       requestContentType,
       responseStatusCode,
-      responseContentType,
-      responseSchema,
+      responseFormat,
+      responseBodyKey,
     };
 
     const plugin = await Plugin.findByIdAndUpdate(id, update, { new: true });

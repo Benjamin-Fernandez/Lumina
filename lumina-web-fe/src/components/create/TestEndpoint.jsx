@@ -1,19 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  Avatar,
-  IconButton,
-  Paper,
-  Badge,
-  Tooltip,
-  Switch,
-  Divider,
-} from "@mui/material";
+import { Box, Typography, TextField, IconButton } from "@mui/material";
 import { styled } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 const MessageContainer = styled(Box)({
   flex: 1,
@@ -42,7 +30,7 @@ const MessageContent = styled(Box)(({ isOwn }) => ({
   color: isOwn ? "#ffffff" : "#000000",
 }));
 
-const TestEndpoint = () => {
+const TestEndpoint = ({ testEndpoint, yamlString, setEndpointSuccess }) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -78,8 +66,36 @@ const TestEndpoint = () => {
         }),
         status: "sent",
       };
-      setMessages([...messages, message]);
+      setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage("");
+
+      console.log("YAML STRING before calling testEndpoint", yamlString);
+
+      testEndpoint({ yamlString, query: newMessage }).then((response) => {
+        console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: prevMessages.length + 1,
+            text: response,
+            isOwn: false,
+          },
+        ]);
+        if (
+          !response.includes("Error") &&
+          response !== "No response from API."
+        ) {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: prevMessages.length + 1,
+              text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
+              isOwn: false,
+            },
+          ]);
+          setEndpointSuccess(true);
+        }
+      });
     }
   };
 
@@ -108,11 +124,6 @@ const TestEndpoint = () => {
                 <Typography variant="caption" sx={{ mr: 1, opacity: 0.7 }}>
                   {message.time}
                 </Typography>
-                {message.isOwn && (
-                  <DoneAllIcon
-                    style={{ opacity: message.status === "read" ? 1 : 0.5 }}
-                  />
-                )}
               </Box>
             </MessageContent>
           </Message>

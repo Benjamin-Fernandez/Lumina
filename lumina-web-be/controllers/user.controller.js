@@ -15,7 +15,7 @@ const getUserByEmail = async (req, res) => {
     const { email } = req.params;
     const user = await User.findOne({ email });
     res.status(200).json({ user });
-    console.log("User found by email");
+    console.log("User found by email: ", user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

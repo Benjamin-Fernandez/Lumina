@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   FormControl,
@@ -17,67 +17,62 @@ import { Grid } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const PluginEndpointForm = ({
-  yamlFile,
+  formRef,
+  // yamlFile,
   endpoint,
   path,
-  httpMethod,
-  parametersRequired,
-  parameters,
-  requestBodyRequired,
   requestFormat,
   requestContentType,
-  requestBodySchema,
+  requestBodyQueryKey,
   responseStatusCode,
-  responseContentType,
-  responseSchema,
-  setYamlFile,
+  responseFormat,
+  responseBodyKey,
+  // setYamlFile,
   setEndpoint,
   setPath,
-  setHttpMethod,
-  setParametersRequired,
-  setParameters,
-  setRequestBodyRequired,
   setRequestFormat,
-  setRequestBodySchema,
+  setRequestBodyQueryKey,
   setRequestContentType,
   setResponseStatusCode,
-  setResponseContentType,
-  setResponseSchema,
+  setResponseFormat,
+  setResponseBodyKey,
 }) => {
-  const fileInputRef = useRef(null);
+  // const fileInputRef = useRef(null);
 
-  const handleFileChange = (event) => {
-    const uploadedFile = event.target.files[0];
-    if (uploadedFile) {
-      // Check if the file is a YAML file
-      if (
-        uploadedFile.type === "application/x-yaml" ||
-        uploadedFile.name.endsWith(".yaml")
-      ) {
-        setYamlFile(uploadedFile);
-      } else {
-        alert("Please upload a valid YAML file.");
-        setYamlFile(null);
-      }
-    }
-  };
-  const handleDeleteFile = () => {
-    setYamlFile(null);
-    // Reset the file input to allow re-upload of the same file
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset input
-    }
-  };
+  // const handleFileChange = (event) => {
+  //   const uploadedFile = event.target.files[0];
+  //   if (uploadedFile) {
+  //     // Check if the file is a YAML file
+  //     if (
+  //       uploadedFile.type === "application/x-yaml" ||
+  //       uploadedFile.name.endsWith(".yaml")
+  //     ) {
+  //       setYamlFile(uploadedFile);
+  //     } else {
+  //       alert("Please upload a valid YAML file.");
+  //       setYamlFile(null);
+  //     }
+  //   }
+  // };
+  // const handleDeleteFile = () => {
+  //   setYamlFile(null);
+  //   // Reset the file input to allow re-upload of the same file
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = ""; // Reset input
+  //   }
+  // };
 
   return (
     <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="h4">Enter Plugin Endpoint 🌐</Typography>
+      <Typography variant="h4" ref={formRef}>
+        Enter Plugin Endpoint 🌐
+      </Typography>
       <Typography variant="body1">
         Plugin endpoint is where your chatbot lives! Fill in the details below
         to ensure a seamless integration with Lumina:
       </Typography>
 
-      <Divider>Upload your own OpenAPI 3.0 Schema</Divider>
+      {/* <Divider>Upload your own OpenAPI 3.0 Schema</Divider>
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
           <Button
@@ -125,7 +120,7 @@ const PluginEndpointForm = ({
 
       <Divider>
         OR fill in details below to generate an OpenAPI 3.0 Schema
-      </Divider>
+      </Divider> */}
 
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
@@ -138,7 +133,7 @@ const PluginEndpointForm = ({
           >
             <TextField
               label={"Server URL"}
-              helperText="E.g. https://api.example.com"
+              helperText="E.g. https://api.example.com:8000"
               value={endpoint}
               onChange={(e) => setEndpoint(e.target.value)}
               required
@@ -166,115 +161,10 @@ const PluginEndpointForm = ({
           </Tooltip>
         </Grid>
       </Grid>
-      <Typography variant="body1">Request</Typography>
+      <Typography variant="body1">Request Body</Typography>
 
       <Grid container spacing={2} mb="15px">
-        <Grid item size={12}>
-          <Tooltip
-            title={<Typography>Type of HTTP request.</Typography>}
-            placement="top"
-          >
-            <FormControl fullWidth required>
-              <InputLabel id="requestType">HTTP Method</InputLabel>
-              <Select
-                fullWidth
-                labelId="httpMethod"
-                id="httpMethod"
-                value={httpMethod}
-                label={"httpMethod"}
-                onChange={(e) => setHttpMethod(e.target.value)}
-              >
-                <MenuItem value={"GET"}>GET</MenuItem>
-                <MenuItem value={"PUT"}>PUT</MenuItem>
-                <MenuItem value={"POST"}>POST</MenuItem>
-              </Select>
-            </FormControl>
-          </Tooltip>
-        </Grid>
-        <Grid item size={12}>
-          <Typography variant="body1" color="grey">
-            Request Parameters
-          </Typography>
-        </Grid>
-        <Grid item size={6}>
-          <Tooltip
-            title={
-              <Typography>
-                Boolean value of whether parameters are required or not.
-              </Typography>
-            }
-            placement="top"
-          >
-            <FormControl fullWidth required>
-              <InputLabel id="requestFormat">Parameters Required</InputLabel>
-              <Select
-                fullWidth
-                labelId="parametersRequired"
-                id="parametersRequired"
-                value={parametersRequired}
-                label={"parametersRequired"}
-                onChange={(e) => setParametersRequired(e.target.value)}
-              >
-                <MenuItem value={"true"}>True</MenuItem>
-                <MenuItem value={"false"}>False</MenuItem>
-              </Select>
-            </FormControl>
-          </Tooltip>
-        </Grid>
-        <Grid size={6}>
-          <Tooltip
-            title={
-              <Typography>
-                List of parameters, their location (query, header, etc.), types.
-              </Typography>
-            }
-            placement="top"
-          >
-            <TextField
-              fullWidth
-              label={"Parameters"}
-              required
-              helperText={
-                <>E.g. &#123; "query": "string", "header": "JWT" &#125;</>
-              }
-              value={parameters}
-              onChange={(e) => setParameters(e.target.value)}
-            />
-          </Tooltip>
-        </Grid>
-        <Grid item size={12}>
-          <Typography variant="body1" color="grey">
-            Request Body
-          </Typography>
-        </Grid>
-        <Grid item size={6}>
-          <Tooltip
-            title={
-              <Typography>
-                Boolean value of whether request body is required or not.
-              </Typography>
-            }
-            placement="top"
-          >
-            <FormControl fullWidth required>
-              <InputLabel id="requestBodyRequired">
-                Request Body Required
-              </InputLabel>
-              <Select
-                fullWidth
-                labelId="requestBodyRequired"
-                id="requestBodyRequired"
-                value={requestBodyRequired}
-                label={"requestBodyRequired"}
-                onChange={(e) => setRequestBodyRequired(e.target.value)}
-              >
-                <MenuItem value={"true"}>True</MenuItem>
-                <MenuItem value={"false"}>False</MenuItem>
-              </Select>
-            </FormControl>
-          </Tooltip>
-        </Grid>
-        <Grid size={6}>
+        <Grid size={12}>
           <Tooltip
             title={<Typography>Format of the response.</Typography>}
             placement="top"
@@ -293,65 +183,63 @@ const PluginEndpointForm = ({
                   <em>None</em>
                 </MenuItem>
                 <MenuItem value={"application/json"}>application/json</MenuItem>
-                <MenuItem value={"application/x-www-form-urlencoded"}>
+                {/* <MenuItem value={"application/x-www-form-urlencoded"}>
                   application/x-www-form-urlencoded
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem value={"text/plain"}>text/plain</MenuItem>
               </Select>
             </FormControl>
           </Tooltip>
         </Grid>
-        <Grid size={6}>
-          <Tooltip
-            title={
-              <Typography>
-                Data type of the request payload, if applicable.
-              </Typography>
-            }
-            placement="top"
-          >
-            <FormControl fullWidth required>
-              <InputLabel id="requestContentType">
-                Request Body Content Type
-              </InputLabel>
-              <Select
-                fullWidth
-                labelId="requestContentType"
-                id="requestContentType"
-                value={requestContentType}
-                label={"requestContentType"}
-                onChange={(e) => setRequestContentType(e.target.value)}
-              >
-                <MenuItem value={""}>
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={"string"}>String</MenuItem>
-                <MenuItem value={"object"}>Object</MenuItem>
-              </Select>
-            </FormControl>
-          </Tooltip>
-        </Grid>
-        <Grid size={6}>
-          <Tooltip
-            title={
-              <Typography>
-                Structure of the request payload, if applicable.
-              </Typography>
-            }
-            placement="top"
-          >
-            <TextField
-              fullWidth
-              label={"Request Body Schema"}
-              required
-              helperText={
-                <>E.g. &#123; "name": "string", "age": "integer" &#125;</>
+        {requestFormat == "application/json" && (
+          <Grid size={6}>
+            <Tooltip
+              title={<Typography>Data type of the request payload</Typography>}
+              placement="top"
+            >
+              <FormControl fullWidth required>
+                <InputLabel id="requestContentType">
+                  Request Body Content Type
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="requestContentType"
+                  id="requestContentType"
+                  value={requestContentType}
+                  label={"requestContentType"}
+                  onChange={(e) => setRequestContentType(e.target.value)}
+                >
+                  <MenuItem value={""}>
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={"string"}>String</MenuItem>
+                  <MenuItem value={"object"}>Object</MenuItem>
+                </Select>
+              </FormControl>
+            </Tooltip>
+          </Grid>
+        )}
+        {requestFormat == "application/json" && (
+          <Grid size={6}>
+            <Tooltip
+              title={
+                <Typography>
+                  Key of the property that contain user query
+                </Typography>
               }
-              value={requestBodySchema}
-              onChange={(e) => setRequestBodySchema(e.target.value)}
-            />
-          </Tooltip>
-        </Grid>
+              placement="top"
+            >
+              <TextField
+                fullWidth
+                label={"Request Body Query Key"}
+                required
+                helperText={<>E.g. query </>}
+                value={requestBodyQueryKey}
+                onChange={(e) => setRequestBodyQueryKey(e.target.value)}
+              />
+            </Tooltip>
+          </Grid>
+        )}
       </Grid>
       <Typography variant="body1">Response</Typography>
       <Grid container spacing={2} mb="15px">
@@ -366,7 +254,7 @@ const PluginEndpointForm = ({
               fullWidth
               label={"Response Status Code"}
               required
-              helperText={<>E.g. "200"</>}
+              helperText={<>E.g. 200</>}
               value={responseStatusCode}
               onChange={(e) => setResponseStatusCode(e.target.value)}
             />
@@ -378,16 +266,14 @@ const PluginEndpointForm = ({
             placement="top"
           >
             <FormControl fullWidth required>
-              <InputLabel id="responseContentType">
-                Response Content Type
-              </InputLabel>
+              <InputLabel id="responseFormat">Response Format</InputLabel>
               <Select
                 fullWidth
-                labelId="responseContentType"
-                id="responseContentType"
-                value={responseContentType}
-                label={"responseContentType"}
-                onChange={(e) => setResponseContentType(e.target.value)}
+                labelId="responseFormat"
+                id="responseFormat"
+                value={responseFormat}
+                label={"responseFormat"}
+                onChange={(e) => setResponseFormat(e.target.value)}
               >
                 <MenuItem value={"application/json"}>application/json</MenuItem>
                 <MenuItem value={"text/plain"}>text/plain</MenuItem>
@@ -397,16 +283,20 @@ const PluginEndpointForm = ({
         </Grid>
         <Grid item size={12}>
           <Tooltip
-            title={<Typography>Structure of the response payload</Typography>}
+            title={
+              <Typography>
+                Key of the property that contain model's response
+              </Typography>
+            }
             placement="top"
           >
             <TextField
               required
               fullWidth
-              label={"Response Schema"}
+              label={"Response Body Key"}
               helperText={<>E.g. &#123; "type": "string" &#125;</>}
-              value={responseSchema}
-              onChange={(e) => setResponseSchema(e.target.value)}
+              value={responseBodyKey}
+              onChange={(e) => setResponseBodyKey(e.target.value)}
             />
           </Tooltip>
         </Grid>

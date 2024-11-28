@@ -346,8 +346,8 @@ const PluginDetailTableEdit = ({ selectedSection }) => {
                 helperText={
                   <>E.g. &#123; "name": "string", "age": "integer" &#125;</>
                 }
-                // value={requestBodySchema}
-                // onChange={(e) => setRequestBodySchema(e.target.value)}
+                // value={requestBodyQueryKey}
+                // onChange={(e) => setRequestBodyQueryKey(e.target.value)}
               />
             </Tooltip>
           </Grid>
@@ -386,16 +386,16 @@ const PluginDetailTableEdit = ({ selectedSection }) => {
               placement="top"
             >
               <FormControl fullWidth required>
-                <InputLabel id="responseContentType">
+                <InputLabel id="responseFormat">
                   Response Content Type
                 </InputLabel>
                 <Select
                   fullWidth
-                  labelId="responseContentType"
-                  id="responseContentType"
-                  //   value={responseContentType}
-                  label={"responseContentType"}
-                  //   onChange={(e) => setResponseContentType(e.target.value)}
+                  labelId="responseFormat"
+                  id="responseFormat"
+                  //   value={responseFormat}
+                  label={"responseFormat"}
+                  //   onChange={(e) => setResponseFormat(e.target.value)}
                 >
                   <MenuItem value={"application/json"}>
                     application/json
@@ -415,8 +415,8 @@ const PluginDetailTableEdit = ({ selectedSection }) => {
                 fullWidth
                 label={"Response Schema"}
                 helperText={<>E.g. &#123; "type": "string" &#125;</>}
-                // value={responseSchema}
-                // onChange={(e) => setResponseSchema(e.target.value)}
+                // value={responseBodyKey}
+                // onChange={(e) => setResponseBodyKey(e.target.value)}
               />
             </Tooltip>
           </Grid>

@@ -62,9 +62,9 @@ mongoose
 //   try {
 //     console.log("Sending request...");
 //     const response = await client.execute({
-//       operationId: "sayHello",
+//       operationId: "getResponse",
 //       requestBody: {
-//         query: "hello", // Ensure the correct structure
+//         query: "hello ", // Ensure the correct structure
 //       },
 //     });
 
