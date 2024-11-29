@@ -73,7 +73,7 @@ const Instruction = ({ checked, setChecked }) => {
           <ul>
             <li>The base URL where the API is hosted.</li>
             <pre>
-              Example: <code>{`"https://api.example.com"`}</code>
+              Example: <code>{`"https://api.example.com:8000"`}</code>
             </pre>
           </ul>
           <li>Paths</li>
@@ -86,42 +86,28 @@ const Instruction = ({ checked, setChecked }) => {
               Example: <code>{`"/getResponse"`}</code>
             </pre>
           </ul>
-          <li>HTTP Method</li>
-          <ul>
-            <li>Type of HTTP request.</li>
-            <pre>
-              Example: <code>{`"GET" or "PUT" or "POST"`}</code>
-            </pre>
-          </ul>
-          <li>Parameters (Optional)</li>
+
+          <li>Request Body Format</li>
           <ul>
             <li>
-              List of parameters, their location (query, header, etc.), types,
-              and if they’re required.
+              Format of the response (application/json, text/plain, etc.).
             </li>
-            <pre>
-              Example: <code>{`{ "query": "string", "header": "JWT" }`}</code>
-            </pre>
-          </ul>
-          <li>Request Body Format (Optional)</li>
-          <ul>
-            <li>Format of the response (JSON, text/plain, etc.).</li>
             <pre>
               Example: <code>{`"application/json"`}</code>
             </pre>
           </ul>
-          <li>Request Body Content Type (Optional)</li>
+          <li>Request Body Content Type</li>
           <ul>
-            <li>Data type of the request payload, if applicable.</li>
+            <li>Data type of the request payload</li>
             <pre>
               Example: <code>{`"object"`}</code>
             </pre>
           </ul>
-          <li>Request Body Schema (Optional)</li>
+          <li>Request Body Query Key</li>
           <ul>
-            <li>Structure of the request payload, if applicable.</li>
+            <li>Key of the property that contain user query</li>
             <pre>
-              Example: <code>{`{ "name": "string", "age": "integer" }`}</code>
+              Example: <code>{`query`}</code>
             </pre>
           </ul>
           <li>Response Status Code</li>
@@ -138,11 +124,11 @@ const Instruction = ({ checked, setChecked }) => {
               Example: <code>{`"text/plain"`}</code>
             </pre>
           </ul>
-          <li>Response Schema</li>
+          <li>Response Body Key</li>
           <ul>
-            <li>Structure of the response payload</li>
+            <li>Key of the property that contain model's response</li>
             <pre>
-              Example: <code>{`{ "type": "string" }`}</code>
+              Example: <code>{`response`}</code>
             </pre>
           </ul>
         </ul>

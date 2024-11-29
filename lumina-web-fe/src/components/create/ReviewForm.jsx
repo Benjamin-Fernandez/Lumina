@@ -21,15 +21,14 @@ const ReviewForm = ({
 }) => {
   const [imageSrc, setImageSrc] = useState("");
   useEffect(() => {
-    if (file && file[0]) {
+    if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageSrc(reader.result);
       };
-      reader.readAsDataURL(file[0]);
+      reader.readAsDataURL(file);
     }
   }, [file]);
-  console.log(file[0]);
 
   return (
     <Box display="flex" flexDirection="column" gap={2}>
@@ -104,18 +103,22 @@ const ReviewForm = ({
             </Typography>
             <Typography variant="body1">{requestFormat}</Typography>
           </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Request Body Content Type:
-            </Typography>
-            <Typography variant="body1">{requestContentType}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Request Body Schema:
-            </Typography>
-            <Typography variant="body1">{requestBodyQueryKey}</Typography>
-          </Box>
+          {requestFormat === "application/json" && (
+            <Box display="flex" flexDirection="row" gap={2}>
+              <Typography variant="body1" fontWeight="bold">
+                Request Body Content Type:
+              </Typography>
+              <Typography variant="body1">{requestContentType}</Typography>
+            </Box>
+          )}
+          {requestFormat === "application/json" && (
+            <Box display="flex" flexDirection="row" gap={2}>
+              <Typography variant="body1" fontWeight="bold">
+                Request Body Schema:
+              </Typography>
+              <Typography variant="body1">{requestBodyQueryKey}</Typography>
+            </Box>
+          )}
           <Box display="flex" flexDirection="row" gap={2}>
             <Typography variant="body1" fontWeight="bold">
               Response Status Code:

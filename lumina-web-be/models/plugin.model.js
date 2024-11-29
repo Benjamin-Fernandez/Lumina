@@ -44,22 +44,6 @@ const PluginSchema = mongoose.Schema({
     type: String,
     required: [true, "Please provide a path"],
   },
-  httpMethod: {
-    type: String,
-    required: [true, "Please provide an HTTP Method"],
-  },
-  parametersRequired: {
-    type: Boolean,
-    required: true,
-  },
-  parameters: {
-    type: String,
-    required: false,
-  },
-  requestBodyRequired: {
-    type: Boolean,
-    required: true,
-  },
   requestBodyQueryKey: {
     type: String,
     required: false,

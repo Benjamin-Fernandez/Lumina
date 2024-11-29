@@ -294,7 +294,7 @@ const PluginEndpointForm = ({
               required
               fullWidth
               label={"Response Body Key"}
-              helperText={<>E.g. &#123; "type": "string" &#125;</>}
+              helperText={<>response</>}
               value={responseBodyKey}
               onChange={(e) => setResponseBodyKey(e.target.value)}
             />

@@ -7,6 +7,8 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  IconButton,
+  Avatar,
 } from "@mui/material";
 import { Grid } from "@mui/system";
 import { FilePond, registerPlugin } from "react-filepond";
@@ -29,54 +31,84 @@ registerPlugin(
 );
 
 const PluginDetailsForm = ({
+  formRef,
   file,
+  base64,
   name,
   category,
   description,
   setFile,
+  setBase64,
   setName,
   setCategory,
   setDescription,
 }) => {
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      console.log(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64(reader.result);
+        console.log(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
   return (
-    <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="h4">Enter Plugin Details 📝</Typography>
+    <Box
+      display="flex"
+      flexDirection="column"
+      gap={2}
+      alignContent="center"
+      justifyContent="center"
+    >
+      <Typography variant="h4" ref={formRef}>
+        Enter Plugin Details 📝
+      </Typography>
       <Typography variant="body1">
         Plugin details lets students learn more about your chatbot in Lumina
         Store! Fill in the details below to make your chatbot stand out and help
         students discover its value:
       </Typography>
-      <Box>
-        <FilePond
-          files={file}
-          onupdatefiles={(fileItems) =>
-            setFile(fileItems.map((fileItem) => fileItem.file))
-          }
-          acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]} // File type validation for upload
-          allowMultiple={false} // Allow only 1 file
-          allowImageCrop={true} // Allow cropping
-          allowImagePreview={true} // Preview images
-          imageCropAspectRatio="1:1" // Crop to square
-          name="profilePicture"
-          labelIdle="+"
-          stylePanelAspectRatio="1:1"
-          stylePanelLayout="compact circle"
-          styleButtonRemoveItemPosition="center bottom"
-        />
-        <style>
-          {`
-              /* Make the image uploader smaller */
-              .filepond--root {
-              justify-self: center;
-              height: 120px; /* Set the height of the entire uploader */
-              width: 120px; /* Set the width of the entire uploader */
-                max-width: 120px; /* Set the width of the entire uploader */
-                max-height: 120px; /* Set the height of the entire uploader */
-              }
-
-            `}
-        </style>
-      </Box>
+      <Grid container spacing={2} mb="15px" justifyContent="center">
+        <Grid item xs={12} display="flex" justifyContent="center">
+          {/* Avatar Selector */}
+          <input
+            accept="image/*"
+            type="file"
+            id="file-upload"
+            hidden
+            onChange={handleFileChange}
+          />
+          <label htmlFor="file-upload">
+            <IconButton
+              component="span"
+              sx={{ width: "120px", height: "120px" }}
+            >
+              {file ? (
+                <Avatar sx={{ width: "120px", height: "120px" }}>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="avatar"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </Avatar>
+              ) : (
+                <Avatar sx={{ width: "120px", height: "120px" }}>
+                  <Typography variant="h4">+</Typography>
+                </Avatar>
+              )}
+            </IconButton>
+          </label>
+        </Grid>
+      </Grid>
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
           <TextField
