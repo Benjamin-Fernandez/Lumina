@@ -4,7 +4,7 @@ const Plugin = require("../models/plugin.model");
 const getPluginByEmail = async (req, res) => {
   try {
     const { email } = req.params;
-    const plugin = await Plugin.findOne({ email });
+    const plugin = await Plugin.find({ userEmail: email });
     res.status(200).json({ plugin });
   } catch (error) {
     res.status(500).json({ error: error.message });

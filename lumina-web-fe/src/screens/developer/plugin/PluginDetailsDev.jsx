@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../../theme";
@@ -10,6 +10,8 @@ import DeactivateModal from "../../../components/modal/DeactivateModal";
 import CancelModal from "../../../components/modal/CancelModal";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
+import { useParams } from "react-router-dom";
+import axios from "../../../config/axiosConfig";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
@@ -20,6 +22,9 @@ const PluginDetailsDev = () => {
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [cancelModal, setCancelModal] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [plugin, setPlugin] = useState(null);
+
+  const { id } = useParams();
 
   // Function to handle sidebar navigation
   const handleSectionClick = (section) => {
@@ -42,7 +47,18 @@ const PluginDetailsDev = () => {
   const handleEdit = () => {
     setEdit(!edit);
   };
+  const fetchPlugin = async () => {
+    const response = await axios.get(`/plugin/${id}`);
+    setPlugin(response.data.plugin);
+  };
 
+  useEffect(() => {
+    fetchPlugin();
+  }, []);
+
+  useEffect(() => {
+    console.log(plugin);
+  }, [plugin]);
   return (
     <Box
       px={4}
@@ -68,7 +84,7 @@ const PluginDetailsDev = () => {
         <Box display="flex" flexDirection="row">
           <Box
             component="img"
-            src={"/assets/chatbot.jpg"}
+            src={plugin?.image}
             sx={{
               width: "150px",
               height: "150px",
@@ -81,13 +97,13 @@ const PluginDetailsDev = () => {
               sx={{ mx: "20px", my: "20px" }}
               fontWeight="bold"
             >
-              Plugin Name
+              {plugin?.name}
             </Typography>
             <Typography variant="h6" sx={{ mx: "20px", mb: "10px" }}>
-              Author
+              {plugin?.userName}
             </Typography>
             <Typography variant="h6" sx={{ mx: "20px" }}>
-              Author Email
+              {plugin?.userEmail}
             </Typography>
           </Box>
         </Box>
@@ -173,6 +189,7 @@ const PluginDetailsDev = () => {
         <PluginDetailTableContent
           selectedSection={selectedSection}
           edit={edit}
+          plugin={plugin}
         />
       </Box>
       <DeactivateModal

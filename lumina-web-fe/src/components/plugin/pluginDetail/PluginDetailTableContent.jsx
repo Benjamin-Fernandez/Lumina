@@ -8,14 +8,24 @@ import IconButton from "@mui/material/IconButton";
 import { tokens } from "../../../theme";
 import PluginDetailTableNoEdit from "./PluginDetailTableNoEdit";
 
-const PluginDetailTableContent = ({ selectedSection, edit }) => {
+const PluginDetailTableContent = ({ selectedSection, edit, plugin }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box width="100%" height="50vh" pl={3} sx={{ overflowY: "auto" }}>
-      {edit && <PluginDetailTableEdit selectedSection={selectedSection} />}
-      {!edit && <PluginDetailTableNoEdit selectedSection={selectedSection} />}
+    <Box width="100%" height="50vh" pl={3} py={1} sx={{ overflowY: "auto" }}>
+      {edit && (
+        <PluginDetailTableEdit
+          selectedSection={selectedSection}
+          plugin={plugin}
+        />
+      )}
+      {!edit && (
+        <PluginDetailTableNoEdit
+          selectedSection={selectedSection}
+          plugin={plugin}
+        />
+      )}
     </Box>
   );
 };

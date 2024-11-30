@@ -21,6 +21,7 @@ import { msalInstance } from "../src/config";
 import PluginDev from "./screens/developer/plugin/PluginDev";
 import PluginDetailsDev from "./screens/developer/plugin/PluginDetailsDev";
 import { UserProvider } from "./context/UserContext";
+import { PluginProvider } from "./context/PluginContext";
 
 // import Setting from "./screens/setting";
 
@@ -44,22 +45,23 @@ function App() {
   return (
     <MsalProvider instance={msalInstance}>
       <UserProvider>
-        <ColorModeContext.Provider value={colorMode}>
-          {/* Setting up the theme provider */}
-          <ThemeProvider theme={themeMode}>
-            {/* CssBaseline --> resets the css to the default [FROM MUI] */}
-            <CssBaseline />
-            <div className="app">
-              {/* Sidebar */}
-              {BarPresent && <Sidebar />}
-              {/* Main content */}
-              <main className="content">
-                {/* Topbar */}
-                {BarPresent && <Topbar />}
-                {/* Routes */}
-                <Routes>
-                  <Route path="/" element={<Login />} />
-                  {/* <Route
+        <PluginProvider>
+          <ColorModeContext.Provider value={colorMode}>
+            {/* Setting up the theme provider */}
+            <ThemeProvider theme={themeMode}>
+              {/* CssBaseline --> resets the css to the default [FROM MUI] */}
+              <CssBaseline />
+              <div className="app">
+                {/* Sidebar */}
+                {BarPresent && <Sidebar />}
+                {/* Main content */}
+                <main className="content">
+                  {/* Topbar */}
+                  {BarPresent && <Topbar />}
+                  {/* Routes */}
+                  <Routes>
+                    <Route path="/" element={<Login />} />
+                    {/* <Route
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
@@ -131,52 +133,53 @@ function App() {
                     </ProtectedRoute>
                   }
                 /> */}
-                  <Route
-                    path="/profile"
-                    element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/create"
-                    element={
-                      <ProtectedRoute>
-                        <Create />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/pluginDev"
-                    element={
-                      <ProtectedRoute>
-                        <PluginDev />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/pluginDev/:id"
-                    element={
-                      <ProtectedRoute>
-                        <PluginDetailsDev />
-                      </ProtectedRoute>
-                    }
-                  />
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRoute>
+                          <Profile />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/create"
+                      element={
+                        <ProtectedRoute>
+                          <Create />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/pluginDev"
+                      element={
+                        <ProtectedRoute>
+                          <PluginDev />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/pluginDev/:id"
+                      element={
+                        <ProtectedRoute>
+                          <PluginDetailsDev />
+                        </ProtectedRoute>
+                      }
+                    />
 
-                  <Route
-                    path="*"
-                    element={
-                      <ProtectedRoute>
-                        <NotFound />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </main>
-            </div>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
+                    <Route
+                      path="*"
+                      element={
+                        <ProtectedRoute>
+                          <NotFound />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </main>
+              </div>
+            </ThemeProvider>
+          </ColorModeContext.Provider>
+        </PluginProvider>
       </UserProvider>
     </MsalProvider>
   );

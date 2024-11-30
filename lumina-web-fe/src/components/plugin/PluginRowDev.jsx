@@ -5,15 +5,7 @@ import React, { useState } from "react";
 import DeactivateModal from "../modal/DeactivateModal";
 import ReactivateModal from "../modal/ReactivateModal";
 
-const PluginRowDev = ({
-  title,
-  status,
-  version,
-  size,
-  category,
-  action,
-  displayPic,
-}) => {
+const PluginRowDev = ({ name, activated, version, category, image }) => {
   // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
   const [deactivateModal, setDeactivateModal] = useState(false);
@@ -50,7 +42,7 @@ const PluginRowDev = ({
         >
           <Box
             component="img"
-            src={displayPic}
+            src={`${image}`}
             width={40}
             height={40}
             borderRadius="50%"
@@ -61,7 +53,7 @@ const PluginRowDev = ({
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {title}
+            {name}
           </Typography>
         </Grid>
         <Grid item size={2}>
@@ -89,28 +81,28 @@ const PluginRowDev = ({
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {status}
+            {activated ? "Active" : "Inactive"}
           </Typography>
         </Grid>
         <Grid item size={2}>
-          {action === "Deactivate" && (
+          {activated === true && (
             <Button
               variant="contained"
               color="error"
               sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
               onClick={handleOpenDeactivate}
             >
-              {action}
+              Deactivate
             </Button>
           )}
-          {action === "Reactivate" && (
+          {activated === false && (
             <Button
               variant="contained"
               color="success"
               sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
               onClick={handleOpenReactivate}
             >
-              {action}
+              Activate
             </Button>
           )}
         </Grid>

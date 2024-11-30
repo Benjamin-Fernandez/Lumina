@@ -7,7 +7,7 @@ import PluginDetailTableEdit from "./PluginDetailTableEdit";
 import IconButton from "@mui/material/IconButton";
 import { tokens } from "../../../theme";
 
-const PluginDetailTableNoEdit = ({ selectedSection }) => {
+const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -20,7 +20,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Plugin Name
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              SC1015 Chatbot
+              {plugin?.name}
             </Typography>
           </Grid>
           <Grid item size={6}>
@@ -28,7 +28,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Version
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              1.0.0
+              {plugin?.version}
             </Typography>{" "}
           </Grid>
           <Grid item size={12}>
@@ -47,7 +47,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Category
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Modules
+              {plugin?.category}
             </Typography>
           </Grid>
           <Grid item size={12}>
@@ -58,18 +58,14 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Description
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit
-              optio sequi cum cumque dicta laudantium molestias quia libero
-              laborum architecto quos quasi, saepe, a doloremque omnis iusto
-              tenetur reiciendis ullam modi, magnam exercitationem. Asperiores
-              at animi sit magni sunt iusto.
+              {plugin?.description}
             </Typography>
           </Grid>
         </Grid>
       )}
       {selectedSection === "endpoints" && (
         <Grid container spacing={2} mb="15px">
-          <Grid item size={12}>
+          {/* <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
               OpenAPI 3.0 Schema
             </Typography>
@@ -81,7 +77,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
             >
               yamlFile
             </Link>
-          </Grid>
+          </Grid> */}
           <Grid item size={12}>
             <Divider />
           </Grid>
@@ -90,7 +86,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Server URL
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              https://api.example.com
+              {plugin?.endpoint}
             </Typography>
           </Grid>
           <Grid item size={6}>
@@ -98,59 +94,17 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Path
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              /getResponse
+              {plugin?.path}
             </Typography>
           </Grid>
 
           <Grid item size={12}>
             <Divider />
           </Grid>
-          <Grid item size={12}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Request
-            </Typography>
-          </Grid>
-          <Grid item size={12}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              HTTP Method
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              POST
-            </Typography>
-          </Grid>
-          <Grid item size={12}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Request Parameters
-            </Typography>
-          </Grid>
 
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Parameters Required
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              True
-            </Typography>
-          </Grid>
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Parameters
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              &#123; "query": "string", "header": "JWT" &#125;
-            </Typography>
-          </Grid>
           <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
               Request Body
-            </Typography>
-          </Grid>
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Request Body Required
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              False
             </Typography>
           </Grid>
 
@@ -159,7 +113,7 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Request Format
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              -
+              {plugin?.requestFormat}
             </Typography>
           </Grid>
 
@@ -168,15 +122,15 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Request Body Content Type
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              -
+              {plugin?.requestContentType}
             </Typography>
           </Grid>
-          <Grid item size={6}>
+          <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Request Body Schema
+              Request Body Query Key
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              -
+              {plugin?.requestBodyQueryKey}
             </Typography>
           </Grid>
           <Grid item size={12}>
@@ -193,24 +147,24 @@ const PluginDetailTableNoEdit = ({ selectedSection }) => {
               Response Status Code
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              200
+              {plugin?.responseStatusCode}
             </Typography>
           </Grid>
 
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Response Content Type
+              Response Format
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              application/json
+              {plugin?.responseFormat}
             </Typography>
           </Grid>
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Response Schema
+              Response Body Key
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              &#123; "query": "string", "header": "JWT" &#125;
+              {plugin?.responseBodyKey}
             </Typography>
           </Grid>
         </Grid>

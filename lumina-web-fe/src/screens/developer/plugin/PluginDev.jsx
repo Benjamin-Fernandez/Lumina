@@ -13,9 +13,10 @@ import { Link } from "react-router-dom";
 import { Grid, Stack, useTheme } from "@mui/system";
 import { tokens } from "../../../theme.js";
 import PluginRowDev from "../../../components/plugin/PluginRowDev.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import pluginData from "../../../data/pluginData.jsx";
+import axios from "../../../config/axiosConfig.js";
+import { useMsal } from "@azure/msal-react";
 
 const PluginDev = () => {
   const theme = useTheme();
@@ -24,6 +25,9 @@ const PluginDev = () => {
   const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(0); // Current page number
   const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
+  const [plugin, setPlugin] = useState([]);
+  const { instance } = useMsal();
+  const email = instance.getActiveAccount()?.username;
 
   // Handle pagination
   const handleChangePage = (event, newPage) => {
@@ -52,20 +56,37 @@ const PluginDev = () => {
     }
   };
 
+  const fetchPlugin = async () => {
+    try {
+      console.log("User email obtained from context " + email);
+      const response = await axios.get("/plugin/email/" + email);
+      setPlugin(response.data.plugin);
+    } catch (error) {
+      console.error("Error fetching plugin data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch plugin data from the database
+    fetchPlugin();
+  }, []);
+
+  useEffect(() => {
+    console.log("Plugin data fetched from the database: ", plugin);
+  }, [plugin]);
+
   // Filter and paginate data
-  const filteredData = pluginData.filter(
+  const filteredData = plugin.filter(
     (request) =>
-      (request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        request.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      request.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (filterTerm === "" ||
         request.category === filterTerm ||
-        request.status === filterTerm)
+        request.activated === filterTerm)
   );
   const paginatedData = filteredData.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-
   return (
     <Box
       py={4}
@@ -116,9 +137,10 @@ const PluginDev = () => {
           >
             <option aria-label="None" value="" />
             <optgroup label="Category">
-              <option value="Planning">Planning</option>
-              <option value="Help">Help</option>
-              <option value="Module">Modules</option>
+              <option value="Module">Module</option>
+              <option value="NTU">NTU</option>
+              <option value="Career">Career</option>
+              <option value="General">General</option>
             </optgroup>
             <optgroup label="Status">
               <option value="Active">Active</option>
@@ -160,7 +182,7 @@ const PluginDev = () => {
         {/* Table data */}
         {paginatedData.map((plugin, index) => (
           <Link
-            to={`/pluginDev/${plugin.id}`}
+            to={`/pluginDev/${plugin._id}`}
             key={index}
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -178,14 +200,12 @@ const PluginDev = () => {
             >
               <PluginRowDev
                 key={index}
-                title={plugin.title}
-                author={plugin.author}
+                name={plugin.name}
+                userName={plugin.userName}
                 version={plugin.version}
-                size={plugin.size}
                 category={plugin.category}
-                status={plugin.status}
-                action={plugin.action}
-                displayPic={plugin.displayPic}
+                activated={plugin.activated}
+                image={plugin.image}
               />
             </ButtonBase>
           </Link>
