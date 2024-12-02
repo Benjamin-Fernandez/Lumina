@@ -39,7 +39,7 @@ const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
               Date of Launch
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              9 September 2024
+              {plugin?.createdAt.split("T")[0]}
             </Typography>
           </Grid>
           <Grid item size={6}>

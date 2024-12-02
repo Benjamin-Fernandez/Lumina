@@ -43,8 +43,14 @@ const PluginDetailsForm = ({
   setCategory,
   setDescription,
 }) => {
+  const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      alert("File size exceeds 1MB. Please upload a smaller file.");
+      e.target.value = null;
+      return;
+    }
     if (selectedFile) {
       setFile(selectedFile);
       console.log(selectedFile);

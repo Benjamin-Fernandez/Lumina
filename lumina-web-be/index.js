@@ -5,7 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 // Middleware -> needed to parse the request body which is in JSON format
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "50mb" }));
 
 // Middleware -> needed to allow request from frontend
 app.use(

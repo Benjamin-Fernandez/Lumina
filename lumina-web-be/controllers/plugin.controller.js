@@ -36,7 +36,23 @@ const createPlugin = async (req, res) => {
 const updatePluginById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, version, author, email } = req.body;
+    const {
+      name,
+      version,
+      image,
+      category,
+      description,
+      activated,
+      schema,
+      endpoint,
+      path,
+      requestBodyQueryKey,
+      requestFormat,
+      requestContentType,
+      responseStatusCode,
+      responseFormat,
+      responseBodyKey,
+    } = req.body;
     const update = {
       name,
       version,
@@ -47,10 +63,6 @@ const updatePluginById = async (req, res) => {
       schema,
       endpoint,
       path,
-      httpMethod,
-      parametersRequired,
-      parameters,
-      requestBodyRequired,
       requestBodyQueryKey,
       requestFormat,
       requestContentType,
