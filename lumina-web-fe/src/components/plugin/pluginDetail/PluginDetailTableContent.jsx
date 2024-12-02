@@ -13,7 +13,7 @@ const PluginDetailTableContent = ({ selectedSection, edit, plugin }) => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box width="100%" height="50vh" pl={3} py={1} sx={{ overflowY: "auto" }}>
+    <Box width="100%" height="50vh" pl={3}>
       {edit && (
         <PluginDetailTableEdit
           selectedSection={selectedSection}

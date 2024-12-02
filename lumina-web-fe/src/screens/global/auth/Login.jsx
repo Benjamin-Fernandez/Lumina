@@ -5,7 +5,6 @@ import { config } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
-import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -18,7 +17,6 @@ const Login = () => {
       navigate("/pluginDev");
     }
   }, [instance]);
-  const { setEmail } = useUser();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -57,7 +55,6 @@ const Login = () => {
             console.error("Error fetching user by email:", error);
           });
         instance.setActiveAccount(response.account);
-        setEmail(email);
         console.log("Active Account Set:", response.account);
         navigate("/pluginDev");
       }

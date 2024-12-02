@@ -7,14 +7,14 @@ import LogOutModal from "../../../components/modal/LogOutModal";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
-import { useUser } from "../../../context/UserContext";
 import Loading from "../Loading";
+import { useMsal } from "@azure/msal-react";
 
 const Profile = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [logoutModal, setLogoutModal] = useState(false);
-  const { email } = useUser();
+  const email = useMsal().instance.getActiveAccount()?.username;
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 

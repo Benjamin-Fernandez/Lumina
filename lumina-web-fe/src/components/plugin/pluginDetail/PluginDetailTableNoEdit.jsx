@@ -77,10 +77,10 @@ const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
             >
               yamlFile
             </Link>
-          </Grid> */}
+          </Grid>
           <Grid item size={12}>
             <Divider />
-          </Grid>
+          </Grid> */}
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
               Server URL

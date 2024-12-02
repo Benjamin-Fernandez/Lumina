@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Divider,
@@ -19,33 +19,29 @@ import { tokens } from "../../../theme";
 const PluginDetailTableEdit = ({ selectedSection, plugin }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [name, setName] = React.useState(plugin.name);
-  const [version, setVersion] = React.useState(plugin.version);
-  const [category, setCategory] = React.useState(plugin.category);
-  const [description, setDescription] = React.useState(plugin.description);
-  const [endpoint, setEndpoint] = React.useState(plugin.endpoint);
-  const [path, setPath] = React.useState(plugin.path);
-  const [requestFormat, setRequestFormat] = React.useState(
-    plugin.requestFormat
-  );
-  const [requestContentType, setRequestContentType] = React.useState(
+  const [name, setName] = useState(plugin.name);
+  const [version, setVersion] = useState(plugin.version);
+  const [category, setCategory] = useState(plugin.category);
+  const [description, setDescription] = useState(plugin.description);
+  const [endpoint, setEndpoint] = useState(plugin.endpoint);
+  const [path, setPath] = useState(plugin.path);
+  const [requestFormat, setRequestFormat] = useState(plugin.requestFormat);
+  const [requestContentType, setRequestContentType] = useState(
     plugin.requestContentType
   );
-  const [requestBodyQueryKey, setRequestBodyQueryKey] = React.useState(
+  const [requestBodyQueryKey, setRequestBodyQueryKey] = useState(
     plugin.requestBodyQueryKey
   );
-  const [responseStatusCode, setResponseStatusCode] = React.useState(
+  const [responseStatusCode, setResponseStatusCode] = useState(
     plugin.responseStatusCode
   );
-  const [responseFormat, setResponseFormat] = React.useState(
-    plugin.responseFormat
-  );
-  const [responseBodyKey, setResponseBodyKey] = React.useState(
+  const [responseFormat, setResponseFormat] = useState(plugin.responseFormat);
+  const [responseBodyKey, setResponseBodyKey] = useState(
     plugin.responseBodyKey
   );
 
   return (
-    <Box>
+    <Box width="100%" height="50vh" pl={3} sx={{ overflowY: "auto" }} py={1}>
       {selectedSection === "details" && (
         <Grid container spacing={2} mb="15px">
           <Grid item size={6}>

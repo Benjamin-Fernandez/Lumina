@@ -15,11 +15,11 @@ import PluginDetailsForm from "../../../components/create/PluginDetailsForm";
 import PluginEndpointForm from "../../../components/create/PluginEndpointForm";
 import ReviewForm from "../../../components/create/ReviewForm";
 import TestEndpoint from "../../../components/create/TestEndpoint";
-import { useUser } from "../../../context/UserContext";
 import axios from "../../../config/axiosConfig";
 import * as yaml from "js-yaml";
 import testEndpoint from "../../../helpers/TestEndpoint";
 import { useNavigate } from "react-router-dom";
+import { useMsal } from "@azure/msal-react";
 
 const Create = () => {
   const theme = useTheme();
@@ -36,11 +36,11 @@ const Create = () => {
     //   { label: "Review and Submit", component: <ReviewForm /> },
   ];
   const Navigate = useNavigate();
-  const email = useUser();
+  const email = useMsal().instance.getActiveAccount().username;
   const formRef = useRef();
 
   const [checked, setChecked] = useState();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const [endpointSuccess, setEndpointSuccess] = useState(false);
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
@@ -193,12 +193,12 @@ const Create = () => {
 
   const handleSubmit = () => {
     console.log("Retrieving user information...");
-    console.log("User email:", email.email);
+    console.log("User email:", email);
     axios
-      .get("/user/email/" + email.email)
+      .get("/user/email/" + email)
       .then((res) => {
         console.log("Sending data:", {
-          userEmail: email.email,
+          userEmail: email,
           userName: res.data.user.name,
           name: name,
           version: "1.0.0",
@@ -216,29 +216,33 @@ const Create = () => {
           responseFormat: responseFormat,
           responseBodyKey: responseBodyKey,
         });
-        axios.post("/plugin/", {
-          userEmail: email.email,
-          userName: res.data.user.name,
-          name: name,
-          version: "1.0.0",
-          image: base64,
-          category: category,
-          description: description,
-          activated: false, // will change to true once deployed
-          schema: JSON.stringify(yamlString),
-          endpoint: endpoint,
-          path: path,
-          requestBodyQueryKey: requestBodyQueryKey,
-          requestFormat: requestFormat,
-          requestContentType: requestContentType,
-          responseStatusCode: responseStatusCode,
-          responseFormat: responseFormat,
-          responseBodyKey: responseBodyKey,
-        });
-      })
-      .then(() => {
-        console.log("Plugin submitted successfully!");
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        axios
+          .post("/plugin/", {
+            userEmail: email,
+            userName: res.data.user.name,
+            name: name,
+            version: "1.0.0",
+            image: base64,
+            category: category,
+            description: description,
+            activated: false, // will change to true once deployed
+            schema: JSON.stringify(yamlString),
+            endpoint: endpoint,
+            path: path,
+            requestBodyQueryKey: requestBodyQueryKey,
+            requestFormat: requestFormat,
+            requestContentType: requestContentType,
+            responseStatusCode: responseStatusCode,
+            responseFormat: responseFormat,
+            responseBodyKey: responseBodyKey,
+          })
+          .then(() => {
+            console.log("Plugin submitted successfully!");
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          })
+          .catch((error) => {
+            console.error("Error submitting plugin:", error);
+          });
       })
       .catch((error) => {
         console.error("Error submitting plugin:", error);
