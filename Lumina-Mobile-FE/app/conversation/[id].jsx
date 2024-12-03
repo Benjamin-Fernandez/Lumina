@@ -28,7 +28,8 @@ const ChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]); // Start with zero messages
   const [input, setInput] = useState("");
   const [conversationId, setConversationId] = useState(params.id); // Get conversation ID from params
-  const [chatTitle, setChatTitle] = useState(params.chatBot);
+  const [chatbotId, setChatbotId] = useState(params.chatbotId);
+  const [chatbot, setChatbot] = useState({});
   const [loading, setLoading] = useState(true);
   const { email } = useUser(); // Get email from context
   const scrollViewRef = useRef(null);
@@ -52,9 +53,23 @@ const ChatScreen = ({ navigation }) => {
     }
   };
 
+  const fetchChatbot = async () => {
+    try {
+      const response = await axios.get("/chatbot/" + chatbotId);
+      console.log("Chatbot details:", response.data);
+      setChatbot(response.data.chatbot);
+    } catch (error) {
+      console.error("Error fetching chatbot details:", error);
+    }
+  };
+
   // Fetch messages on initial render
   React.useEffect(() => {
     console.log("Conversation ID: ", conversationId);
+    console.log("params: ", params);
+    if (chatbotId !== "0") {
+      fetchChatbot();
+    }
     if (conversationId !== "new") {
       fetchConversation();
     } else {
@@ -63,39 +78,75 @@ const ChatScreen = ({ navigation }) => {
   }, []);
 
   const getResponse = useCallback(async () => {
-    console.log("Getting response from OpenAI...");
-    console.log("Messages: ", messages);
+    if (chatbotId === "0") {
+      // If the chatbot is Lumina GPT-4o
+      console.log("Getting response from OpenAI...");
+      console.log("Messages: ", messages);
 
-    const response = await axios.post("/openai", {
-      messages: messages,
-    });
+      const response = await axios.post("/openai", {
+        messages: messages,
+      });
 
-    console.log(
-      "Response from OpenAI: ",
-      response.data.response.choices[0].message.content
-    );
+      console.log(
+        "Response from OpenAI: ",
+        response.data.response.choices[0].message.content
+      );
 
-    // Post the message to the backend
-    await axios.post("/message", {
-      conversationId: conversationId,
-      fromSelf: false,
-      content: response.data.response.choices[0].message.content,
-    });
-
-    // Update messages using the functional form to ensure the most up-to-date state is used
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        content: response.data.response.choices[0].message.content,
+      // Post the message to the backend
+      await axios.post("/message", {
+        conversationId: conversationId,
         fromSelf: false,
-      },
-    ]);
+        content: response.data.response.choices[0].message.content,
+      });
 
-    console.log("Conversation updated: ", conversationId);
-    await axios.put("/conversation/" + conversationId, {
-      lastMessage: response.data.response.choices[0].message.content,
-    });
-    return response.data;
+      // Update messages using the functional form to ensure the most up-to-date state is used
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          content: response.data.response.choices[0].message.content,
+          fromSelf: false,
+        },
+      ]);
+
+      console.log("Conversation updated: ", conversationId);
+      await axios.put("/conversation/" + conversationId, {
+        lastMessage: response.data.response.choices[0].message.content,
+      });
+      return response.data;
+    } else {
+      console.log("Getting response from Custom Chatbot...");
+      try {
+        const response = await axios.post("/custom", {
+          message: messages[messages.length - 1].content,
+          schema: chatbot.schema,
+        });
+        console.log("Response from Custom Chatbot: ", response.data.response);
+
+        // Post the message to the backend
+        await axios.post("/message", {
+          conversationId: conversationId,
+          fromSelf: false,
+          content: response.data.response,
+        });
+
+        // Update messages using the functional form to ensure the most up-to-date state is used
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            content: response.data.response,
+            fromSelf: false,
+          },
+        ]);
+
+        console.log("Conversation updated: ", conversationId);
+        await axios.put("/conversation/" + conversationId, {
+          lastMessage: response.data.response,
+        });
+        return response.data.response;
+      } catch (error) {
+        console.error("Error fetching response from custom chatbot:", error);
+      }
+    }
   }, [messages, conversationId]);
 
   React.useEffect(() => {
@@ -113,18 +164,24 @@ const ChatScreen = ({ navigation }) => {
     console.log("Sending message: ", input);
     if (input.trim()) {
       if (messages.length === 0) {
-        const res = await axios.post("conversation/", {
-          userEmail: email,
-          chatbot: "Lumina GPT-4o-mini",
-          firstMessage: input,
-        });
-        setConversationId(res.data.conversation._id);
-        const currentConversationId = res.data.conversation._id;
-        const messageRes = await axios.post("/message", {
-          conversationId: currentConversationId,
-          fromSelf: true,
-          content: input,
-        });
+        try {
+          const res = await axios.post("conversation/", {
+            userEmail: email,
+            chatbotId: chatbotId,
+            firstMessage: input,
+          });
+          setConversationId(res.data.conversation._id);
+          const currentConversationId = res.data.conversation._id;
+
+          const messageRes = await axios.post("/message", {
+            conversationId: currentConversationId,
+            fromSelf: true,
+            content: input,
+          });
+        } catch (error) {
+          console.error("Error occurred:", error);
+          // Handle the error gracefully (e.g., show a user-friendly message)
+        }
       } else {
         console.log("Conversation exists: ", conversationId);
         await axios.post("/message", {
@@ -171,7 +228,9 @@ const ChatScreen = ({ navigation }) => {
           >
             <Icon name="chevron-left" size={24} color="black" />
           </TouchableOpacity>
-          <Text className="font-llight text-lg">{chatTitle}</Text>
+          <Text className="font-llight text-lg">
+            {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
+          </Text>
         </View>
         <ScrollView className="flex-1 ">
           <View className="flex-1 translate-y-72 items-center justify-center">
@@ -197,7 +256,9 @@ const ChatScreen = ({ navigation }) => {
           >
             <Icon name="chevron-left" size={24} color="black" />
           </TouchableOpacity>
-          <Text className="font-llight text-lg">{chatTitle}</Text>
+          <Text className="font-llight text-lg">
+            {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
+          </Text>
         </View>
 
         {/* Messages or No Messages */}

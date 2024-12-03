@@ -14,7 +14,7 @@ const ConversationHistory = () => {
   const handleNewChat = () => {
     router.push({
       pathname: "/conversation/new",
-      params: { chatBot: "Lumina GPT-4o-mini" },
+      params: { chatbotId: "0" },
     });
   };
 
@@ -92,7 +92,7 @@ const ConversationHistory = () => {
                 <React.Fragment key={index}>
                   <CustomConversation
                     id={conversation._id}
-                    chatBot={conversation.chatbot}
+                    chatbotId={conversation.chatbotId}
                     lastMessage={conversation.lastMessage}
                     date={conversation.updatedAt.split("T")[0]}
                     time={conversation.updatedAt.split("T")[1].split(".")[0]}

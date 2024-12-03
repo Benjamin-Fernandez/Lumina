@@ -15,7 +15,7 @@ import axios from "../config/axiosConfig";
 
 const CustomConversation = ({
   id,
-  chatBot,
+  chatbotId,
   lastMessage,
   date,
   time,
@@ -29,9 +29,10 @@ const CustomConversation = ({
     if (!isSwipeActive) {
       // Only navigate if swipe is not active
       console.log("Navigating to conversation with ID: " + id);
+      console.log("Passing in chatbot: " + chatbotId);
       router.push({
         pathname: "/conversation/" + id,
-        params: { chatBot: chatBot },
+        params: { chatbotId: chatbotId },
       }); // Navigate to the conversation screen
     }
   };

@@ -78,6 +78,14 @@ const ChatbotDetail = () => {
       console.error("Error updating favourite chatbots:", error);
     }
   };
+  const handleNewChat = () => {
+    router.push({
+      pathname: "/conversation/new",
+      params: {
+        chatbotId: chatbot._id,
+      },
+    });
+  };
 
   useEffect(() => {
     fetchDetails();
@@ -160,7 +168,7 @@ const ChatbotDetail = () => {
           {chatbot.description}
         </Text>
       </View>
-      <TouchableOpacity className="px-7">
+      <TouchableOpacity className="px-7" onPress={handleNewChat}>
         <View className="w-full h-[50px] rounded-full bg-primaryButton mt-8 items-center justify-center">
           <Text className="font-lregular text-lg text-white">
             Start Chatbot
