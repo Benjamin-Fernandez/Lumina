@@ -6,9 +6,9 @@ const conversationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide user id"],
     },
-    chatbot: {
+    chatbotId: {
       type: String,
-      required: [true, "Please provide chatbot"],
+      required: [true, "Please provide chatbotId"],
     },
     firstMessage: {
       type: String,

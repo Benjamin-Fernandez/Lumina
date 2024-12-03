@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Middleware -> needed to parse the request body which is in JSON format
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 // Importing routes
 const userRoute = require("./routes/user.route");

@@ -2,6 +2,6 @@ const axios = require("axios");
 
 // Set up axios defaults
 // axios.defaults.baseURL = "http://192.168.0.114:3000";
-axios.defaults.baseURL = "http://10.244.0.221:3000";
+axios.defaults.baseURL = "http://172.20.10.4:3000";
 
 module.exports = axios;

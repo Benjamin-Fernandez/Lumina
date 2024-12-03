@@ -2,21 +2,41 @@ const mongoose = require("mongoose");
 
 const chatbotSchema = new mongoose.Schema(
   {
+    userEmail: {
+      type: String,
+      required: [true, "Please provide an email"],
+    },
+    userName: {
+      type: String,
+      required: [true, "Please provide a username"],
+    },
     name: {
       type: String,
-      required: [true, "Please provide chatbot name"],
+      required: [true, "Please provide a name"],
     },
-    ratings: {
-      type: Number,
-      required: false,
-    },
-    description: {
+    version: {
       type: String,
-      required: [true, "Please provide chatbot description"],
+      required: [true, "Please provide a version"],
     },
     image: {
       type: String,
-      required: false,
+      required: [true, "Please provide an image"],
+    },
+    category: {
+      type: String,
+      required: [true, "Please provide a category"],
+    },
+    description: {
+      type: String,
+      required: [true, "Please provide a description"],
+    },
+    activated: {
+      type: Boolean,
+      required: [true, "Please provide an activation status"],
+    },
+    schema: {
+      type: String,
+      required: [true, "Please provide a schema"],
     },
   },
   {

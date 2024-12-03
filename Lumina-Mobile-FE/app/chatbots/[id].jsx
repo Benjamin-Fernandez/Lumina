@@ -117,8 +117,8 @@ const ChatbotDetail = () => {
       <View className="flex-row w-full p-7 justify-start">
         <View className="">
           <Image
-            className="w-[100px] h-[100px] rounded-full bg-black"
-            // source={require("../../assets/images/icon.png")}
+            className="w-[100px] h-[100px] rounded-full"
+            source={{ uri: chatbot.image }}
           />
         </View>
         <View className="flex-col ml-6">
@@ -128,11 +128,15 @@ const ChatbotDetail = () => {
           </Text>
           <Text className="font-lregular text-base">
             {/* Last Updated: {chatbot.chatbot.updatedAt.split("T")[0]} */}
+            Version: {chatbot.version}
+          </Text>
+          <Text className="font-lregular text-base">
+            {/* Last Updated: {chatbot.chatbot.updatedAt.split("T")[0]} */}
             Last Updated: {chatbot.updatedAt.split("T")[0]}
           </Text>
           {/* <Text className="font-lregular text-base">Ratings:</Text> */}
         </View>
-        <View className="absolute bottom-8 right-10">
+        <View className="absolute bottom-5 right-10">
           <TouchableOpacity onPress={() => handleFavourite(chatbot)}>
             {favourite ? (
               <Icon name="heart-fill" size={24} color="red" />
@@ -141,6 +145,13 @@ const ChatbotDetail = () => {
             )}
           </TouchableOpacity>
         </View>
+      </View>
+      <View className="px-7">
+        <Text className="font-lregular text-lg mb-5">Category</Text>
+        <Text className="font-llight text-[17px] mb-5">
+          {/* {chatbot.chatbot.description} */}
+          {chatbot.category}
+        </Text>
       </View>
       <View className="px-7">
         <Text className="font-lregular text-lg mb-5">Description</Text>

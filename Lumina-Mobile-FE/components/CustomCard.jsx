@@ -21,10 +21,10 @@ const CustomCard = ({ title, favourite, image, chatbot, handleFavourite }) => {
       style={{ backgroundColor: cardColor }}
     >
       {/* Image Section (50% of the card height) */}
-      {image ? (
+      {chatbot.image ? (
         <View className="h-[50%]">
           <Image
-            source={{ uri: image }}
+            source={{ uri: chatbot.image }}
             className="w-full h-full rounded-t-lg"
             resizeMode="cover"
           />
