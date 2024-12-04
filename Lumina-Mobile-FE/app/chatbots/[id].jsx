@@ -138,10 +138,10 @@ const ChatbotDetail = () => {
             {/* Last Updated: {chatbot.chatbot.updatedAt.split("T")[0]} */}
             Version: {chatbot.version}
           </Text>
-          <Text className="font-lregular text-base">
-            {/* Last Updated: {chatbot.chatbot.updatedAt.split("T")[0]} */}
+          {/* <Text className="font-lregular text-base">
+            Last Updated: {chatbot.chatbot.updatedAt.split("T")[0]}
             Last Updated: {chatbot.updatedAt.split("T")[0]}
-          </Text>
+          </Text> */}
           {/* <Text className="font-lregular text-base">Ratings:</Text> */}
         </View>
         <View className="absolute bottom-5 right-10">

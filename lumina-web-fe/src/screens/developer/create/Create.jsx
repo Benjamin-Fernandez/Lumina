@@ -226,7 +226,7 @@ const Create = () => {
             category: category,
             description: description,
             activated: false, // will change to true once deployed
-            schema: JSON.stringify(yamlString),
+            schema: yamlString,
             endpoint: endpoint,
             path: path,
             requestBodyQueryKey: requestBodyQueryKey,

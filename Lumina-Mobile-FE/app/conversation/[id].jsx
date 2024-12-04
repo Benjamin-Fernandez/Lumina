@@ -114,7 +114,10 @@ const ChatScreen = ({ navigation }) => {
       });
       return response.data;
     } else {
-      console.log("Getting response from Custom Chatbot...");
+      console.log(
+        "Getting response from Custom Chatbot..., schema: ",
+        chatbot.schema
+      );
       try {
         const response = await axios.post("/custom", {
           message: messages[messages.length - 1].content,

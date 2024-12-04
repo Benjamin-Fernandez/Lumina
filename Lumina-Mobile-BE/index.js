@@ -36,8 +36,8 @@ mongoose
     Whenever we visit the root route, the callback function is executed
     res.send() sends a response to the client
     */
-    app.listen(3000, () => {
-      console.log("Server running on port 3000");
+    app.listen(3002, () => {
+      console.log("Server running on port 3002");
 
       // ----------------------------------- Endpoints ------------- ----------------------
       // GET request to the root route
