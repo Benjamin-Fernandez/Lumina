@@ -102,12 +102,19 @@ const Home = ({ username, onLogout }) => {
     fetchChatbots();
   }, []);
 
+  const handleRefresh = () => {
+    fetchChatbots();
+  };
+
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
       <View className="flex-row justify-between items-center mt-16 mx-2">
         <Text className="font-llight text-3xl">Home </Text>
-        <View className="flex-row">
+        <View className="flex-row gap-4">
+          <TouchableOpacity onPress={handleRefresh}>
+            <Icon name="sync" size={24} color="black" />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleLogOut}>
             <Icon name="sign-out" size={24} color="black" />
           </TouchableOpacity>
