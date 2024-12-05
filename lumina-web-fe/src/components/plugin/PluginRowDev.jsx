@@ -5,31 +5,9 @@ import React, { useState } from "react";
 import DeactivateModal from "../modal/DeactivateModal";
 import ReactivateModal from "../modal/ReactivateModal";
 
-const PluginRowDev = ({ name, activated, version, category, image }) => {
+const PluginRowDev = ({ name, activated, version, category, image, date }) => {
   // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
-  const [deactivateModal, setDeactivateModal] = useState(false);
-  const [reactivateModal, setReactivateModal] = useState(false);
-
-  const handleOpenDeactivate = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setDeactivateModal(true);
-  };
-
-  const handleCloseDeactivate = () => {
-    setDeactivateModal(false);
-  };
-  const handleOpenReactivate = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setReactivateModal(true);
-  };
-
-  const handleCloseReactivate = () => {
-    setReactivateModal(false);
-  };
-
   return (
     <Box justifyContent="center">
       <Grid container spacing={2} alignItems="center">
@@ -85,36 +63,9 @@ const PluginRowDev = ({ name, activated, version, category, image }) => {
           </Typography>
         </Grid>
         <Grid item size={2}>
-          {activated === true && (
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
-              onClick={handleOpenDeactivate}
-            >
-              Deactivate
-            </Button>
-          )}
-          {activated === false && (
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ textTransform: "none", fontSize: "13px", borderRadius: 2 }}
-              onClick={handleOpenReactivate}
-            >
-              Activate
-            </Button>
-          )}
+          <Typography variant="body1">{date.split("T")[0]}</Typography>
         </Grid>
       </Grid>
-      <DeactivateModal
-        open={deactivateModal}
-        handleClose={handleCloseDeactivate}
-      />
-      <ReactivateModal
-        open={reactivateModal}
-        handleClose={handleCloseReactivate}
-      />
     </Box>
   );
 };

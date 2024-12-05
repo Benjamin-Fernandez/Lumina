@@ -225,7 +225,7 @@ const Create = () => {
             image: base64,
             category: category,
             description: description,
-            activated: false, // will change to true once deployed
+            activated: true, // will change to true once deployed
             schema: yamlString,
             endpoint: endpoint,
             path: path,

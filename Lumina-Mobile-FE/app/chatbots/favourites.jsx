@@ -83,7 +83,7 @@ const FavouriteChatbots = () => {
           </Text>
         </View>
       ) : (
-        <View className="flex-row items-center ml-2 mr-3 mt-4">
+        <View className="flex-column items-center ml-2 mr-3 mt-4">
           {favouriteChatbots
             .reverse()
             .reduce((rows, chatbot, index) => {

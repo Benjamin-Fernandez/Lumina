@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const DeactivateModal = ({ open, handleClose, onDeactivate }) => {
+const ActivateModal = ({ open, handleClose, onActivate }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -29,12 +29,12 @@ const DeactivateModal = ({ open, handleClose, onDeactivate }) => {
     >
       <DialogTitle>
         <Typography variant="h5" fontWeight="bold">
-          Deactivate
+          Activate
         </Typography>
       </DialogTitle>
       <DialogContent>
         <Typography variant="body1">
-          Are you sure you want to deactivate this plugin?
+          Are you sure you want to activate this plugin?
         </Typography>
       </DialogContent>
       <DialogActions>
@@ -51,19 +51,19 @@ const DeactivateModal = ({ open, handleClose, onDeactivate }) => {
           Cancel
         </Button>
         <Button
-          onClick={onDeactivate}
-          color="error"
+          onClick={onActivate}
+          color="success"
           variant="contained"
           sx={{
             textTransform: "none",
             fontSize: "13px",
           }}
         >
-          Deactivate
+          Activate
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default DeactivateModal;
+export default ActivateModal;

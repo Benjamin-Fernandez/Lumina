@@ -217,7 +217,119 @@ const ChatScreen = ({ navigation }) => {
     };
   }, []);
 
-  return loading ? (
+  return chatbot ? (
+    loading ? (
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === "ios" ? "padding" : "height"} // Use "position" for more predictable input handling
+        keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
+      >
+        <View className="bg-white p-5 flex-1">
+          <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
+            <TouchableOpacity
+              className="absolute left-2 h-16 w-16 align-middle justify-center"
+              onPress={handleBack}
+            >
+              <Icon name="chevron-left" size={24} color="black" />
+            </TouchableOpacity>
+            <Text className="font-llight text-lg">
+              {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
+            </Text>
+          </View>
+          <ScrollView className="flex-1 ">
+            <View className="flex-1 translate-y-72 items-center justify-center">
+              <Icon name="database" size={24} color="black" />
+              <Text className="text-center font-llight text-lg mt-3">
+                Loading messages...
+              </Text>
+            </View>
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
+    ) : (
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
+      >
+        <View className="bg-white p-5 flex-1">
+          <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
+            <TouchableOpacity
+              className="absolute left-2 h-16 w-16 align-middle justify-center"
+              onPress={handleBack}
+            >
+              <Icon name="chevron-left" size={24} color="black" />
+            </TouchableOpacity>
+            <Text className="font-llight text-lg">
+              {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
+            </Text>
+          </View>
+
+          {/* Messages or No Messages */}
+          {messages.length === 0 ? (
+            <View className="h-[80%] justify-center align-middle items-center flex-1 ">
+              <Image
+                source={require("../../assets/images/icon.png")}
+                className="w-[100px] h-[100px]"
+              />
+              <Text className="font-llight text-2xl">Lumina</Text>
+            </View>
+          ) : (
+            <ScrollView
+              ref={scrollViewRef}
+              className="flex-1"
+              contentContainerStyle={{ flexGrow: 1 }} // Ensures content takes full height
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled" // Ensures the scroll view handles taps when the keyboard is up
+              onContentSizeChange={() =>
+                scrollViewRef.current.scrollToEnd({ animated: true })
+              }
+            >
+              {messages.map((message, index) => (
+                <View
+                  key={message._id || index}
+                  className={`mb-2 max-w-[80%] ${
+                    message.fromSelf
+                      ? "self-end bg-gray-100 rounded-3xl p-4"
+                      : "self-start flex-row items-center"
+                  }`}
+                >
+                  {!message.fromSelf && (
+                    <Image
+                      source={require("../../assets/images/icon.png")}
+                      className="w-9 h-9 rounded-full mr-2"
+                    />
+                  )}
+                  <Markdown className="font-llight text-base ">
+                    {message.content}
+                  </Markdown>
+                </View>
+              ))}
+            </ScrollView>
+          )}
+
+          {/* Input Box */}
+          <View className="h-16 flex-row items-center p-4 bg-gray-100 my-2 mx-2 rounded-full">
+            <TextInput
+              className="flex-1 px-4 py-4 mr-9 h-16 rounded-full text-base font-llight"
+              placeholder="Ask me anything..."
+              value={input}
+              multiline={true}
+              numberOfLines={4}
+              onChangeText={(text) => setInput(text)}
+            />
+            <TouchableOpacity
+              className="absolute right-5"
+              onPress={handleSend}
+              disabled={!input}
+            >
+              <Icon name="paper-airplane" size={24} color="gray" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    )
+  ) : (
     <KeyboardAvoidingView
       className="flex-1"
       behavior={Platform.OS === "ios" ? "padding" : "height"} // Use "position" for more predictable input handling
@@ -231,100 +343,16 @@ const ChatScreen = ({ navigation }) => {
           >
             <Icon name="chevron-left" size={24} color="black" />
           </TouchableOpacity>
-          <Text className="font-llight text-lg">
-            {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
-          </Text>
         </View>
         <ScrollView className="flex-1 ">
           <View className="flex-1 translate-y-72 items-center justify-center">
-            <Icon name="database" size={24} color="black" />
+            <Icon name="dependabot" size={24} color="black" />
             <Text className="text-center font-llight text-lg mt-3">
-              Loading messages...
+              This chatbot may have been disabled. Please try using other
+              chatbots, or come back later!
             </Text>
           </View>
         </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
-  ) : (
-    <KeyboardAvoidingView
-      className="flex-1"
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
-    >
-      <View className="bg-white p-5 flex-1">
-        <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
-          <TouchableOpacity
-            className="absolute left-2 h-16 w-16 align-middle justify-center"
-            onPress={handleBack}
-          >
-            <Icon name="chevron-left" size={24} color="black" />
-          </TouchableOpacity>
-          <Text className="font-llight text-lg">
-            {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
-          </Text>
-        </View>
-
-        {/* Messages or No Messages */}
-        {messages.length === 0 ? (
-          <View className="h-[80%] justify-center align-middle items-center flex-1 ">
-            <Image
-              source={require("../../assets/images/icon.png")}
-              className="w-[100px] h-[100px]"
-            />
-            <Text className="font-llight text-2xl">Lumina</Text>
-          </View>
-        ) : (
-          <ScrollView
-            ref={scrollViewRef}
-            className="flex-1"
-            contentContainerStyle={{ flexGrow: 1 }} // Ensures content takes full height
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled" // Ensures the scroll view handles taps when the keyboard is up
-            onContentSizeChange={() =>
-              scrollViewRef.current.scrollToEnd({ animated: true })
-            }
-          >
-            {messages.map((message, index) => (
-              <View
-                key={message._id || index}
-                className={`mb-2 max-w-[80%] ${
-                  message.fromSelf
-                    ? "self-end bg-gray-100 rounded-3xl p-4"
-                    : "self-start flex-row items-center"
-                }`}
-              >
-                {!message.fromSelf && (
-                  <Image
-                    source={require("../../assets/images/icon.png")}
-                    className="w-9 h-9 rounded-full mr-2"
-                  />
-                )}
-                <Markdown className="font-llight text-base ">
-                  {message.content}
-                </Markdown>
-              </View>
-            ))}
-          </ScrollView>
-        )}
-
-        {/* Input Box */}
-        <View className="h-16 flex-row items-center p-4 bg-gray-100 my-2 mx-2 rounded-full">
-          <TextInput
-            className="flex-1 px-4 py-4 mr-9 h-16 rounded-full text-base font-llight"
-            placeholder="Ask me anything..."
-            value={input}
-            multiline={true}
-            numberOfLines={4}
-            onChangeText={(text) => setInput(text)}
-          />
-          <TouchableOpacity
-            className="absolute right-5"
-            onPress={handleSend}
-            disabled={!input}
-          >
-            <Icon name="paper-airplane" size={24} color="gray" />
-          </TouchableOpacity>
-        </View>
       </View>
     </KeyboardAvoidingView>
   );

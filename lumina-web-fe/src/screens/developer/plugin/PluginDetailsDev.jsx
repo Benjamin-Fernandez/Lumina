@@ -6,6 +6,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import PluginDetailTableSidebar from "../../../components/plugin/pluginDetail/PluginDetailTableSidebar";
 import PluginDetailTableContent from "../../../components/plugin/pluginDetail/PluginDetailTableContent";
 import EditIcon from "@mui/icons-material/Edit";
+import RocketLaunchOutlinedIcon from "@mui/icons-material/RocketLaunchOutlined";
 import DeactivateModal from "../../../components/modal/DeactivateModal";
 import CancelModal from "../../../components/modal/CancelModal";
 import DoneIcon from "@mui/icons-material/Done";
@@ -13,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useParams } from "react-router-dom";
 import axios from "../../../config/axiosConfig";
 import Loading from "../../global/Loading";
+import ActivateModal from "../../../components/modal/ActivateModal";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
@@ -21,6 +23,7 @@ const PluginDetailsDev = () => {
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("details");
   const [deactivateModal, setDeactivateModal] = useState(false);
+  const [activateModal, setActivateModal] = useState(false);
   const [cancelModal, setCancelModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [plugin, setPlugin] = useState(null);
@@ -41,6 +44,12 @@ const PluginDetailsDev = () => {
   const handleCloseDeactivate = () => {
     setDeactivateModal(false);
   };
+  const handleOpenActivate = () => {
+    setActivateModal(true);
+  };
+  const handleCloseActivate = () => {
+    setActivateModal(false);
+  };
   const handleOpenCancel = () => {
     setCancelModal(true);
   };
@@ -56,6 +65,31 @@ const PluginDetailsDev = () => {
     setEditedPlugin({ ...editedPlugin, [field]: value });
   };
 
+  const handleDeactivate = () => {
+    console.log("deactivate");
+    axios
+      .put(`/plugin/${id}`, { activated: false })
+      .then(() => {
+        setDeactivateModal(false);
+        setPlugin({ ...plugin, activated: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleActivate = () => {
+    console.log("Activate");
+    axios
+      .put(`/plugin/${id}`, { activated: true })
+      .then(() => {
+        setActivateModal(false);
+        setPlugin({ ...plugin, activated: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleDone = () => {
     axios
       .put(`/plugin/${id}`, {
@@ -64,7 +98,7 @@ const PluginDetailsDev = () => {
         image: editedPlugin.image,
         category: editedPlugin.category,
         description: editedPlugin.description,
-        activated: false,
+        activated: editedPlugin.activated,
         schema: editedPlugin.schema,
         endpoint: editedPlugin.endpoint,
         path: editedPlugin.path,
@@ -203,7 +237,7 @@ const PluginDetailsDev = () => {
                   Done
                 </Button>
               )}
-              {!edit && (
+              {!edit && plugin.activated && (
                 <Button
                   variant="contained"
                   color="error"
@@ -218,6 +252,23 @@ const PluginDetailsDev = () => {
                   startIcon={<DeleteOutlineOutlinedIcon />}
                 >
                   Deactivate
+                </Button>
+              )}
+              {!edit && !plugin.activated && (
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{
+                    padding: "8px 16px", // Adjust padding to hug content
+                    alignSelf: "flex-end", // Position the button at the bottom of the Box
+                    textTransform: "none",
+                    fontSize: "13px",
+                    borderRadius: 2,
+                  }}
+                  onClick={handleOpenActivate}
+                  startIcon={<RocketLaunchOutlinedIcon />}
+                >
+                  Activate
                 </Button>
               )}
               {edit && (
@@ -257,6 +308,12 @@ const PluginDetailsDev = () => {
           <DeactivateModal
             open={deactivateModal}
             handleClose={handleCloseDeactivate}
+            onDeactivate={handleDeactivate}
+          />
+          <ActivateModal
+            open={activateModal}
+            handleClose={handleCloseActivate}
+            onActivate={handleActivate}
           />
           <CancelModal open={cancelModal} handleClose={handleCloseCancel} />
         </Box>

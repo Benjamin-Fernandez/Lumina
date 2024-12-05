@@ -203,7 +203,7 @@ const PluginDev = () => {
                     <Typography variant="body1">Status</Typography>
                   </Grid>
                   <Grid item size={2} mt={3}>
-                    <Typography variant="body1">Action</Typography>
+                    <Typography variant="body1">Date of Launch</Typography>
                   </Grid>
                 </Grid>
 
@@ -234,6 +234,7 @@ const PluginDev = () => {
                         category={plugin.category}
                         activated={plugin.activated}
                         image={plugin.image}
+                        date={plugin.createdAt}
                       />
                     </ButtonBase>
                   </Link>
