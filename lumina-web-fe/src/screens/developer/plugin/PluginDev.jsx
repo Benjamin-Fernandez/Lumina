@@ -82,8 +82,9 @@ const PluginDev = () => {
   const filteredData = plugin.filter(
     (request) =>
       request.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterTerm === "" || request.category === filterTerm) &&
-      (filterTerm === "" || request.activated === (filterTerm === "true"))
+      (filterTerm === "" ||
+        request.category === filterTerm ||
+        request.activated === (filterTerm === "true"))
   );
   const paginatedData = filteredData
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

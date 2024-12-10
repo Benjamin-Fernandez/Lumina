@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const CancelModal = ({ open, handleClose }) => {
+const CancelModal = ({ open, handleClose, handleBack }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -39,7 +39,7 @@ const CancelModal = ({ open, handleClose }) => {
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={handleClose}
+          onClick={handleBack}
           color="primary"
           variant="contained"
           sx={{

@@ -26,7 +26,7 @@ const MessageContent = styled(Box)(({ isOwn }) => ({
   maxWidth: "70%",
   padding: "12px 16px",
   borderRadius: "12px",
-  backgroundColor: isOwn ? "#1976d2" : "#f5f5f5",
+  backgroundColor: isOwn ? "#6870fa" : "#f5f5f5",
   color: isOwn ? "#ffffff" : "#000000",
 }));
 

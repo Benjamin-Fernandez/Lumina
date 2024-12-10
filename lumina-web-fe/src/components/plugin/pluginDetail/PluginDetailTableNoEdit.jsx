@@ -39,7 +39,12 @@ const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
               Date of Launch
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              {plugin?.createdAt.split("T")[0]}
+              {new Date(plugin?.createdAt).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
+              {/* {plugin?.createdAt.split("T")[0]} */}
             </Typography>
           </Grid>
           <Grid item size={6}>

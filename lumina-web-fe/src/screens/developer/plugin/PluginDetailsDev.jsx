@@ -57,6 +57,10 @@ const PluginDetailsDev = () => {
     setEdit(false);
     setCancelModal(false);
   };
+  const handleBackCancel = () => {
+    setCancelModal(false);
+  };
+
   const handleEdit = () => {
     setEdit(!edit);
   };
@@ -315,7 +319,11 @@ const PluginDetailsDev = () => {
             handleClose={handleCloseActivate}
             onActivate={handleActivate}
           />
-          <CancelModal open={cancelModal} handleClose={handleCloseCancel} />
+          <CancelModal
+            open={cancelModal}
+            handleClose={handleCloseCancel}
+            handleBack={handleBackCancel}
+          />
         </Box>
       )}
     </>

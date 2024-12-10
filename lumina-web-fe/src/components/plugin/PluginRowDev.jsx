@@ -63,7 +63,13 @@ const PluginRowDev = ({ name, activated, version, category, image, date }) => {
           </Typography>
         </Grid>
         <Grid item size={2}>
-          <Typography variant="body1">{date.split("T")[0]}</Typography>
+          <Typography variant="body1">
+            {new Date(date).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
+          </Typography>
         </Grid>
       </Grid>
     </Box>

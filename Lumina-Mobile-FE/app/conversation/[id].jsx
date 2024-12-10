@@ -78,6 +78,14 @@ const ChatScreen = ({ navigation }) => {
   }, []);
 
   const getResponse = useCallback(async () => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        content: "Fetching response...",
+        fromSelf: false,
+      },
+    ]);
+
     if (chatbotId === "0") {
       // If the chatbot is Lumina GPT-4o
       console.log("Getting response from OpenAI...");
@@ -100,13 +108,17 @@ const ChatScreen = ({ navigation }) => {
       });
 
       // Update messages using the functional form to ensure the most up-to-date state is used
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          content: response.data.response.choices[0].message.content,
-          fromSelf: false,
-        },
-      ]);
+      setMessages((prevMessages) =>
+        prevMessages.map((msg, index) =>
+          index === prevMessages.length - 1 &&
+          msg.content === "Fetching response..."
+            ? {
+                ...msg,
+                content: response.data.response.choices[0].message.content,
+              }
+            : msg
+        )
+      );
 
       console.log("Conversation updated: ", conversationId);
       await axios.put("/conversation/" + conversationId, {
@@ -133,13 +145,17 @@ const ChatScreen = ({ navigation }) => {
         });
 
         // Update messages using the functional form to ensure the most up-to-date state is used
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            content: response.data.response,
-            fromSelf: false,
-          },
-        ]);
+        setMessages((prevMessages) =>
+          prevMessages.map((msg, index) =>
+            index === prevMessages.length - 1 &&
+            msg.content === "Fetching response..."
+              ? {
+                  ...msg,
+                  content: response.data.response,
+                }
+              : msg
+          )
+        );
 
         console.log("Conversation updated: ", conversationId);
         await axios.put("/conversation/" + conversationId, {
