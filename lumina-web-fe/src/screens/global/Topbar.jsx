@@ -84,13 +84,13 @@ const Topbar = () => {
             />
           </IconButton>
         </Link> */}
-        <IconButton onClick={colorMode.toggleColorMode}>
+        {/* <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <LightModeOutlinedIcon fontSize="large" />
           ) : (
             <DarkModeOutlinedIcon fontSize="large" />
           )}
-        </IconButton>
+        </IconButton> */}
         <Link to="/profile">
           <IconButton>
             <FaceIcon

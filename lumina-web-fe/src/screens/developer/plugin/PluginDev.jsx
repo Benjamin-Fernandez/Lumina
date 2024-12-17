@@ -60,10 +60,20 @@ const PluginDev = () => {
 
   const fetchPlugin = async () => {
     try {
-      console.log("User email obtained from context " + email);
-      const response = await axios.get("/plugin/email/" + email);
-      setPlugin(response.data.plugin);
-      setLoading(false);
+      const user = await axios.get("/user/email/" + email);
+      const domain = user.data.user.domain;
+      console.log("User domain obtained from context " + domain);
+      if (domain === "Admin") {
+        const response = await axios.get("/plugin/");
+        setPlugin(response.data.plugin);
+        setLoading(false);
+        return;
+      } else {
+        console.log("User email obtained from context " + email);
+        const response = await axios.get("/plugin/email/" + email);
+        setPlugin(response.data.plugin);
+        setLoading(false);
+      }
     } catch (error) {
       console.error("Error fetching plugin data:", error);
     }

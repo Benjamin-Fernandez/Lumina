@@ -1,5 +1,15 @@
 const Plugin = require("../models/plugin.model");
 
+// GET request to find all plugins
+const getPlugin = async (req, res) => {
+  try {
+    const plugin = await Plugin.find();
+    res.status(200).json({ plugin });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // GET request to find plugin by user email
 const getPluginByEmail = async (req, res) => {
   try {
@@ -100,6 +110,7 @@ const deletePluginById = async (req, res) => {
 };
 
 module.exports = {
+  getPlugin,
   getPluginByEmail,
   getPluginById,
   createPlugin,

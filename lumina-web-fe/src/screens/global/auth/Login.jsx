@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../../theme";
-import { config } from "../../../config";
+import { config, msalInstance } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
@@ -36,6 +36,11 @@ const Login = () => {
       console.log("Login successful:", response);
       if (response && response.account) {
         const email = response.account.username;
+        if (!email.endsWith("@e.ntu.edu.sg")) {
+          alert("Please sign in with your NTU account.");
+          msalInstance.loginRedirect();
+          return;
+        }
         axios
           .get("/user/email/" + email)
           .then((res) => {

@@ -3,12 +3,16 @@ const router = express.Router();
 const Plugin = require("../models/plugin.model");
 
 const {
+  getPlugin,
   getPluginByEmail,
   getPluginById,
   createPlugin,
   updatePluginById,
   deletePluginById,
 } = require("../controllers/plugin.controller");
+
+// GET request to find all plugins
+router.get("/", getPlugin);
 
 // GET request to find plugin by user email
 router.get("/email/:email", getPluginByEmail);
