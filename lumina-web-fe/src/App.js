@@ -8,7 +8,7 @@ import Sidebar from "./screens/global/Sidebar";
 import Login from "./screens/global/auth/Login";
 // import Request from "./screens/admin/request/Request";
 // import RequestDetails from "./screens/admin/request/RequestDetails";
-// import Contributor from "./screens/admin/contributor/Contributor";
+import Contributor from "./screens/admin/contributor/Contributor";
 // import ContributorDetails from "./screens/admin/contributor/ContributorDetails";
 // import ContributorForm from "./screens/admin/contributor/ContributorForm";
 import Notification from "./screens/global/notification/Notification";
@@ -34,7 +34,7 @@ function App() {
     // location.pathname.match("^/contributor/([a-zA-Z0-9]+)$") ||
     // location.pathname === "/plugin" ||
     // location.pathname === "/request" ||
-    // location.pathname === "/contributor" ||
+    location.pathname === "/contributor" ||
     // location.pathname === "/contributorform" ||
     // location.pathname === "/notification" ||
     location.pathname === "/profile" ||
@@ -99,14 +99,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route
-                  path="/contributor"
-                  element={
-                    <ProtectedRoute>
-                      <Contributor />
-                    </ProtectedRoute>
-                  }
-                />
+
                 <Route
                   path="/contributor/:id"
                   element={
@@ -160,6 +153,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <PluginDetailsDev />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/contributor"
+                    element={
+                      <ProtectedRoute>
+                        <Contributor />
                       </ProtectedRoute>
                     }
                   />

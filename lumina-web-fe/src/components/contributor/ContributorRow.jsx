@@ -1,43 +1,55 @@
 import { Box, Typography, Button } from "@mui/material";
 import { Grid, useTheme } from "@mui/system";
 import { tokens } from "../../theme";
-import DeleteModal from "../modal/DeleteModal";
+import DemoteModal from "../modal/DemoteModal";
 import PromoteModal from "../modal/PromoteModal";
 import { useState } from "react";
 
-const ContributorRow = ({ name, domain, lastOnline, joined }) => {
+const ContributorRow = ({
+  name,
+  domain,
+  email,
+  joined,
+  handlePromote,
+  handleDemote,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [promoteModal, setPromoteModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [demoteModal, setDemoteModal] = useState(false);
 
   const handleOpenPromote = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
     setPromoteModal(true);
   };
   const handleClosePromote = () => {
     setPromoteModal(false);
   };
-  const handleOpenDelete = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setDeleteModal(true);
+  const handleOpenDemote = (event) => {
+    setDemoteModal(true);
   };
-  const handleCloseDelete = () => {
-    setDeleteModal(false);
+  const handleCloseDemote = () => {
+    setDemoteModal(false);
   };
 
   return (
     <Box justifyContent="center">
       <Grid container spacing={2} alignItems="center">
-        <Grid item size={4}>
+        <Grid item size={3}>
           <Typography
             variant="body1"
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
             {name}
+          </Typography>
+        </Grid>
+        <Grid item size={3}>
+          <Typography
+            variant="body1"
+            noWrap
+            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+          >
+            {email}
           </Typography>
         </Grid>
         <Grid item size={2}>
@@ -55,43 +67,46 @@ const ContributorRow = ({ name, domain, lastOnline, joined }) => {
             noWrap
             sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
           >
-            {lastOnline}
+            {joined.split("T")[0]}
           </Typography>
         </Grid>
         <Grid item size={2}>
-          <Typography
-            variant="body1"
-            noWrap
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {joined}
-          </Typography>
-        </Grid>
-        <Grid item size={2}>
-          <Button
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              fontSize: "13px",
-              bgcolor: colors.blueAccent[500],
-              mr: 1,
-            }}
-            onClick={handleOpenPromote}
-          >
-            Promote
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ textTransform: "none", fontSize: "13px" }}
-            onClick={handleOpenDelete}
-          >
-            Delete
-          </Button>
+          {domain == "Developer" && (
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                fontSize: "13px",
+                bgcolor: colors.blueAccent[500],
+                mr: 1,
+              }}
+              onClick={handleOpenPromote}
+            >
+              Promote
+            </Button>
+          )}
+          {domain == "Admin" && (
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ textTransform: "none", fontSize: "13px" }}
+              onClick={handleOpenDemote}
+            >
+              Demote
+            </Button>
+          )}
         </Grid>
       </Grid>
-      <DeleteModal open={deleteModal} handleClose={handleCloseDelete} />
-      <PromoteModal open={promoteModal} handleClose={handleClosePromote} />
+      <DemoteModal
+        open={demoteModal}
+        handleClose={handleCloseDemote}
+        handleDemote={handleDemote}
+      />
+      <PromoteModal
+        open={promoteModal}
+        handleClose={handleClosePromote}
+        handlePromote={handlePromote}
+      />
     </Box>
   );
 };

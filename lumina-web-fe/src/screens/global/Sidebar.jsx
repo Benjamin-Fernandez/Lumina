@@ -7,9 +7,11 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 // import WidgetsOutlinedIcon from "@mui/icons-material/WidgetsOutlined";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
-// import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import { useMsal } from "@azure/msal-react";
+import axios from "../../config/axiosConfig";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -37,6 +39,15 @@ const Sidebar = () => {
   const path = location.pathname;
   const [collapsed, setCollapsed] = useState(false); // keep state of sidebar collapse
   const [selected, setSelected] = useState("View Plugins"); // keep state of selected menu item
+  const [user, setUser] = useState({});
+  const { instance } = useMsal();
+
+  const fetchUser = async () => {
+    const email = instance.getActiveAccount()?.username;
+    const user = await axios.get("/user/email/" + email);
+    console.log("User details:", user.data.user);
+    setUser(user.data.user);
+  };
 
   useEffect(() => {
     // if (path.includes("/dashboard")) {
@@ -50,10 +61,9 @@ const Sidebar = () => {
     // }
     else if (path.includes("/create")) {
       setSelected("Create Plugins");
+    } else if (path.includes("/contributor")) {
+      setSelected("Contributor");
     }
-    // else if (path.includes("/contributor")) {
-    //   setSelected("Contributor");
-    // }
     // else if (path.includes("/setting")) {
     //   setSelected("Setting");
     // }
@@ -62,6 +72,7 @@ const Sidebar = () => {
     } else if (path.includes("/notification")) {
       setSelected("Notification");
     }
+    fetchUser();
   }, [path]);
 
   return (
@@ -159,13 +170,15 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             /> */}
-            {/* <Item
-              title="Contributor"
-              to="/contributor"
-              icon={<PeopleOutlineOutlinedIcon fontSize="large" />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
+            {user.domain === "Admin" && (
+              <Item
+                title="Contributor"
+                to="/contributor"
+                icon={<PeopleOutlineOutlinedIcon fontSize="large" />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
             {/* <Item
               title="Setting"
               to="/setting"

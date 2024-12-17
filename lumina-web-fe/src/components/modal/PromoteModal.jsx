@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const PromoteModal = ({ open, handleClose }) => {
+const PromoteModal = ({ open, handleClose, handlePromote }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -51,7 +51,10 @@ const PromoteModal = ({ open, handleClose }) => {
           Cancel
         </Button>
         <Button
-          onClick={handleClose}
+          onClick={() => {
+            handlePromote();
+            handleClose();
+          }}
           variant="contained"
           sx={{
             textTransform: "none",

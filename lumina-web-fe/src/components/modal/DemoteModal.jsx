@@ -10,7 +10,7 @@ import {
 import { useTheme } from "@mui/system";
 import { tokens } from "../../theme";
 
-const DeleteModal = ({ open, handleClose }) => {
+const DemoteModal = ({ open, handleClose, handleDemote }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -29,12 +29,12 @@ const DeleteModal = ({ open, handleClose }) => {
     >
       <DialogTitle>
         <Typography variant="h5" fontWeight="bold">
-          Delete Contributor
+          Demote Contributor
         </Typography>
       </DialogTitle>
       <DialogContent>
         <Typography variant="body1">
-          Confirm to delete this contributor?
+          Confirm to demote this contributor?
         </Typography>
       </DialogContent>
       <DialogActions>
@@ -51,7 +51,10 @@ const DeleteModal = ({ open, handleClose }) => {
           Cancel
         </Button>
         <Button
-          onClick={handleClose}
+          onClick={() => {
+            handleDemote();
+            handleClose();
+          }}
           variant="contained"
           sx={{
             textTransform: "none",
@@ -59,11 +62,11 @@ const DeleteModal = ({ open, handleClose }) => {
             bgcolor: colors.redAccent[500],
           }}
         >
-          Delete
+          Demote
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default DeleteModal;
+export default DemoteModal;
