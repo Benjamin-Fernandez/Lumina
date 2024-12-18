@@ -71,7 +71,7 @@ const ContributorRow = ({
           </Typography>
         </Grid>
         <Grid item size={2}>
-          {domain == "Developer" && (
+          {domain === "Developer" && (
             <Button
               variant="contained"
               sx={{
@@ -85,7 +85,7 @@ const ContributorRow = ({
               Promote
             </Button>
           )}
-          {domain == "Admin" && (
+          {domain === "Admin" && (
             <Button
               variant="contained"
               color="error"

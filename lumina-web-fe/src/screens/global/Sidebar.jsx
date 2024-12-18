@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -42,12 +42,12 @@ const Sidebar = () => {
   const [user, setUser] = useState({});
   const { instance } = useMsal();
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     const email = instance.getActiveAccount()?.username;
     const user = await axios.get("/user/email/" + email);
     console.log("User details:", user.data.user);
     setUser(user.data.user);
-  };
+  }, [instance]);
 
   useEffect(() => {
     // if (path.includes("/dashboard")) {
@@ -73,7 +73,7 @@ const Sidebar = () => {
       setSelected("Notification");
     }
     fetchUser();
-  }, [path]);
+  }, [path, fetchUser]);
 
   return (
     <Box

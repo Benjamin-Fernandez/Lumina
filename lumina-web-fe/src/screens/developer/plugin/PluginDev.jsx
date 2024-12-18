@@ -82,7 +82,7 @@ const PluginDev = () => {
   useEffect(() => {
     // Fetch plugin data from the database
     fetchPlugin();
-  }, []);
+  });
 
   useEffect(() => {
     console.log("Plugin data fetched from the database: ", plugin);

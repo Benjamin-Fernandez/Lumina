@@ -11,7 +11,7 @@ import Login from "./screens/global/auth/Login";
 import Contributor from "./screens/admin/contributor/Contributor";
 // import ContributorDetails from "./screens/admin/contributor/ContributorDetails";
 // import ContributorForm from "./screens/admin/contributor/ContributorForm";
-import Notification from "./screens/global/notification/Notification";
+// import Notification from "./screens/global/notification/Notification";
 import Profile from "./screens/global/profile/Profile";
 import NotFound from "./screens/global/NotFound";
 import ProtectedRoute from "./helpers/ProtectedRoute";

@@ -11,13 +11,13 @@ const Login = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { instance } = useMsal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (instance.getActiveAccount()) {
       navigate("/pluginDev");
     }
-  }, [instance]);
-  const navigate = useNavigate();
+  }, [instance, navigate]);
 
   const handleLogin = async () => {
     try {
