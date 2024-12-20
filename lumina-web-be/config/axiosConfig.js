@@ -5,7 +5,6 @@ import axios from "axios";
 // axios.defaults.baseURL = "http://172.20.10.4:3000";
 // axios.defaults.baseURL = "http://127.0.0.1:3000";
 // axios.defaults.baseURL = "http://192.168.50.156:3000";
-axios.defaults.baseURL =
-  "https://polite-desert-08f77b110.4.azurestaticapps.net";
+axios.defaults.baseURL = "https://lumina-web-backend.azurewebsites.net";
 
 export default axios;
