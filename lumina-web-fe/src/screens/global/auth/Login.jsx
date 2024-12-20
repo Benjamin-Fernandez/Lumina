@@ -70,11 +70,11 @@ const Login = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="row">
+    <Box display="flex" flexDirection="row" height="100vh">
       <Box
         width="60%"
         borderRadius={6}
-        height="100vh"
+        height="100%"
         bgcolor={colors.blueAccent[900]}
         display="flex"
         alignItems="center"
@@ -83,12 +83,13 @@ const Login = () => {
       >
         <Box
           component="img"
-          src={"/assets/Dashboard.png"}
+          src={"/assets/login2.jpg"}
           sx={{
-            width: "85%",
-            height: "80%",
+            width: "90%",
+            height: "90%",
             borderTopLeftRadius: 20,
             borderBottomLeftRadius: 20,
+            objectFit: "cover",
           }}
         />
       </Box>
