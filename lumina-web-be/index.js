@@ -9,7 +9,7 @@ app.use(express.json({ limit: "50mb" }));
 // Middleware -> needed to allow request from frontend
 app.use(
   cors({
-    origin: "https://witty-bay-0d4b3dd10.4.azurestaticapps.net/", // Allow requests from your frontend
+    origin: "https://polite-desert-08f77b110.4.azurestaticapps.net/", // Allow requests from your frontend
     methods: ["GET", "POST", "PUT"], // Allow GET and POST requests
     // credentials: true, // If you need to include credentials (like cookies)
   })
