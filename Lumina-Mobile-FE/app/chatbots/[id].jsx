@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
@@ -17,6 +24,7 @@ const ChatbotDetail = () => {
   const { setFavouriteChatbots, setDiscoverChatbots } = useChatbot();
   const [favourite, setFavourite] = useState(false);
   const { email } = useUser();
+  const { height } = Dimensions.get("window");
 
   const params = useLocalSearchParams();
   console.log("Params: ", params);
@@ -93,7 +101,10 @@ const ChatbotDetail = () => {
 
   return loading ? (
     <View className="h-full bg-white p-5">
-      <View className="flex-row justify-between items-center mt-12 mx-2">
+      <View
+        className="flex-row justify-between items-center mx-2"
+        style={{ marginTop: height * 0.05 }}
+      >
         <TouchableOpacity
           className="absolute left-2 h-16 w-16 align-middle justify-center"
           onPress={handleBack}
@@ -113,7 +124,10 @@ const ChatbotDetail = () => {
   ) : (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
-      <View className="flex-row justify-between items-center mt-12 mx-2">
+      <View
+        className="flex-row justify-between items-center mx-2"
+        style={{ marginTop: height * 0.05 }}
+      >
         <TouchableOpacity
           className="absolute left-2 h-16 w-16 align-middle justify-center"
           onPress={handleBack}
@@ -130,7 +144,7 @@ const ChatbotDetail = () => {
           />
         </View>
         <View className="flex-col ml-6">
-          <Text className="font-lregular text-2xl mb-1">
+          <Text className="font-lregular text-xl mb-1">
             {/* {chatbot.chatbot.name} */}
             {chatbot.name}
           </Text>

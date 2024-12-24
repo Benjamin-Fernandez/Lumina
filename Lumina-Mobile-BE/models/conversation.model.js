@@ -18,6 +18,10 @@ const conversationSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    chatbotName: {
+      type: String,
+      required: [true, "Please provide chatbot name"],
+    },
   },
   {
     timestamps: true, // to organize by time created

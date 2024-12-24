@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 import React from "react";
 import { router } from "expo-router";
@@ -8,10 +14,10 @@ import { useUser } from "../../context/UserContext";
 import axios from "../../config/axiosConfig";
 
 const FavouriteChatbots = () => {
-  handleBack = () => {
+  const handleBack = () => {
     router.push("/home");
   };
-  handleFavourite = async (chatbot) => {
+  const handleFavourite = async (chatbot) => {
     // Add the chatbot to the user's favourite chatbots
     try {
       let updatedFavouriteChatbots = [];
@@ -56,14 +62,18 @@ const FavouriteChatbots = () => {
 
   const { email } = useUser();
 
-  handleChatbotDetail = (chatbot) => {
+  const handleChatbotDetail = (chatbot) => {
     router.push("/chatbots/" + chatbot._id);
   };
+  const { height } = Dimensions.get("window");
 
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
-      <View className="relative flex-row justify-center items-center mt-12 mx-2">
+      <View
+        className="relative flex-row justify-center items-center mx-2"
+        style={{ height: height * 0.1 }}
+      >
         <TouchableOpacity
           className="absolute left-2 h-16 w-16 align-middle justify-center"
           onPress={handleBack}
@@ -74,46 +84,47 @@ const FavouriteChatbots = () => {
           Favourite Chatbots
         </Text>
       </View>
-
-      {favouriteChatbots.length === 0 ? (
-        <View className="flex-row justify-center items-center ml-2 mr-3 mt-4 h-[80%] border-gray-300 p-4 rounded-lg">
-          <Icon name="info" size={24} color="gray" />
-          <Text className="font-lregular text-lg ml-2">
-            No Favourite Chatbots
-          </Text>
-        </View>
-      ) : (
-        <View className="flex-column items-center ml-2 mr-3 mt-4">
-          {favouriteChatbots
-            .reverse()
-            .reduce((rows, chatbot, index) => {
-              if (index % 3 === 0) rows.push([]);
-              rows[rows.length - 1].push(chatbot);
-              return rows;
-            }, [])
-            .map((row, rowIndex) => (
-              <View
-                className="flex-row items-center ml-2 mr-3 mt-4 w-full"
-                key={rowIndex}
-              >
-                {row.map((chatbot, index) => (
-                  <TouchableOpacity
-                    className="w-[30%] mr-5"
-                    key={index}
-                    onPress={() => handleChatbotDetail(chatbot)}
-                  >
-                    <CustomCard
-                      title={chatbot.name}
-                      chatbot={chatbot}
-                      favourite={true}
-                      handleFavourite={handleFavourite}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-            ))}
-        </View>
-      )}
+      <ScrollView className="flex-col">
+        {favouriteChatbots.length === 0 ? (
+          <View className="flex-row justify-center items-center ml-2 mr-3 h-[80%] border-gray-300 p-4 rounded-lg">
+            <Icon name="info" size={24} color="gray" />
+            <Text className="font-lregular text-lg ml-2">
+              No Favourite Chatbots
+            </Text>
+          </View>
+        ) : (
+          <View className="flex-column items-center ml-2 mr-3">
+            {favouriteChatbots
+              .reverse()
+              .reduce((rows, chatbot, index) => {
+                if (index % 3 === 0) rows.push([]);
+                rows[rows.length - 1].push(chatbot);
+                return rows;
+              }, [])
+              .map((row, rowIndex) => (
+                <View
+                  className="flex-row items-center ml-2 mr-3 w-full"
+                  key={rowIndex}
+                >
+                  {row.map((chatbot, index) => (
+                    <TouchableOpacity
+                      className="w-[30%] mr-5"
+                      key={index}
+                      onPress={() => handleChatbotDetail(chatbot)}
+                    >
+                      <CustomCard
+                        title={chatbot.name}
+                        chatbot={chatbot}
+                        favourite={true}
+                        handleFavourite={handleFavourite}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ))}
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 };

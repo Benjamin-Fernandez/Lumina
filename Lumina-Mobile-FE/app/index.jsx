@@ -1,4 +1,12 @@
-import { ScrollView, StatusBar, Text, View, Image, Button } from "react-native";
+import {
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+  Image,
+  Button,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
 import { router } from "expo-router";
@@ -24,8 +32,12 @@ export default function App() {
   const discovery = useAutoDiscovery(
     "https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/v2.0"
   );
-  const redirectUri = "lumina-mobile://auth";
+  const redirectUri = makeRedirectUri({
+    scheme: undefined,
+    path: "auth",
+  });
   const clientId = "8056ae32-9e42-4e77-bb36-2bb47f029744";
+  console.log(redirectUri);
 
   // Store token
   const [token, setToken] = useState(null);
@@ -41,6 +53,7 @@ export default function App() {
   );
 
   const { setEmail } = useUser();
+  const { width, height } = Dimensions.get("window");
 
   // To decode JWT from SSO
   // Function to decode the JWT
@@ -114,28 +127,70 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView className="h-full">
-      <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="w-full justify-center items-center h-[60%] px-4">
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            height: height * 0.6, // 40% of screen height
+            paddingHorizontal: 16,
+          }}
+        >
           <Image
             source={require("../assets/images/icon.png")}
-            className="w-[200px] h-[295px]"
-            resizeMode="contain"
+            style={{
+              width: width * 0.5, // 50% of screen width
+              height: width * 0.7, // Maintain aspect ratio
+              resizeMode: "contain",
+            }}
           />
         </View>
-        <View className="w-full h-[40%] p-12">
+
+        <View
+          style={{
+            width: "100%",
+            height: height * 0.4, // 40% of screen height
+            padding: 40,
+          }}
+        >
           <View>
-            <Text className="font-llight text-custom-header w-full">
+            <Text
+              className="font-llight text-custom-header"
+              style={{
+                fontSize: 28,
+                color: "#333",
+                textAlign: "start",
+              }}
+            >
               Welcome to
             </Text>
-            <Text className="font-llight text-custom-header w-full mb-3">
+            <Text
+              className="font-llight text-custom-header"
+              style={{
+                fontSize: 28,
+                color: "#333",
+                textAlign: "start",
+                marginBottom: 8,
+              }}
+            >
               Lumina 👋!
             </Text>
-            <Text className="font-llight text-custom-subheader text-subheader">
+            <Text
+              className="font-llight text-custom-subheader text-subheader"
+              style={{
+                fontFamily: "sans-serif-light",
+                fontSize: 16,
+                color: "#666",
+                textAlign: "start",
+              }}
+            >
               Lumina is designed for NTU students only. Please sign in to
               continue.
             </Text>
           </View>
+
           <View className="justify-center items-center">
             <CustomButton
               title="Sign In with Microsoft"

@@ -8,7 +8,7 @@ const colors = tailwindConfig.theme.extend.colors;
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View className="flex-row bg-white rounded-full h-[70px] mx-5 absolute bottom-10 left-0 right-0 shadow-lg justify-around items-center px-5">
+    <View className="flex-row bg-white rounded-full h-[70px] mx-5 absolute bottom-5 left-0 right-0 shadow-lg justify-around items-center px-5">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;

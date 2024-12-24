@@ -16,6 +16,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 import { useLocalSearchParams, router } from "expo-router";
@@ -188,7 +189,9 @@ const ChatScreen = ({ navigation }) => {
             userEmail: email,
             chatbotId: chatbotId,
             firstMessage: input,
+            chatbotName: chatbot.name || "Lumina GPT-4o",
           });
+          console.log("Conversation with: ", chatbot.name);
           setConversationId(res.data.conversation._id);
           const currentConversationId = res.data.conversation._id;
 
@@ -232,6 +235,7 @@ const ChatScreen = ({ navigation }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
+  const { width, height } = Dimensions.get("window");
 
   return chatbot ? (
     loading ? (
@@ -241,7 +245,10 @@ const ChatScreen = ({ navigation }) => {
         keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
       >
         <View className="bg-white p-5 flex-1">
-          <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
+          <View
+            className="relative flex-row justify-center items-center mb-6 mx-2"
+            style={{ marginTop: height * 0.05 }}
+          >
             <TouchableOpacity
               className="absolute left-2 h-16 w-16 align-middle justify-center"
               onPress={handleBack}
@@ -269,7 +276,10 @@ const ChatScreen = ({ navigation }) => {
         keyboardVerticalOffset={Platform.OS === "ios" ? -20 : 0} // Adjust offset as needed for iOS
       >
         <View className="bg-white p-5 flex-1">
-          <View className="relative flex-row justify-center items-center mt-12 mb-6 mx-2">
+          <View
+            className="relative flex-row justify-center items-center mb-6 mx-2"
+            style={{ marginTop: height * 0.05 }}
+          >
             <TouchableOpacity
               className="absolute left-2 h-16 w-16 align-middle justify-center"
               onPress={handleBack}

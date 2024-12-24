@@ -20,6 +20,7 @@ const CustomConversation = ({
   date,
   time,
   setConversations,
+  chatbotName,
 }) => {
   const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -115,8 +116,12 @@ const CustomConversation = ({
             >
               {lastMessage}
             </Text>
-            <Text className="font-llight text-[17px] text-gray-500">
-              {date} | {time}
+            <Text
+              className="font-llight text-[17px] text-gray-500"
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {chatbotName} | {date} | {time}
             </Text>
           </View>
         </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/Octicons"; // Assuming you're using Material Icons
 import CustomCard from "../../components/CustomCard";
@@ -9,19 +9,19 @@ import { useChatbot } from "../../context/ChatbotContext";
 
 const Home = ({ username, onLogout }) => {
   // Onclick Handlers
-  handleLogOut = () => {
+  const handleLogOut = () => {
     router.push("/");
   };
-  handleFavouriteChatbot = () => {
+  const handleFavouriteChatbot = () => {
     router.push("/chatbots/favourites");
   };
-  handleDiscoverChatbot = () => {
+  const handleDiscoverChatbot = () => {
     router.push("/chatbots/discover");
   };
-  handleChatbotDetail = (chatbot) => {
+  const handleChatbotDetail = (chatbot) => {
     router.push("/chatbots/" + chatbot._id);
   };
-  handleFavourite = async (chatbot) => {
+  const handleFavourite = async (chatbot) => {
     // Add the chatbot to the user's favourite chatbots
     try {
       let updatedFavouriteChatbots = [];
@@ -58,20 +58,17 @@ const Home = ({ username, onLogout }) => {
   const { email } = useUser();
   const { favouriteChatbots, discoverChatbots } = useChatbot();
   const { setFavouriteChatbots, setDiscoverChatbots } = useChatbot();
+  const { width, height } = Dimensions.get("window");
 
   // Database Queries
   const fetchChatbots = async () => {
     try {
       const response = await axios.get("/chatbot");
-      console.log("Chatbots fetched from the database: ", response.data);
+      // console.log("Chatbots fetched from the database: ", response.data);
       const { chatbots } = response.data;
 
       // Assuming you have a way to get the user's favourite chatbots
       const userResponse = await axios.get("/user/email/" + email);
-      console.log(
-        "User's favourite chatbots fetched from the database: ",
-        userResponse.data
-      );
 
       // extract the favourite_chatbot from the user's response and store it in a variable userFavouriteChatbots
       const { favourite_chatbot } = userResponse.data.user;
@@ -88,8 +85,8 @@ const Home = ({ username, onLogout }) => {
           discoverChatbots.push(chatbot);
         }
       });
-      console.log("Favourite Chatbots: ", favouriteChatbots);
-      console.log("Discover Chatbots: ", discoverChatbots);
+      // console.log("Favourite Chatbots: ", favouriteChatbots);
+      // console.log("Discover Chatbots: ", discoverChatbots);
       setFavouriteChatbots(favouriteChatbots);
       setDiscoverChatbots(discoverChatbots);
     } catch (error) {
@@ -109,7 +106,10 @@ const Home = ({ username, onLogout }) => {
   return (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
-      <View className="flex-row justify-between items-center mt-16 mx-2">
+      <View
+        className="flex-row justify-between items-center mx-2"
+        style={{ marginTop: height * 0.05 }}
+      >
         <Text className="font-llight text-3xl">Home </Text>
         <View className="flex-row gap-4">
           <TouchableOpacity onPress={handleRefresh}>
@@ -122,7 +122,10 @@ const Home = ({ username, onLogout }) => {
       </View>
       {/* Favourite Chatbots Row */}
       <TouchableOpacity onPress={handleFavouriteChatbot}>
-        <View className="flex-row justify-between items-center mt-10 ml-2 mr-3">
+        <View
+          className="flex-row justify-between items-center ml-2 mr-3"
+          style={{ marginTop: height * 0.025 }}
+        >
           <Text className="font-lregular text-xl">Favourite Chatbots</Text>
           <Icon name="chevron-right" size={24} color="black" />
         </View>
@@ -136,13 +139,14 @@ const Home = ({ username, onLogout }) => {
           </Text>
         </View>
       ) : (
-        <View className="flex-row items-center ml-2 mr-3 mt-4">
+        <View className="flex-row items-center ml-2 mr-3">
           {favouriteChatbots
             .slice(-3)
             .reverse()
             .map((chatbot, index) => (
               <TouchableOpacity
-                className="w-[30%] mr-5"
+                className="mr-5"
+                style={{ height: height * 0.15, width: (width - 80) / 3 }}
                 key={index}
                 onPress={() => handleChatbotDetail(chatbot)}
               >
@@ -157,8 +161,11 @@ const Home = ({ username, onLogout }) => {
         </View>
       )}
       {/* Discover Chatbots Row */}
-      <TouchableOpacity onPress={handleDiscoverChatbot}>
-        <View className="flex-row justify-between items-center mt-12 ml-2 mr-3">
+      <TouchableOpacity
+        onPress={handleDiscoverChatbot}
+        style={{ marginTop: height * 0.075 }}
+      >
+        <View className="flex-row justify-between items-center ml-2 mr-3">
           <Text className="font-lregular text-xl">Discover Chatbots</Text>
           <Icon name="chevron-right" size={24} color="black" />
         </View>
@@ -181,13 +188,11 @@ const Home = ({ username, onLogout }) => {
             return rows;
           }, [])
           .map((row, rowIndex) => (
-            <View
-              className="flex-row items-center ml-2 mr-3 mt-4"
-              key={rowIndex}
-            >
+            <View className="flex-row items-center ml-2 mr-3" key={rowIndex}>
               {row.map((chatbot, index) => (
                 <TouchableOpacity
-                  className="w-[30%] mr-5"
+                  className="mr-5"
+                  style={{ height: height * 0.2, width: (width - 80) / 3 }}
                   key={index}
                   onPress={() => handleChatbotDetail(chatbot)}
                 >
@@ -206,3 +211,5 @@ const Home = ({ username, onLogout }) => {
 };
 
 export default Home;
+// marginTop: height * 0.05,
+// width: (width - 80) / 3, // Dynamic width for 3 cards per row
