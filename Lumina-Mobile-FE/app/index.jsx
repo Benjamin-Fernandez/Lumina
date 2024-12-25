@@ -32,10 +32,7 @@ export default function App() {
   const discovery = useAutoDiscovery(
     "https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/v2.0"
   );
-  const redirectUri = makeRedirectUri({
-    scheme: undefined,
-    path: "auth",
-  });
+  const redirectUri = "lumina-mobile://auth";
   const clientId = "8056ae32-9e42-4e77-bb36-2bb47f029744";
   console.log(redirectUri);
 
