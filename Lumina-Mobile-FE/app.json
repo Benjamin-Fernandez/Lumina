@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lumina-Mobile",
     "slug": "Lumina-Mobile",
-    "scheme": "lumina-mobile",
+    "scheme": "com.lumina",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -24,14 +24,6 @@
         "package": "com.lumina"
       },
       "intentFilters": [
-        {
-          "action": "VIEW",
-          "data": {
-            "scheme": "lumina-mobile",
-            "host": "auth"
-          },
-          "category": ["BROWSABLE", "DEFAULT"]
-        },
         {
           "action": "VIEW",
           "data": {
