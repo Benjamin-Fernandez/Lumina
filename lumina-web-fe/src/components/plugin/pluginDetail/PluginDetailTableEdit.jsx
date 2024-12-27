@@ -526,6 +526,7 @@ const PluginDetailTableEdit = ({
         handleClose={handleCloseTestEndpoint}
         yamlString={yamlString}
         setEndpointSuccess={setEndpointSuccess}
+        path={editedPlugin.path}
       />
     </Box>
   );
