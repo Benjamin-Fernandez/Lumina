@@ -20,15 +20,15 @@ const loadSchema = async ({ yamlString }) => {
   }
 };
 
-const callEndpoint = async ({ client, query }) => {
+const callEndpoint = async ({ client, query, path }) => {
   try {
     console.log("Sending request...");
     console.log("Query:", query);
     console.log("Client:", client);
 
-    const operation = client.spec.paths["/getResponse"];
+    const operation = client.spec.paths[path];
     if (!operation) {
-      throw new Error("Operation not found for /getResponse");
+      throw new Error("Operation not found in the schema.");
     }
 
     if (operation?.post?.requestBody?.content["application/json"]) {
@@ -76,9 +76,9 @@ const callEndpoint = async ({ client, query }) => {
   }
 };
 
-const testEndpoint = async ({ yamlString, query }) => {
+const testEndpoint = async ({ yamlString, query, path }) => {
   const client = await loadSchema({ yamlString });
-  const response = await callEndpoint({ client, query });
+  const response = await callEndpoint({ client, query, path });
   console.log(response); // Log the final response
   return response;
 };

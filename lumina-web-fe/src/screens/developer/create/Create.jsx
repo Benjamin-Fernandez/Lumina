@@ -454,6 +454,7 @@ const Create = () => {
                 testEndpoint={testEndpoint}
                 yamlString={yamlString}
                 setEndpointSuccess={setEndpointSuccess}
+                path={path}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button

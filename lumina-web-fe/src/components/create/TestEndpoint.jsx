@@ -30,7 +30,12 @@ const MessageContent = styled(Box)(({ isOwn }) => ({
   color: isOwn ? "#ffffff" : "#000000",
 }));
 
-const TestEndpoint = ({ testEndpoint, yamlString, setEndpointSuccess }) => {
+const TestEndpoint = ({
+  testEndpoint,
+  yamlString,
+  setEndpointSuccess,
+  path,
+}) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -71,7 +76,7 @@ const TestEndpoint = ({ testEndpoint, yamlString, setEndpointSuccess }) => {
 
       console.log("YAML STRING before calling testEndpoint", yamlString);
 
-      testEndpoint({ yamlString, query: newMessage }).then((response) => {
+      testEndpoint({ yamlString, query: newMessage, path }).then((response) => {
         console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
         setMessages((prevMessages) => [
           ...prevMessages,
