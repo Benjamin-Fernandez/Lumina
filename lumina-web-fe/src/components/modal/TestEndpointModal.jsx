@@ -93,31 +93,43 @@ const TestEndpointModal = ({
 
       console.log("YAML STRING before calling testEndpoint", yamlString);
 
-      testEndpoint({ yamlString, query: newMessage, path }).then((response) => {
-        console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            id: prevMessages.length + 1,
-            text: response,
-            isOwn: false,
-          },
-        ]);
-        if (
-          !response.includes("Error") &&
-          response !== "No response from API."
-        ) {
+      testEndpoint({ yamlString, query: newMessage, path })
+        .then((response) => {
+          console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
           setMessages((prevMessages) => [
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
+              text: response,
               isOwn: false,
             },
           ]);
-          setEndpointSuccess(true);
-        }
-      });
+          if (
+            !response.includes("Error") &&
+            response !== "No response from API."
+          ) {
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                id: prevMessages.length + 1,
+                text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
+                isOwn: false,
+              },
+            ]);
+            setEndpointSuccess(true);
+          }
+        })
+        .catch((error) => {
+          console.log("ERROR:", error); // Rejected error
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: prevMessages.length + 1,
+              text: error,
+              isOwn: false,
+            },
+          ]);
+        });
     }
   };
 
