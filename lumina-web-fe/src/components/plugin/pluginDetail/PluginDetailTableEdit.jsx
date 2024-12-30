@@ -38,45 +38,60 @@ const PluginDetailTableEdit = ({
     requestFormat,
     requestContentType,
     requestBodyQueryKey,
-    responseStatusCode,
-    responseFormat,
-    responseBodyKey,
+    authType,
   }) => {
+    let yamlObject = {};
     if (requestFormat == "application/json") {
-      // Create a basic structure for the YAML file
-      const yamlObject = {
-        openapi: "3.0.0",
-        info: {
-          title: name + "API",
-          version: "1.0.0",
-        },
-        servers: [
-          {
-            url: endpoint, // Base URL can be dynamic, for now using the example
+      if (authType === "apiKey") {
+        // Create a basic structure for the YAML file
+        yamlObject = {
+          openapi: "3.0.0",
+          info: {
+            title: name + "API",
+            version: "1.0.0",
           },
-        ],
-        paths: {
-          [path]: {
-            // Dynamic path
-            post: {
-              operationId: "getResponse", // Example operationId based on method and path
-              requestBody: {
-                required: true, // Convert to boolean
-                content: {
-                  [requestFormat]: {
-                    schema: {
-                      type: requestContentType,
-                      properties: requestBodyQueryKey,
+          servers: [
+            {
+              url: endpoint, // Base URL can be dynamic, for now using the example
+            },
+          ],
+          components: {
+            securitySchemes: {
+              ApiKeyAuth: {
+                type: "apiKey",
+                in: "header",
+                name: "Apikey",
+              },
+            },
+          },
+          security: [
+            {
+              ApiKeyAuth: [],
+            },
+          ],
+          paths: {
+            [path]: {
+              // Dynamic path
+              post: {
+                operationId: "getResponse", // Example operationId based on method and path
+                requestBody: {
+                  required: true, // Convert to boolean
+                  content: {
+                    [requestFormat]: {
+                      schema: {
+                        type: requestContentType,
+                        properties: requestBodyQueryKey,
+                      },
                     },
                   },
                 },
-              },
-              responses: {
-                [responseStatusCode]: {
-                  content: {
-                    [responseFormat]: {
-                      schema: {
-                        type: responseBodyKey || "string", // Default type to string if not provided
+                responses: {
+                  200: {
+                    content: {
+                      "application/json": {
+                        schema: {
+                          type: "string", // Default type to string if not provided
+                        },
                       },
                     },
                   },
@@ -84,45 +99,42 @@ const PluginDetailTableEdit = ({
               },
             },
           },
-        },
-      };
-      // Convert the JavaScript object to a YAML string
-      const yamlString = yaml.dump(yamlObject);
-      onChange("schema", yamlString);
-      return yamlString;
-    } else {
-      const yamlObject = {
-        openapi: "3.0.0",
-        info: {
-          title: name + "API",
-          version: "1.0.0",
-        },
-        servers: [
-          {
-            url: endpoint, // Base URL can be dynamic, for now using the example
+        };
+      } else {
+        yamlObject = {
+          openapi: "3.0.0",
+          info: {
+            title: name + "API",
+            version: "1.0.0",
           },
-        ],
-        paths: {
-          [path]: {
-            // Dynamic path
-            post: {
-              operationId: "getResponse", // Example operationId based on method and path
-              requestBody: {
-                required: true, // Convert to boolean
-                content: {
-                  [requestFormat]: {
-                    schema: {
-                      type: "string",
+          servers: [
+            {
+              url: endpoint, // Base URL can be dynamic, for now using the example
+            },
+          ],
+          paths: {
+            [path]: {
+              // Dynamic path
+              post: {
+                operationId: "getResponse", // Example operationId based on method and path
+                requestBody: {
+                  required: true, // Convert to boolean
+                  content: {
+                    [requestFormat]: {
+                      schema: {
+                        type: requestContentType,
+                        properties: requestBodyQueryKey,
+                      },
                     },
                   },
                 },
-              },
-              responses: {
-                [responseStatusCode]: {
-                  content: {
-                    [responseFormat]: {
-                      schema: {
-                        type: responseBodyKey || "string", // Default type to string if not provided
+                responses: {
+                  200: {
+                    content: {
+                      "application/json": {
+                        schema: {
+                          type: "string", // Default type to string if not provided
+                        },
                       },
                     },
                   },
@@ -130,13 +142,118 @@ const PluginDetailTableEdit = ({
               },
             },
           },
-        },
-      };
+        };
+      }
+
       // Convert the JavaScript object to a YAML string
       const yamlString = yaml.dump(yamlObject);
-      onChange("schema", yamlString);
 
       return yamlString;
+    } else {
+      if (authType === "apiKey") {
+        yamlObject = {
+          openapi: "3.0.0",
+          info: {
+            title: name + "API",
+            version: "1.0.0",
+          },
+          servers: [
+            {
+              url: endpoint, // Base URL can be dynamic, for now using the example
+            },
+          ],
+          components: {
+            securitySchemes: {
+              ApiKeyAuth: {
+                type: "apiKey",
+                in: "header",
+                name: "Apikey",
+              },
+            },
+          },
+          security: [
+            {
+              ApiKeyAuth: [],
+            },
+          ],
+          paths: {
+            [path]: {
+              // Dynamic path
+              post: {
+                operationId: "getResponse", // Example operationId based on method and path
+                requestBody: {
+                  required: true, // Convert to boolean
+                  content: {
+                    [requestFormat]: {
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                  },
+                },
+                responses: {
+                  200: {
+                    content: {
+                      "application/json": {
+                        schema: {
+                          type: "string", // Default type to string if not provided
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        };
+      } else {
+        yamlObject = {
+          openapi: "3.0.0",
+          info: {
+            title: name + "API",
+            version: "1.0.0",
+          },
+          servers: [
+            {
+              url: endpoint, // Base URL can be dynamic, for now using the example
+            },
+          ],
+          paths: {
+            [path]: {
+              // Dynamic path
+              post: {
+                operationId: "getResponse", // Example operationId based on method and path
+                requestBody: {
+                  required: true, // Convert to boolean
+                  content: {
+                    [requestFormat]: {
+                      schema: {
+                        type: "string",
+                      },
+                    },
+                  },
+                },
+                responses: {
+                  200: {
+                    content: {
+                      "application/json": {
+                        schema: {
+                          type: "string", // Default type to string if not provided
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        };
+
+        // Convert the JavaScript object to a YAML string
+        const yamlString = yaml.dump(yamlObject);
+
+        return yamlString;
+      }
     }
   };
 
@@ -149,9 +266,7 @@ const PluginDetailTableEdit = ({
       requestFormat: editedPlugin.requestFormat,
       requestContentType: editedPlugin.requestContentType,
       requestBodyQueryKey: editedPlugin.requestBodyQueryKey,
-      responseStatusCode: editedPlugin.responseStatusCode,
-      responseFormat: editedPlugin.responseFormat,
-      responseBodyKey: editedPlugin.responseBodyKey,
+      authType: editedPlugin.authType,
     });
     setYamlString(yamlString);
     setTestEndpointModal(true);
@@ -444,80 +559,50 @@ const PluginDetailTableEdit = ({
               </Grid>
             )}
           </Grid>
-          <Typography variant="body1" mb="15px">
-            Response
-          </Typography>
+          <Typography variant="body1">Authentication</Typography>
           <Grid container spacing={2} mb="15px">
             <Grid item size={6}>
               <Tooltip
-                title={
-                  <Typography>
-                    HTTP status code for successful response
-                  </Typography>
-                }
-                placement="top"
-              >
-                <TextField
-                  fullWidth
-                  label={"Response Status Code"}
-                  required
-                  helperText={<>E.g. 200</>}
-                  value={editedPlugin.responseStatusCode}
-                  onChange={(e) => {
-                    onChange("responseStatusCode", e.target.value);
-                    setEndpointSuccess(false);
-                  }}
-                />
-              </Tooltip>
-            </Grid>
-            <Grid item size={6}>
-              <Tooltip
-                title={<Typography>Format of the response payload</Typography>}
+                title={<Typography>Authentication Type</Typography>}
                 placement="top"
               >
                 <FormControl fullWidth required>
-                  <InputLabel id="responseFormat">Response Format</InputLabel>
+                  <InputLabel id="authType">Authentication Type</InputLabel>
                   <Select
                     fullWidth
-                    labelId="responseFormat"
-                    id="responseFormat"
-                    value={editedPlugin.responseFormat}
-                    label={"responseFormat"}
+                    labelId="authType"
+                    id="authType"
+                    value={editedPlugin.authType}
+                    label={"authType"}
                     onChange={(e) => {
-                      onChange("responseFormat", e.target.value);
+                      onChange("authType", e.target.value);
                       setEndpointSuccess(false);
                     }}
                   >
-                    <MenuItem value={"application/json"}>
-                      application/json
-                    </MenuItem>
-                    <MenuItem value={"text/plain"}>text/plain</MenuItem>
+                    <MenuItem value={"none"}>None</MenuItem>
+                    <MenuItem value={"apiKey"}>API Key</MenuItem>
                   </Select>
                 </FormControl>
               </Tooltip>
             </Grid>
-            <Grid item size={12}>
-              <Tooltip
-                title={
-                  <Typography>
-                    Key of the property that contain model's response
-                  </Typography>
-                }
-                placement="top"
-              >
-                <TextField
-                  required
-                  fullWidth
-                  label={"Response Body Key"}
-                  helperText={<>response</>}
-                  value={editedPlugin.responseBodyKey}
-                  onChange={(e) => {
-                    onChange("responseBodyKey", e.target.value);
-                    setEndpointSuccess(false);
-                  }}
-                />
-              </Tooltip>
-            </Grid>
+            {editedPlugin.authType == "apiKey" && (
+              <Grid item size={6}>
+                <Tooltip
+                  title={<Typography>API Key</Typography>}
+                  placement="top"
+                >
+                  <TextField
+                    fullWidth
+                    label={"API Key"}
+                    value={editedPlugin.apiKey}
+                    onChange={(e) => {
+                      onChange("apiKey", e.target.value);
+                      setEndpointSuccess(false);
+                    }}
+                  />
+                </Tooltip>
+              </Grid>
+            )}
           </Grid>
         </Box>
       )}
@@ -527,6 +612,7 @@ const PluginDetailTableEdit = ({
         yamlString={yamlString}
         setEndpointSuccess={setEndpointSuccess}
         path={editedPlugin.path}
+        apiKey={editedPlugin.apiKey}
       />
     </Box>
   );

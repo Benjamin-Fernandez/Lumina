@@ -143,35 +143,29 @@ const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
           </Grid>
           <Grid item size={12}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Response
+              Authentication
             </Typography>
           </Grid>
 
           <Grid item size={6}>
             <Typography variant="body1" color={colors.grey[700]}>
-              Response Status Code
+              Authentication Type
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              {plugin?.responseStatusCode}
+              {plugin?.authType}
             </Typography>
           </Grid>
 
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Response Format
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              {plugin?.responseFormat}
-            </Typography>
-          </Grid>
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Response Body Key
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              {plugin?.responseBodyKey}
-            </Typography>
-          </Grid>
+          {plugin?.authType === "apiKey" && (
+            <Grid item size={6}>
+              <Typography variant="body1" color={colors.grey[700]}>
+                API Key
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 2 }}>
+                {plugin?.apiKey}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       )}
 

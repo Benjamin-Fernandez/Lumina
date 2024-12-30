@@ -8,13 +8,8 @@ import {
   MenuItem,
   InputLabel,
   Tooltip,
-  Divider,
-  Button,
-  IconButton,
-  Link,
 } from "@mui/material";
 import { Grid } from "@mui/system";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 const PluginEndpointForm = ({
   formRef,
@@ -24,18 +19,16 @@ const PluginEndpointForm = ({
   requestFormat,
   requestContentType,
   requestBodyQueryKey,
-  responseStatusCode,
-  responseFormat,
-  responseBodyKey,
+  authType,
+  apiKey,
   // setYamlFile,
   setEndpoint,
   setPath,
   setRequestFormat,
   setRequestBodyQueryKey,
   setRequestContentType,
-  setResponseStatusCode,
-  setResponseFormat,
-  setResponseBodyKey,
+  setAuthType,
+  setApiKey,
 }) => {
   // const fileInputRef = useRef(null);
 
@@ -241,7 +234,49 @@ const PluginEndpointForm = ({
           </Grid>
         )}
       </Grid>
-      <Typography variant="body1">Response</Typography>
+      <Typography variant="body1">Authentication</Typography>
+      <Grid container spacing={2} mb="15px">
+        <Grid item size={6}>
+          <Tooltip
+            title={<Typography>Authentication Type</Typography>}
+            placement="top"
+          >
+            <FormControl fullWidth required>
+              <InputLabel id="authType">Authentication Type</InputLabel>
+              <Select
+                fullWidth
+                labelId="authType"
+                id="authType"
+                value={authType}
+                label={"authType"}
+                onChange={(e) => {
+                  setAuthType(e.target.value);
+                  if (e.target.value === "none") {
+                    setApiKey("");
+                  }
+                }}
+              >
+                <MenuItem value={"none"}>None</MenuItem>
+                <MenuItem value={"apiKey"}>API Key</MenuItem>
+              </Select>
+            </FormControl>
+          </Tooltip>
+        </Grid>
+        {authType === "apiKey" && (
+          <Grid item size={6}>
+            <Tooltip title={<Typography>API Key</Typography>} placement="top">
+              <TextField
+                fullWidth
+                label={"API Key"}
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+              />
+            </Tooltip>
+          </Grid>
+        )}
+      </Grid>
+
+      {/* <Typography variant="body1">Response</Typography>
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
           <Tooltip
@@ -300,7 +335,7 @@ const PluginEndpointForm = ({
             />
           </Tooltip>
         </Grid>
-      </Grid>
+      </Grid>*/}
     </Box>
   );
 };

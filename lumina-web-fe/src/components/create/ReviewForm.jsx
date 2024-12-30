@@ -15,9 +15,8 @@ const ReviewForm = ({
   requestFormat,
   requestContentType,
   requestBodyQueryKey,
-  responseStatusCode,
-  responseFormat,
-  responseBodyKey,
+  authType,
+  apiKey,
 }) => {
   const [imageSrc, setImageSrc] = useState("");
   useEffect(() => {
@@ -121,22 +120,18 @@ const ReviewForm = ({
           )}
           <Box display="flex" flexDirection="row" gap={2}>
             <Typography variant="body1" fontWeight="bold">
-              Response Status Code:
+              Authentication Type
             </Typography>
-            <Typography variant="body1">{responseStatusCode}</Typography>
+            <Typography variant="body1">{authType}</Typography>
           </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Response Content Type:
-            </Typography>
-            <Typography variant="body1">{responseFormat}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={2}>
-            <Typography variant="body1" fontWeight="bold">
-              Response Schema:
-            </Typography>
-            <Typography variant="body1">{responseBodyKey}</Typography>
-          </Box>
+          {authType === "apiKey" && (
+            <Box display="flex" flexDirection="row" gap={2}>
+              <Typography variant="body1" fontWeight="bold">
+                Api Key
+              </Typography>
+              <Typography variant="body1">{apiKey}</Typography>
+            </Box>
+          )}
         </Box>
       )}
       {yamlFile && (

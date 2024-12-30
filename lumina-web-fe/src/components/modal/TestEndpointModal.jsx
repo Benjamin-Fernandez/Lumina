@@ -49,6 +49,7 @@ const TestEndpointModal = ({
   yamlString,
   setEndpointSuccess,
   path,
+  apiKey,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -93,7 +94,7 @@ const TestEndpointModal = ({
 
       console.log("YAML STRING before calling testEndpoint", yamlString);
 
-      testEndpoint({ yamlString, query: newMessage, path })
+      testEndpoint({ yamlString, query: newMessage, path, apiKey })
         .then((response) => {
           console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
           setMessages((prevMessages) => [
