@@ -255,7 +255,11 @@ const ChatScreen = ({ navigation }) => {
             >
               <Icon name="chevron-left" size={24} color="black" />
             </TouchableOpacity>
-            <Text className="font-llight text-lg">
+            <Text
+              className="font-llight text-lg"
+              numberOfLines={1}
+              style={{ maxWidth: width * 0.6 }}
+            >
               {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
             </Text>
           </View>
@@ -286,7 +290,11 @@ const ChatScreen = ({ navigation }) => {
             >
               <Icon name="chevron-left" size={24} color="black" />
             </TouchableOpacity>
-            <Text className="font-llight text-lg">
+            <Text
+              className="font-llight text-lg "
+              numberOfLines={1}
+              style={{ maxWidth: width * 0.6 }}
+            >
               {chatbotId === "0" ? "Lumina GPT-4o" : chatbot.name}
             </Text>
           </View>

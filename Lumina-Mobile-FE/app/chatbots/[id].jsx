@@ -24,7 +24,7 @@ const ChatbotDetail = () => {
   const { setFavouriteChatbots, setDiscoverChatbots } = useChatbot();
   const [favourite, setFavourite] = useState(false);
   const { email } = useUser();
-  const { height } = Dimensions.get("window");
+  const { width, height } = Dimensions.get("window");
 
   const params = useLocalSearchParams();
   console.log("Params: ", params);
@@ -144,7 +144,11 @@ const ChatbotDetail = () => {
           />
         </View>
         <View className="flex-col ml-6">
-          <Text className="font-lregular text-xl mb-1">
+          <Text
+            className="font-lregular text-xl mb-1"
+            style={{ width: width * 0.5 }}
+            numberOfLines={3}
+          >
             {/* {chatbot.chatbot.name} */}
             {chatbot.name}
           </Text>

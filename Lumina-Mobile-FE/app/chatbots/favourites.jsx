@@ -84,9 +84,9 @@ const FavouriteChatbots = () => {
           Favourite Chatbots
         </Text>
       </View>
-      <ScrollView className="flex-col">
+      <ScrollView className="flex-col" contentContainerStyle={{ flexGrow: 1 }}>
         {favouriteChatbots.length === 0 ? (
-          <View className="flex-row justify-center items-center ml-2 mr-3 h-[80%] border-gray-300 p-4 rounded-lg">
+          <View className="flex-row justify-center items-center ml-2 mr-3 h-[80%] border-gray-300 p-4 rounded-lg ">
             <Icon name="info" size={24} color="gray" />
             <Text className="font-lregular text-lg ml-2">
               No Favourite Chatbots
