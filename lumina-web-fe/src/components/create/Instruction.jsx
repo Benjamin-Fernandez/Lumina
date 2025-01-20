@@ -73,7 +73,8 @@ const Instruction = ({ checked, setChecked }) => {
           <ul>
             <li>The base URL where the API is hosted.</li>
             <pre>
-              Example: <code>{`"https://api.example.com:8000"`}</code>
+              Example:{" "}
+              <code>{`"https://workshop-plugins.azurewebsites.net"`}</code>
             </pre>
           </ul>
           <li>Paths</li>
@@ -83,7 +84,7 @@ const Instruction = ({ checked, setChecked }) => {
               and receive responses.
             </li>
             <pre>
-              Example: <code>{`"/getResponse"`}</code>
+              Example: <code>{`"/api/cdefg-plugin"`}</code>
             </pre>
           </ul>
 
@@ -108,27 +109,6 @@ const Instruction = ({ checked, setChecked }) => {
             <li>Key of the property that contain user query</li>
             <pre>
               Example: <code>{`query`}</code>
-            </pre>
-          </ul>
-          <li>Response Status Code</li>
-          <ul>
-            <li>HTTP status code for successful response</li>
-            <pre>
-              Example: <code>{`"200"`}</code>
-            </pre>
-          </ul>
-          <li>Response Content Type</li>
-          <ul>
-            <li>Format of the response payload</li>
-            <pre>
-              Example: <code>{`"text/plain"`}</code>
-            </pre>
-          </ul>
-          <li>Response Body Key</li>
-          <ul>
-            <li>Key of the property that contain model's response</li>
-            <pre>
-              Example: <code>{`response`}</code>
             </pre>
           </ul>
         </ul>
@@ -158,7 +138,7 @@ const Instruction = ({ checked, setChecked }) => {
               onChange={(e) => setChecked(e.target.checked)}
             />
           }
-          label="I have read and acknowledge the guide."
+          label="I have read and acknowledged the guide."
         />
       </FormGroup>
     </Box>

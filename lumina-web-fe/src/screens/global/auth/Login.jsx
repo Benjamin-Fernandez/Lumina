@@ -135,7 +135,7 @@ const Login = () => {
           }}
           onClick={handleLogin}
         >
-          Sign in with Outlook
+          Sign in with Microsoft
         </Button>
       </Box>
     </Box>

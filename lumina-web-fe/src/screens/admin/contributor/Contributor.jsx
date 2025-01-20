@@ -78,10 +78,9 @@ const Contributor = () => {
       contributor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (filterTerm === "" || contributor.domain === filterTerm)
   );
-  const paginatedData = filteredData.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  const paginatedData = filteredData
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handlePromote = async (id, name, email) => {
     try {

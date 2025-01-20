@@ -12,7 +12,7 @@ const ContributorDetailTableContent = (user) => {
       <Grid container spacing={2} mb="15px">
         <Grid item size={6}>
           <Typography variant="body1" color={colors.grey[700]}>
-            Username
+            Name
           </Typography>
           <Typography variant="body1" sx={{ mt: 2 }}>
             {user.user.name}
@@ -44,7 +44,7 @@ const ContributorDetailTableContent = (user) => {
         </Grid>
         <Grid item size={6}>
           <Typography variant="body1" color={colors.grey[700]}>
-            Email Address
+            Email
           </Typography>
           <Typography variant="body1" sx={{ mt: 2 }}>
             {user.user.email}

@@ -35,7 +35,6 @@ const TestEndpoint = ({
   yamlString,
   setEndpointSuccess,
   path,
-  apiKey,
 }) => {
   const [messages, setMessages] = useState([
     {
@@ -77,38 +76,36 @@ const TestEndpoint = ({
 
       console.log("YAML STRING before calling testEndpoint", yamlString);
 
-      testEndpoint({ yamlString, query: newMessage, path, apiKey }).then(
-        (response) => {
-          console.log(
-            "RESPONSE IN TESTENDPOINT",
-            response,
-            "Type:",
-            response.typeof
-          ); // Resolved response
+      testEndpoint({ yamlString, query: newMessage, path }).then((response) => {
+        console.log(
+          "RESPONSE IN TESTENDPOINT",
+          response,
+          "Type:",
+          response.typeof
+        ); // Resolved response
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: prevMessages.length + 1,
+            text: response,
+            isOwn: false,
+          },
+        ]);
+        if (
+          !response.includes("Error") &&
+          response !== "No response from API."
+        ) {
           setMessages((prevMessages) => [
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: response,
+              text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
               isOwn: false,
             },
           ]);
-          if (
-            !response.includes("Error") &&
-            response !== "No response from API."
-          ) {
-            setMessages((prevMessages) => [
-              ...prevMessages,
-              {
-                id: prevMessages.length + 1,
-                text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
-                isOwn: false,
-              },
-            ]);
-            setEndpointSuccess(true);
-          }
+          setEndpointSuccess(true);
         }
-      );
+      });
     }
   };
 

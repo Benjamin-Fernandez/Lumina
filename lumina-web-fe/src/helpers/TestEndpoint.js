@@ -20,7 +20,7 @@ const loadSchema = async ({ yamlString }) => {
   }
 };
 
-const callEndpoint = async ({ client, query, path, apiKey }) => {
+const callEndpoint = async ({ client, query, path }) => {
   try {
     console.log("Sending request...");
     console.log("Query:", query);
@@ -46,66 +46,28 @@ const callEndpoint = async ({ client, query, path, apiKey }) => {
           "requestBodyQueryKey is undefined. Check the schema properties."
         );
       }
-      if (apiKey === "") {
-        const response = await client.execute({
-          operationId: "getResponse",
-          requestBody: {
-            [requestBodyQueryKey]: query, // Use the dynamic key
-          },
-        });
-        if (!response) {
-          console.error("No response returned from the API.");
-          return "No response from API.";
-        }
-        return response.body;
-      } else {
-        console.log(apiKey, requestBodyQueryKey);
-        const response = await client.execute({
-          operationId: "getResponse",
-          requestBody: {
-            [requestBodyQueryKey]: query, // Use the dynamic key
-          },
-          headers: {
-            Apikey: apiKey,
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response) {
-          console.error("No response returned from the API.");
-          return "No response from API.";
-        }
-
-        return response.body;
+      const response = await client.execute({
+        operationId: "getResponse",
+        requestBody: {
+          [requestBodyQueryKey]: query, // Use the dynamic key
+        },
+      });
+      if (!response) {
+        console.error("No response returned from the API.");
+        return "No response from API.";
       }
+      return response.body;
     } else {
-      if (apiKey === "") {
-        const response = await client.execute({
-          operationId: "getResponse",
-          requestBody: query,
-        });
-        if (!response) {
-          console.error("No response returned from the API.");
-          return "No response from API.";
-        }
-
-        return response.body;
-      } else {
-        console.log(apiKey);
-        const response = await client.execute({
-          operationId: "getResponse",
-          requestBody: query,
-          headers: {
-            Apikey: apiKey,
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response) {
-          console.error("No response returned from the API.");
-          return "No response from API.";
-        }
-
-        return response.body;
+      const response = await client.execute({
+        operationId: "getResponse",
+        requestBody: query,
+      });
+      if (!response) {
+        console.error("No response returned from the API.");
+        return "No response from API.";
       }
+
+      return response.body;
     }
   } catch (error) {
     console.error("Error calling endpoint:", error);
@@ -113,9 +75,9 @@ const callEndpoint = async ({ client, query, path, apiKey }) => {
   }
 };
 
-const testEndpoint = async ({ yamlString, query, path, apiKey }) => {
+const testEndpoint = async ({ yamlString, query, path }) => {
   const client = await loadSchema({ yamlString });
-  const response = await callEndpoint({ client, query, path, apiKey });
+  const response = await callEndpoint({ client, query, path });
   console.log(response); // Log the final response
   return response;
 };

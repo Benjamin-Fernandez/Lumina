@@ -44,6 +44,13 @@ const PluginDetailsForm = ({
   setDescription,
 }) => {
   const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
+
+  const [charCount, setCharCount] = React.useState(name.length);
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    setCharCount(e.target.value.length);
+  };
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile.size > MAX_FILE_SIZE) {
@@ -121,9 +128,13 @@ const PluginDetailsForm = ({
             fullWidth
             label={"Name of plugin"}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
+            inputProps={{ maxLength: 50 }}
             required
           />
+          <Typography variant="caption" align="right">
+            {charCount}/50
+          </Typography>
         </Grid>
         <Grid item size={6}>
           <FormControl fullWidth required>

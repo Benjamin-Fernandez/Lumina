@@ -48,6 +48,7 @@ const PluginDev = () => {
 
   // Handle filter term
   const handleFilterChange = (event) => {
+    console.log(event.target.value);
     setFilterTerm(event.target.value);
   };
 
@@ -94,7 +95,11 @@ const PluginDev = () => {
       request.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (filterTerm === "" ||
         request.category === filterTerm ||
-        request.activated === (filterTerm === "true"))
+        (request.activated === (filterTerm === "true") &&
+          filterTerm !== "Module" &&
+          filterTerm !== "NTU" &&
+          filterTerm !== "Career" &&
+          filterTerm !== "General"))
   );
   const paginatedData = filteredData
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -170,8 +175,8 @@ const PluginDev = () => {
                   <option value="General">General</option>
                 </optgroup>
                 <optgroup label="Status">
-                  <option value="true">Active</option>
-                  <option value="false">Inactive</option>
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
                   {/* <option value="text">Text</option>
                 <option value="utility">Utility</option> */}
                 </optgroup>

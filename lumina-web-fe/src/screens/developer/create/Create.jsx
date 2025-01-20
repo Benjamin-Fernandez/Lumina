@@ -55,8 +55,6 @@ const Create = () => {
   const [requestFormat, setRequestFormat] = useState("");
   const [requestBodyQueryKey, setRequestBodyQueryKey] = useState("");
   const [requestContentType, setRequestContentType] = useState("");
-  const [authType, setAuthType] = useState("");
-  const [apiKey, setApiKey] = useState("");
 
   useEffect(() => {
     if (formRef.current) {
@@ -66,15 +64,7 @@ const Create = () => {
 
   useEffect(() => {
     setEndpointSuccess(false);
-  }, [
-    endpoint,
-    path,
-    requestFormat,
-    requestBodyQueryKey,
-    requestContentType,
-    authType,
-    apiKey,
-  ]);
+  }, [endpoint, path, requestFormat, requestBodyQueryKey, requestContentType]);
 
   useEffect(() => {
     setRequestBodyQueryKey("");
@@ -88,60 +78,42 @@ const Create = () => {
     requestFormat,
     requestContentType,
     requestBodyQueryKey,
-    authType,
   }) => {
     let yamlObject = {};
     if (requestFormat == "application/json") {
-      if (authType === "apiKey") {
-        // Create a basic structure for the YAML file
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
           },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          components: {
-            securitySchemes: {
-              ApiKeyAuth: {
-                type: "apiKey",
-                in: "header",
-                name: "Apikey",
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: requestContentType,
+                      properties: requestBodyQueryKey,
+                    },
+                  },
+                },
               },
-            },
-          },
-          security: [
-            {
-              ApiKeyAuth: [],
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
+              responses: {
+                200: {
                   content: {
-                    [requestFormat]: {
+                    "application/json": {
                       schema: {
-                        type: requestContentType,
-                        properties: requestBodyQueryKey,
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
+                        type: "string", // Default type to string if not provided
                       },
                     },
                   },
@@ -149,105 +121,45 @@ const Create = () => {
               },
             },
           },
-        };
-      } else {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
-          },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
-                  content: {
-                    [requestFormat]: {
-                      schema: {
-                        type: requestContentType,
-                        properties: requestBodyQueryKey,
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        };
-      }
-
+        },
+      };
       // Convert the JavaScript object to a YAML string
       const yamlString = yaml.dump(yamlObject);
 
       return yamlString;
     } else {
-      if (authType === "apiKey") {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
           },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          components: {
-            securitySchemes: {
-              ApiKeyAuth: {
-                type: "apiKey",
-                in: "header",
-                name: "Apikey",
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: "string",
+                    },
+                  },
+                },
               },
-            },
-          },
-          security: [
-            {
-              ApiKeyAuth: [],
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
+              responses: {
+                200: {
                   content: {
-                    [requestFormat]: {
+                    "application/json": {
                       schema: {
-                        type: "string",
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
+                        type: "string", // Default type to string if not provided
                       },
                     },
                   },
@@ -255,55 +167,13 @@ const Create = () => {
               },
             },
           },
-        };
-      } else {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
-          },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
-                  content: {
-                    [requestFormat]: {
-                      schema: {
-                        type: "string",
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        };
+        },
+      };
 
-        // Convert the JavaScript object to a YAML string
-        const yamlString = yaml.dump(yamlObject);
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
 
-        return yamlString;
-      }
+      return yamlString;
     }
   };
 
@@ -328,8 +198,6 @@ const Create = () => {
           requestBodyQueryKey: requestBodyQueryKey,
           requestFormat: requestFormat,
           requestContentType: requestContentType,
-          authType: authType,
-          apiKey: apiKey,
         });
         axios
           .post("/plugin/", {
@@ -347,8 +215,6 @@ const Create = () => {
             requestBodyQueryKey: requestBodyQueryKey,
             requestFormat: requestFormat,
             requestContentType: requestContentType,
-            authType: authType,
-            apiKey: apiKey,
           })
           .then(() => {
             console.log("Plugin submitted successfully!");
@@ -375,11 +241,7 @@ const Create = () => {
         "requestContentType:",
         requestContentType,
         "requestBodyQueryKey:",
-        requestBodyQueryKey,
-        "authType:",
-        authType,
-        "apiKey:",
-        apiKey
+        requestBodyQueryKey
       );
       const yamlString = generateYaml({
         name,
@@ -388,8 +250,6 @@ const Create = () => {
         requestFormat,
         requestContentType,
         requestBodyQueryKey,
-        authType,
-        apiKey,
       });
       setYamlString(yamlString);
       console.log("Generated YAML file:", yamlString);
@@ -514,16 +374,12 @@ const Create = () => {
                 requestFormat={requestFormat}
                 requestContentType={requestContentType}
                 requestBodyQueryKey={requestBodyQueryKey}
-                authType={authType}
-                apiKey={apiKey}
                 setYamlFile={setYamlFile}
                 setEndpoint={setEndpoint}
                 setPath={setPath}
                 setRequestFormat={setRequestFormat}
                 setRequestContentType={setRequestContentType}
                 setRequestBodyQueryKey={setRequestBodyQueryKey}
-                setAuthType={setAuthType}
-                setApiKey={setApiKey}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -538,13 +394,7 @@ const Create = () => {
                 <Button
                   onClick={handleNext}
                   disabled={
-                    !(
-                      endpoint !== "" &&
-                      path !== "" &&
-                      requestFormat !== "" &&
-                      authType !== ""
-                    ) ||
-                    (authType === "apiKey" && apiKey === "")
+                    !(endpoint !== "" && path !== "" && requestFormat !== "")
                   }
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
@@ -558,7 +408,6 @@ const Create = () => {
                 yamlString={yamlString}
                 setEndpointSuccess={setEndpointSuccess}
                 path={path}
-                apiKey={apiKey}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
@@ -589,8 +438,6 @@ const Create = () => {
                 requestBodyQueryKey={requestBodyQueryKey}
                 requestFormat={requestFormat}
                 requestContentType={requestContentType}
-                authType={authType}
-                apiKey={apiKey}
               />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button

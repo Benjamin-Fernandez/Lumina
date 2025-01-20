@@ -141,31 +141,6 @@ const PluginDetailTableNoEdit = ({ selectedSection, plugin }) => {
           <Grid item size={12}>
             <Divider />
           </Grid>
-          <Grid item size={12}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Authentication
-            </Typography>
-          </Grid>
-
-          <Grid item size={6}>
-            <Typography variant="body1" color={colors.grey[700]}>
-              Authentication Type
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              {plugin?.authType}
-            </Typography>
-          </Grid>
-
-          {plugin?.authType === "apiKey" && (
-            <Grid item size={6}>
-              <Typography variant="body1" color={colors.grey[700]}>
-                API Key
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 2 }}>
-                {plugin?.apiKey}
-              </Typography>
-            </Grid>
-          )}
         </Grid>
       )}
 

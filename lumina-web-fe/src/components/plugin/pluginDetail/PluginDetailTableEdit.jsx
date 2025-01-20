@@ -38,60 +38,42 @@ const PluginDetailTableEdit = ({
     requestFormat,
     requestContentType,
     requestBodyQueryKey,
-    authType,
   }) => {
     let yamlObject = {};
     if (requestFormat == "application/json") {
-      if (authType === "apiKey") {
-        // Create a basic structure for the YAML file
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
           },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          components: {
-            securitySchemes: {
-              ApiKeyAuth: {
-                type: "apiKey",
-                in: "header",
-                name: "Apikey",
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: requestContentType,
+                      properties: requestBodyQueryKey,
+                    },
+                  },
+                },
               },
-            },
-          },
-          security: [
-            {
-              ApiKeyAuth: [],
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
+              responses: {
+                200: {
                   content: {
-                    [requestFormat]: {
+                    "application/json": {
                       schema: {
-                        type: requestContentType,
-                        properties: requestBodyQueryKey,
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
+                        type: "string", // Default type to string if not provided
                       },
                     },
                   },
@@ -99,105 +81,45 @@ const PluginDetailTableEdit = ({
               },
             },
           },
-        };
-      } else {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
-          },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
-                  content: {
-                    [requestFormat]: {
-                      schema: {
-                        type: requestContentType,
-                        properties: requestBodyQueryKey,
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        };
-      }
-
+        },
+      };
       // Convert the JavaScript object to a YAML string
       const yamlString = yaml.dump(yamlObject);
 
       return yamlString;
     } else {
-      if (authType === "apiKey") {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
           },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          components: {
-            securitySchemes: {
-              ApiKeyAuth: {
-                type: "apiKey",
-                in: "header",
-                name: "Apikey",
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: "string",
+                    },
+                  },
+                },
               },
-            },
-          },
-          security: [
-            {
-              ApiKeyAuth: [],
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
+              responses: {
+                200: {
                   content: {
-                    [requestFormat]: {
+                    "application/json": {
                       schema: {
-                        type: "string",
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
+                        type: "string", // Default type to string if not provided
                       },
                     },
                   },
@@ -205,55 +127,13 @@ const PluginDetailTableEdit = ({
               },
             },
           },
-        };
-      } else {
-        yamlObject = {
-          openapi: "3.0.0",
-          info: {
-            title: name + "API",
-            version: "1.0.0",
-          },
-          servers: [
-            {
-              url: endpoint, // Base URL can be dynamic, for now using the example
-            },
-          ],
-          paths: {
-            [path]: {
-              // Dynamic path
-              post: {
-                operationId: "getResponse", // Example operationId based on method and path
-                requestBody: {
-                  required: true, // Convert to boolean
-                  content: {
-                    [requestFormat]: {
-                      schema: {
-                        type: "string",
-                      },
-                    },
-                  },
-                },
-                responses: {
-                  200: {
-                    content: {
-                      "application/json": {
-                        schema: {
-                          type: "string", // Default type to string if not provided
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        };
+        },
+      };
 
-        // Convert the JavaScript object to a YAML string
-        const yamlString = yaml.dump(yamlObject);
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
 
-        return yamlString;
-      }
+      return yamlString;
     }
   };
 
@@ -266,7 +146,6 @@ const PluginDetailTableEdit = ({
       requestFormat: editedPlugin.requestFormat,
       requestContentType: editedPlugin.requestContentType,
       requestBodyQueryKey: editedPlugin.requestBodyQueryKey,
-      authType: editedPlugin.authType,
     });
     setYamlString(yamlString);
     setTestEndpointModal(true);
@@ -358,8 +237,12 @@ const PluginDetailTableEdit = ({
               label={"Name of plugin"}
               value={editedPlugin.name}
               onChange={(e) => onChange("name", e.target.value)}
+              inputProps={{ maxLength: 50 }}
               required
             />
+            <Typography variant="caption" align="right">
+              {editedPlugin.name.length}/50
+            </Typography>
           </Grid>
           <Grid item size={6}>
             <TextField
@@ -559,51 +442,6 @@ const PluginDetailTableEdit = ({
               </Grid>
             )}
           </Grid>
-          <Typography variant="body1">Authentication</Typography>
-          <Grid container spacing={2} mb="15px">
-            <Grid item size={6}>
-              <Tooltip
-                title={<Typography>Authentication Type</Typography>}
-                placement="top"
-              >
-                <FormControl fullWidth required>
-                  <InputLabel id="authType">Authentication Type</InputLabel>
-                  <Select
-                    fullWidth
-                    labelId="authType"
-                    id="authType"
-                    value={editedPlugin.authType}
-                    label={"authType"}
-                    onChange={(e) => {
-                      onChange("authType", e.target.value);
-                      setEndpointSuccess(false);
-                    }}
-                  >
-                    <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"apiKey"}>API Key</MenuItem>
-                  </Select>
-                </FormControl>
-              </Tooltip>
-            </Grid>
-            {editedPlugin.authType == "apiKey" && (
-              <Grid item size={6}>
-                <Tooltip
-                  title={<Typography>API Key</Typography>}
-                  placement="top"
-                >
-                  <TextField
-                    fullWidth
-                    label={"API Key"}
-                    value={editedPlugin.apiKey}
-                    onChange={(e) => {
-                      onChange("apiKey", e.target.value);
-                      setEndpointSuccess(false);
-                    }}
-                  />
-                </Tooltip>
-              </Grid>
-            )}
-          </Grid>
         </Box>
       )}
       <TestEndpointModal
@@ -612,7 +450,6 @@ const PluginDetailTableEdit = ({
         yamlString={yamlString}
         setEndpointSuccess={setEndpointSuccess}
         path={editedPlugin.path}
-        apiKey={editedPlugin.apiKey}
       />
     </Box>
   );

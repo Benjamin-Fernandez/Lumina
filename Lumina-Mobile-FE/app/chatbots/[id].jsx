@@ -137,9 +137,15 @@ const ChatbotDetail = () => {
       </View>
 
       <View className="flex-row w-full p-7 justify-start">
-        <View className="">
+        <View
+          className="w-[100px] h-[100px] rounded-full overflow-hidden"
+          style={{
+            backgroundColor: "#f0f0f0", // Optional fallback background
+          }}
+        >
           <Image
-            className="w-[100px] h-[100px] rounded-full"
+            className="w-full h-full"
+            style={{ resizeMode: "cover", transform: [{ scale: 2.5 }] }}
             source={{ uri: chatbot.image }}
           />
         </View>

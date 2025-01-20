@@ -172,7 +172,7 @@ const Sidebar = () => {
             /> */}
             {user.domain === "Admin" && (
               <Item
-                title="Contributor"
+                title="Contributors"
                 to="/contributor"
                 icon={<PeopleOutlineOutlinedIcon fontSize="large" />}
                 selected={selected}
