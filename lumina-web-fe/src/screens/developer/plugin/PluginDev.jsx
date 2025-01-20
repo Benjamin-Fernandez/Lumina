@@ -25,7 +25,7 @@ const PluginDev = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(0); // Current page number
-  const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Rows per page
   const [plugin, setPlugin] = useState([]);
   const [loading, setLoading] = useState(true);
   const { instance } = useMsal();

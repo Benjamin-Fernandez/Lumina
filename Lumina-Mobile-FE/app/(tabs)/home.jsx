@@ -8,6 +8,7 @@ import { useUser } from "../../context/UserContext";
 import { useChatbot } from "../../context/ChatbotContext";
 
 const Home = ({ username, onLogout }) => {
+  const [loading, setLoading] = useState(true);
   // Onclick Handlers
   const handleLogOut = () => {
     router.push("/");
@@ -64,10 +65,7 @@ const Home = ({ username, onLogout }) => {
   const fetchChatbots = async () => {
     try {
       const response = await axios.get("/chatbot");
-      // console.log("Chatbots fetched from the database: ", response.data);
       const { chatbots } = response.data;
-
-      // Assuming you have a way to get the user's favourite chatbots
       const userResponse = await axios.get("/user/email/" + email);
 
       // extract the favourite_chatbot from the user's response and store it in a variable userFavouriteChatbots
@@ -89,6 +87,7 @@ const Home = ({ username, onLogout }) => {
       // console.log("Discover Chatbots: ", discoverChatbots);
       setFavouriteChatbots(favouriteChatbots);
       setDiscoverChatbots(discoverChatbots);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching chatbots:", error);
     }
@@ -103,7 +102,32 @@ const Home = ({ username, onLogout }) => {
     fetchChatbots();
   };
 
-  return (
+  return loading ? ( // Loading Spinner
+    <View className="h-full bg-white p-5">
+      <View>
+        <View
+          className="flex-row justify-between items-center mx-2"
+          style={{ marginTop: height * 0.05 }}
+        >
+          <Text className="font-llight text-3xl">Home </Text>
+          <View className="flex-row gap-4">
+            <TouchableOpacity onPress={handleRefresh}>
+              <Icon name="sync" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleLogOut}>
+              <Icon name="sign-out" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View className="translate-y-64 items-center justify-center">
+          <Icon name="archive" size={24} color="black" />
+          <Text className="text-center font-llight text-lg mt-3">
+            Loading chatbots...
+          </Text>
+        </View>
+      </View>
+    </View>
+  ) : (
     <View className="h-full bg-white p-5">
       {/* Greeting + Sign-out Row */}
       <View
@@ -192,7 +216,7 @@ const Home = ({ username, onLogout }) => {
               {row.map((chatbot, index) => (
                 <TouchableOpacity
                   className="mr-5"
-                  style={{ height: height * 0.2, width: (width - 80) / 3 }}
+                  style={{ height: height * 0.2, width: (width - 100) / 3 }}
                   key={index}
                   onPress={() => handleChatbotDetail(chatbot)}
                 >

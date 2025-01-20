@@ -34,7 +34,7 @@ const CustomCard = ({ title, favourite, image, chatbot, handleFavourite }) => {
       )}
 
       {/* Text Section (30% of the card height) */}
-      <View className="h-[50%] p-3 flex-row justify-between bg-white rounded-b-lg">
+      <View className="h-[50%] py-3 px-2 flex-row justify-between bg-white rounded-b-lg">
         <View className="flex-[0.70]">
           <Text
             className="font-llight text-base font-bold"
@@ -44,7 +44,7 @@ const CustomCard = ({ title, favourite, image, chatbot, handleFavourite }) => {
             {title}
           </Text>
         </View>
-        <View className="flex-[0.25] mt-4">
+        <View className="flex-[0.25] mt-6">
           <TouchableOpacity onPress={() => handleFavourite(chatbot)}>
             {favourite ? (
               <Icon name="heart-fill" size={20} color="red" />

@@ -32,6 +32,7 @@ const ChatScreen = ({ navigation }) => {
   const [chatbotId, setChatbotId] = useState(params.chatbotId);
   const [chatbot, setChatbot] = useState({});
   const [loading, setLoading] = useState(true);
+  const [generating, setGenerating] = useState(false);
   const { email } = useUser(); // Get email from context
   const scrollViewRef = useRef(null);
 
@@ -125,6 +126,7 @@ const ChatScreen = ({ navigation }) => {
       await axios.put("/conversation/" + conversationId, {
         lastMessage: response.data.response.choices[0].message.content,
       });
+      setGenerating(false);
       return response.data;
     } else {
       console.log(
@@ -162,6 +164,7 @@ const ChatScreen = ({ navigation }) => {
         await axios.put("/conversation/" + conversationId, {
           lastMessage: response.data.response,
         });
+        setGenerating(false);
         return response.data.response;
       } catch (error) {
         console.error("Error fetching response from custom chatbot:", error);
@@ -181,6 +184,7 @@ const ChatScreen = ({ navigation }) => {
   }, [messages, getResponse]);
   // Handle sending a message
   const handleSend = async () => {
+    setGenerating(true);
     console.log("Sending message: ", input);
     if (input.trim()) {
       if (messages.length === 0) {
@@ -352,10 +356,11 @@ const ChatScreen = ({ navigation }) => {
               numberOfLines={4}
               onChangeText={(text) => setInput(text)}
             />
+
             <TouchableOpacity
               className="absolute right-5"
               onPress={handleSend}
-              disabled={!input}
+              disabled={!input || generating}
             >
               <Icon name="paper-airplane" size={24} color="gray" />
             </TouchableOpacity>

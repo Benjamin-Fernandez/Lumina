@@ -64,10 +64,10 @@ const CustomConversation = ({
   const renderRightActions = (progress, dragX) => {
     return (
       <TouchableOpacity
-        className="bg-red-500 w-1/4 justify-center items-center h-[70px] rounded-r-lg"
+        className="w-1/4 justify-center items-center h-[70px] rounded-r-lg"
         onPress={handleDeletePress} // Open modal on trash icon press
       >
-        <Icon name="trash" size={24} color="white" />
+        <Icon name="trash" size={24} color="red" />
       </TouchableOpacity>
     );
   };
