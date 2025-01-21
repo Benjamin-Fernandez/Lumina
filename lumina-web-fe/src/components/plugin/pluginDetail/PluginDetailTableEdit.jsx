@@ -138,7 +138,6 @@ const PluginDetailTableEdit = ({
   };
 
   const handleOpenTestEndpoint = () => {
-    console.log("EDITED PLUGIN", editedPlugin);
     const yamlString = generateYaml({
       name: editedPlugin.name,
       endpoint: editedPlugin.endpoint,
@@ -166,8 +165,6 @@ const PluginDetailTableEdit = ({
       reader.onloadend = () => {
         const base64 = reader.result;
         onChange("image", base64);
-        console.log(reader.result);
-        console.log("Base64: ", base64);
       };
       reader.readAsDataURL(selectedFile);
     }

@@ -74,15 +74,7 @@ const TestEndpoint = ({
       setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage("");
 
-      console.log("YAML STRING before calling testEndpoint", yamlString);
-
       testEndpoint({ yamlString, query: newMessage, path }).then((response) => {
-        console.log(
-          "RESPONSE IN TESTENDPOINT",
-          response,
-          "Type:",
-          response.typeof
-        ); // Resolved response
         setMessages((prevMessages) => [
           ...prevMessages,
           {

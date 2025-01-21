@@ -90,7 +90,6 @@ const Contributor = () => {
         domain: "Admin",
       };
       const response = await axios.put(`/user/${id}`, body);
-      console.log("User promoted successfully:", response.data.user);
       fetchUsers();
     } catch (error) {
       console.error("Error promoting user:", error);
@@ -105,7 +104,6 @@ const Contributor = () => {
         domain: "Developer",
       };
       const response = await axios.put(`/user/${id}`, body);
-      console.log("User demoted successfully:", response.data.user);
       fetchUsers();
     } catch (error) {
       console.error("Error demoting user:", error);

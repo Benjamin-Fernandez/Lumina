@@ -70,7 +70,6 @@ const PluginDetailsDev = () => {
   };
 
   const handleDeactivate = () => {
-    console.log("deactivate");
     axios
       .put(`/plugin/${id}`, { activated: false })
       .then(() => {
@@ -82,7 +81,6 @@ const PluginDetailsDev = () => {
       });
   };
   const handleActivate = () => {
-    console.log("Activate");
     axios
       .put(`/plugin/${id}`, { activated: true })
       .then(() => {
@@ -132,10 +130,6 @@ const PluginDetailsDev = () => {
   useEffect(() => {
     fetchPlugin();
   }, []);
-
-  useEffect(() => {
-    console.log(plugin);
-  }, [plugin]);
   return (
     <>
       {loading ? (

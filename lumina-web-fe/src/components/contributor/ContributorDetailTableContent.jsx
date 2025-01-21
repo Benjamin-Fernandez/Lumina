@@ -5,7 +5,6 @@ import { tokens } from "../../theme";
 const ContributorDetailTableContent = (user) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  console.log("User details: IN SIDE", user);
 
   return (
     <Box width="100%" height="100%">

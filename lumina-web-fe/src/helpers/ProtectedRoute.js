@@ -6,9 +6,6 @@ import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
   // Check if the user is authenticated
   const { instance } = useMsal();
-  console.log("Active Account: ", instance.getActiveAccount());
-  console.log("Active Account Name: ", instance.getActiveAccount()?.name);
-  console.log("Active Account Email: ", instance.getActiveAccount()?.username);
   const isAuthenticated = instance.getActiveAccount() !== null;
 
   return isAuthenticated ? children : <Navigate to="/" />;

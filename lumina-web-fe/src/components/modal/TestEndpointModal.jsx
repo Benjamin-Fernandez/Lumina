@@ -91,11 +91,8 @@ const TestEndpointModal = ({
       setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage("");
 
-      console.log("YAML STRING before calling testEndpoint", yamlString);
-
       testEndpoint({ yamlString, query: newMessage, path })
         .then((response) => {
-          console.log("RESPONSE IN TESTENDPOINT", response); // Resolved response
           setMessages((prevMessages) => [
             ...prevMessages,
             {
@@ -120,7 +117,6 @@ const TestEndpointModal = ({
           }
         })
         .catch((error) => {
-          console.log("ERROR:", error); // Rejected error
           setMessages((prevMessages) => [
             ...prevMessages,
             {

@@ -30,8 +30,6 @@ const Profile = () => {
       .get("/user/email/" + email)
       .then((res) => {
         setUser(res.data.user);
-        console.log("User details:", res.data.user);
-        console.log("Loading done.");
         setLoading(false);
       })
       .catch((error) => {

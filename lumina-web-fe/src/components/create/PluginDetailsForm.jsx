@@ -60,11 +60,11 @@ const PluginDetailsForm = ({
     }
     if (selectedFile) {
       setFile(selectedFile);
-      console.log(selectedFile);
+      // console.log(selectedFile);
       const reader = new FileReader();
       reader.onloadend = () => {
         setBase64(reader.result);
-        console.log(reader.result);
+        // console.log(reader.result);
       };
       reader.readAsDataURL(selectedFile);
     }

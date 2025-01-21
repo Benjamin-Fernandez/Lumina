@@ -48,7 +48,6 @@ const PluginDev = () => {
 
   // Handle filter term
   const handleFilterChange = (event) => {
-    console.log(event.target.value);
     setFilterTerm(event.target.value);
   };
 
@@ -63,14 +62,12 @@ const PluginDev = () => {
     try {
       const user = await axios.get("/user/email/" + email);
       const domain = user.data.user.domain;
-      console.log("User domain obtained from context " + domain);
       if (domain === "Admin") {
         const response = await axios.get("/plugin/");
         setPlugin(response.data.plugin);
         setLoading(false);
         return;
       } else {
-        console.log("User email obtained from context " + email);
         const response = await axios.get("/plugin/email/" + email);
         setPlugin(response.data.plugin);
         setLoading(false);
@@ -84,10 +81,6 @@ const PluginDev = () => {
     // Fetch plugin data from the database
     fetchPlugin();
   }, []);
-
-  useEffect(() => {
-    console.log("Plugin data fetched from the database: ", plugin);
-  }, [plugin]);
 
   // Filter and paginate data
   const filteredData = plugin.filter(

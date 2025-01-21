@@ -178,27 +178,9 @@ const Create = () => {
   };
 
   const handleSubmit = () => {
-    console.log("Retrieving user information...");
-    console.log("User email:", email);
     axios
       .get("/user/email/" + email)
       .then((res) => {
-        console.log("Sending data:", {
-          userEmail: email,
-          userName: res.data.user.name,
-          name: name,
-          version: "1.0.0",
-          image: base64,
-          category: category,
-          description: description,
-          activated: false,
-          schema: JSON.stringify(yamlString),
-          endpoint: endpoint,
-          path: path,
-          requestBodyQueryKey: requestBodyQueryKey,
-          requestFormat: requestFormat,
-          requestContentType: requestContentType,
-        });
         axios
           .post("/plugin/", {
             userEmail: email,
@@ -217,7 +199,6 @@ const Create = () => {
             requestContentType: requestContentType,
           })
           .then(() => {
-            console.log("Plugin submitted successfully!");
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
           })
           .catch((error) => {
@@ -231,18 +212,6 @@ const Create = () => {
 
   const handleNext = () => {
     if (activeStep === 2 && yamlFile === null) {
-      console.log(
-        "Generating YAML file... with endpoint:",
-        endpoint,
-        "path:",
-        path,
-        "requestFormat:",
-        requestFormat,
-        "requestContentType:",
-        requestContentType,
-        "requestBodyQueryKey:",
-        requestBodyQueryKey
-      );
       const yamlString = generateYaml({
         name,
         endpoint,
@@ -252,7 +221,6 @@ const Create = () => {
         requestBodyQueryKey,
       });
       setYamlString(yamlString);
-      console.log("Generated YAML file:", yamlString);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };

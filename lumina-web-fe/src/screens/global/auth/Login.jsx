@@ -23,7 +23,6 @@ const Login = () => {
     try {
       // Ensure the instance is initialized
       await instance.initialize();
-      console.log("MSAL initialized successfully.");
 
       const loginRequest = {
         scopes: config.scopes,
@@ -33,7 +32,6 @@ const Login = () => {
       // Proceed with the login popup
       const response = await instance.loginPopup(loginRequest);
 
-      console.log("Login successful:", response);
       if (response && response.account) {
         const email = response.account.username;
         if (!email.endsWith("@e.ntu.edu.sg")) {
@@ -60,7 +58,6 @@ const Login = () => {
             console.error("Error fetching user by email:", error);
           });
         instance.setActiveAccount(response.account);
-        console.log("Active Account Set:", response.account);
         navigate("/pluginDev");
       }
     } catch (error) {

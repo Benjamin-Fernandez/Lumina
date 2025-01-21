@@ -45,7 +45,6 @@ const Sidebar = () => {
   const fetchUser = useCallback(async () => {
     const email = instance.getActiveAccount()?.username;
     const user = await axios.get("/user/email/" + email);
-    console.log("User details:", user.data.user);
     setUser(user.data.user);
   }, [instance]);
 
