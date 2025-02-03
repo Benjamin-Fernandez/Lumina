@@ -236,6 +236,7 @@ const PluginDetailTableEdit = ({
               onChange={(e) => onChange("name", e.target.value)}
               inputProps={{ maxLength: 50 }}
               required
+              error={editedPlugin.name.length > 50 || editedPlugin.name == ""}
             />
             <Typography variant="caption" align="right">
               {editedPlugin.name.length}/50
@@ -248,6 +249,7 @@ const PluginDetailTableEdit = ({
               value={editedPlugin.version}
               onChange={(e) => onChange("version", e.target.value)}
               required
+              error={editedPlugin.version == ""}
             />
           </Grid>
           <Grid item size={12}>
@@ -263,6 +265,8 @@ const PluginDetailTableEdit = ({
                 value={editedPlugin.category}
                 label={"Category"}
                 onChange={(e) => onChange("category", e.target.value)}
+                required
+                error={editedPlugin.category == ""}
               >
                 <MenuItem value={"Module"}>Module</MenuItem>
                 <MenuItem value={"NTU"}>NTU</MenuItem>
@@ -283,6 +287,7 @@ const PluginDetailTableEdit = ({
               multiline={true}
               rows={4}
               required
+              error={editedPlugin.description == ""}
               onChange={(e) => onChange("description", e.target.value)}
             />
           </Grid>

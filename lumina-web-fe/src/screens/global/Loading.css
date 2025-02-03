@@ -1,0 +1,24 @@
+/* Logo Spinner Styles */
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 100px; /* Adjust the size of your logo */
+  height: 100px; /* Adjust the size of your logo */
+  animation: spin 1.5s linear infinite; /* The logo spins continuously */
+}
+
+/* Keyframes for spinning animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start at 0 degrees */
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg); /* End at a full rotation (360 degrees) */
+    opacity: 0.3;
+  }
+}

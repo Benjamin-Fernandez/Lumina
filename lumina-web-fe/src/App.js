@@ -28,15 +28,7 @@ function App() {
   const [themeMode, colorMode] = useMode();
   const location = useLocation();
   const BarPresent =
-    // location.pathname === "/dashboard" ||
-    // location.pathname.match("^/plugin/([a-zA-Z0-9]+)$") ||
-    // location.pathname.match("^/request/([a-zA-Z0-9]+)$") ||
-    // location.pathname.match("^/contributor/([a-zA-Z0-9]+)$") ||
-    // location.pathname === "/plugin" ||
-    // location.pathname === "/request" ||
     location.pathname === "/contributor" ||
-    // location.pathname === "/contributorform" ||
-    // location.pathname === "/notification" ||
     location.pathname === "/profile" ||
     location.pathname === "/pluginDev" ||
     location.pathname.match("^/pluginDev/([a-zA-Z0-9]+)$") ||

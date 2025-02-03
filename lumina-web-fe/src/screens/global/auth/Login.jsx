@@ -6,12 +6,35 @@ import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { instance } = useMsal();
   const navigate = useNavigate();
+
+  const successToastify = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
+
+  const errorToastify = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
 
   useEffect(() => {
     if (instance.getActiveAccount()) {
@@ -23,19 +46,16 @@ const Login = () => {
     try {
       // Ensure the instance is initialized
       await instance.initialize();
-
       const loginRequest = {
         scopes: config.scopes,
         prompt: "login", // Forces credential prompt on login
       };
-
       // Proceed with the login popup
       const response = await instance.loginPopup(loginRequest);
-
       if (response && response.account) {
         const email = response.account.username;
         if (!email.endsWith("@e.ntu.edu.sg")) {
-          alert("Please sign in with your NTU account.");
+          errorToastify("Please sign in with your NTU account.");
           msalInstance.loginRedirect();
           return;
         }
@@ -62,12 +82,13 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Login failed: " + error.message);
+      errorToastify("Login failed: " + error.message);
     }
   };
 
   return (
     <Box display="flex" flexDirection="row" height="100vh">
+      <ToastContainer />
       <Box
         width="60%"
         borderRadius={6}

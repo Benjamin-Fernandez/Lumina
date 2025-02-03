@@ -15,6 +15,7 @@ import PluginDetailsForm from "../../../components/create/PluginDetailsForm";
 import PluginEndpointForm from "../../../components/create/PluginEndpointForm";
 import ReviewForm from "../../../components/create/ReviewForm";
 import TestEndpoint from "../../../components/create/TestEndpoint";
+import Loading from "../../global/Loading";
 import axios from "../../../config/axiosConfig";
 import * as yaml from "js-yaml";
 import testEndpoint from "../../../helpers/TestEndpoint";
@@ -55,6 +56,7 @@ const Create = () => {
   const [requestFormat, setRequestFormat] = useState("");
   const [requestBodyQueryKey, setRequestBodyQueryKey] = useState("");
   const [requestContentType, setRequestContentType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (formRef.current) {
@@ -178,6 +180,7 @@ const Create = () => {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     axios
       .get("/user/email/" + email)
       .then((res) => {
@@ -200,6 +203,7 @@ const Create = () => {
           })
           .then(() => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setLoading(false);
           })
           .catch((error) => {
             console.error("Error submitting plugin:", error);
@@ -392,7 +396,7 @@ const Create = () => {
                 </Button>
               </Box>
             </Box>
-          ) : activeStep === 4 ? (
+          ) : activeStep === 4 && !loading ? (
             <Box sx={{ overflowY: "auto", height: "60vh" }} px={2}>
               <ReviewForm //TODO
                 formRef={formRef}
@@ -422,6 +426,8 @@ const Create = () => {
                 </Button>
               </Box>
             </Box>
+          ) : activeStep === 4 && loading ? (
+            <Loading />
           ) : (
             <React.Fragment>
               <Typography sx={{ mt: 2, mb: 1 }}>

@@ -19,6 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // import contributorData from "../../../data/contributorData.jsx";
 import axios from "../../../config/axiosConfig.js";
 import Loading from "../../global/Loading.jsx";
+import { toast, ToastContainer } from "react-toastify";
 
 const Contributor = () => {
   const theme = useTheme();
@@ -29,6 +30,28 @@ const Contributor = () => {
   const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const successToastify = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
+
+  const errorToastify = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
 
   // Handle pagination
   const handleChangePage = (event, newPage) => {
@@ -69,7 +92,6 @@ const Contributor = () => {
 
   useEffect(() => {
     fetchUsers();
-    setLoading(false);
   }, []);
 
   // Filter and paginate data
@@ -89,7 +111,9 @@ const Contributor = () => {
         email: email,
         domain: "Admin",
       };
-      const response = await axios.put(`/user/${id}`, body);
+      const response = await axios
+        .put(`/user/${id}`, body)
+        .then(successToastify("User promoted successfully"));
       fetchUsers();
     } catch (error) {
       console.error("Error promoting user:", error);
@@ -103,7 +127,9 @@ const Contributor = () => {
         email: email,
         domain: "Developer",
       };
-      const response = await axios.put(`/user/${id}`, body);
+      const response = await axios
+        .put(`/user/${id}`, body)
+        .then(successToastify("User demoted successfully"));
       fetchUsers();
     } catch (error) {
       console.error("Error demoting user:", error);
@@ -136,6 +162,7 @@ const Contributor = () => {
           borderRadius={2}
           borderColor={colors.grey[800]}
         >
+          <ToastContainer />
           <Stack
             direction="row"
             spacing={2}

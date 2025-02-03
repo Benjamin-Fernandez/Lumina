@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import axios from "../../../config/axiosConfig";
 import Loading from "../../global/Loading";
 import ActivateModal from "../../../components/modal/ActivateModal";
+import { ToastContainer, toast } from "react-toastify";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
@@ -33,6 +34,27 @@ const PluginDetailsDev = () => {
 
   const { id } = useParams();
 
+  const successToastify = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
+
+  const errorToastify = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
   // Function to handle sidebar navigation
   const handleSectionClick = (section) => {
     setSelectedSection(section);
@@ -75,9 +97,11 @@ const PluginDetailsDev = () => {
       .then(() => {
         setDeactivateModal(false);
         setPlugin({ ...plugin, activated: false });
+        successToastify("Plugin deactivated successfully");
       })
       .catch((err) => {
         console.log(err);
+        errorToastify("Error deactivating plugin: " + err);
       });
   };
   const handleActivate = () => {
@@ -86,9 +110,11 @@ const PluginDetailsDev = () => {
       .then(() => {
         setActivateModal(false);
         setPlugin({ ...plugin, activated: true });
+        successToastify("Plugin activated successfully");
       })
       .catch((err) => {
         console.log(err);
+        errorToastify("Error activating plugin: " + err);
       });
   };
 
@@ -114,6 +140,7 @@ const PluginDetailsDev = () => {
       .then(() => {
         setEdit(false);
         setPlugin(editedPlugin);
+        successToastify("Plugin updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -158,6 +185,7 @@ const PluginDetailsDev = () => {
           display="flex"
           flexDirection="column"
         >
+          <ToastContainer />
           <Box
             height="30%"
             width="100%"
@@ -230,7 +258,17 @@ const PluginDetailsDev = () => {
                   }}
                   onClick={handleDone}
                   startIcon={<DoneIcon />}
-                  disabled={!endpointSuccess}
+                  disabled={
+                    !endpointSuccess ||
+                    !editedPlugin.name ||
+                    !editedPlugin.version ||
+                    !editedPlugin.image ||
+                    !editedPlugin.category ||
+                    !editedPlugin.description ||
+                    !editedPlugin.schema ||
+                    !editedPlugin.endpoint ||
+                    !editedPlugin.path
+                  }
                 >
                   Done
                 </Button>
