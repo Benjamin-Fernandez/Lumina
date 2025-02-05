@@ -16,6 +16,7 @@ import axios from "../../../config/axiosConfig";
 import Loading from "../../global/Loading";
 import ActivateModal from "../../../components/modal/ActivateModal";
 import { ToastContainer, toast } from "react-toastify";
+import * as yaml from "js-yaml";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
@@ -87,6 +88,112 @@ const PluginDetailsDev = () => {
     setEdit(!edit);
   };
 
+  const generateYaml = ({
+    name,
+    endpoint,
+    path,
+    requestFormat,
+    requestContentType,
+    requestBodyQueryKey,
+  }) => {
+    let yamlObject = {};
+    if (requestFormat == "application/json") {
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
+          },
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: requestContentType,
+                      properties: requestBodyQueryKey,
+                    },
+                  },
+                },
+              },
+              responses: {
+                200: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "string", // Default type to string if not provided
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
+
+      return yamlString;
+    } else {
+      yamlObject = {
+        openapi: "3.0.0",
+        info: {
+          title: name + "API",
+          version: "1.0.0",
+        },
+        servers: [
+          {
+            url: endpoint, // Base URL can be dynamic, for now using the example
+          },
+        ],
+        paths: {
+          [path]: {
+            // Dynamic path
+            post: {
+              operationId: "getResponse", // Example operationId based on method and path
+              requestBody: {
+                required: true, // Convert to boolean
+                content: {
+                  [requestFormat]: {
+                    schema: {
+                      type: "string",
+                    },
+                  },
+                },
+              },
+              responses: {
+                200: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "string", // Default type to string if not provided
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Convert the JavaScript object to a YAML string
+      const yamlString = yaml.dump(yamlObject);
+
+      return yamlString;
+    }
+  };
+
   const handlePluginChange = (field, value) => {
     setEditedPlugin({ ...editedPlugin, [field]: value });
   };
@@ -119,6 +226,16 @@ const PluginDetailsDev = () => {
   };
 
   const handleDone = () => {
+    console.log(editedPlugin);
+    const yamlString = generateYaml({
+      name: editedPlugin.name,
+      endpoint: editedPlugin.endpoint,
+      path: editedPlugin.path,
+      requestFormat: editedPlugin.requestFormat,
+      requestContentType: editedPlugin.requestContentType,
+      requestBodyQueryKey: editedPlugin.requestBodyQueryKey,
+    });
+    console.log(yamlString);
     axios
       .put(`/plugin/${id}`, {
         name: editedPlugin.name,
@@ -127,7 +244,7 @@ const PluginDetailsDev = () => {
         category: editedPlugin.category,
         description: editedPlugin.description,
         activated: editedPlugin.activated,
-        schema: editedPlugin.schema,
+        schema: yamlString,
         endpoint: editedPlugin.endpoint,
         path: editedPlugin.path,
         requestBodyQueryKey: editedPlugin.requestBodyQueryKey,

@@ -236,43 +236,52 @@ const Contributor = () => {
                 <Typography variant="body1">Action</Typography>
               </Grid>
             </Grid>
-
-            {/* Table data */}
-            {paginatedData.map((contributor, index) => (
-              <ButtonBase
-                key={index}
-                onClick={handleBaseClick}
-                sx={{
-                  width: "100%",
-                  display: "block",
-                  textAlign: "left",
-                  borderTop: "1px solid",
-                  borderColor: colors.grey[900],
-                  paddingY: "15px",
-                }}
+            {paginatedData.length === 0 ? (
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                align="center"
+                mt={4}
               >
-                <ContributorRow
-                  name={contributor.name}
-                  domain={contributor.domain}
-                  email={contributor.email}
-                  joined={contributor.createdAt}
-                  handlePromote={() =>
-                    handlePromote(
-                      contributor._id,
-                      contributor.name,
-                      contributor.email
-                    )
-                  }
-                  handleDemote={() =>
-                    handleDemote(
-                      contributor._id,
-                      contributor.name,
-                      contributor.email
-                    )
-                  }
-                />
-              </ButtonBase>
-            ))}
+                No contributors found.
+              </Typography>
+            ) : (
+              paginatedData.map((contributor, index) => (
+                <ButtonBase
+                  key={index}
+                  onClick={handleBaseClick}
+                  sx={{
+                    width: "100%",
+                    display: "block",
+                    textAlign: "left",
+                    borderTop: "1px solid",
+                    borderColor: colors.grey[900],
+                    paddingY: "15px",
+                  }}
+                >
+                  <ContributorRow
+                    name={contributor.name}
+                    domain={contributor.domain}
+                    email={contributor.email}
+                    joined={contributor.createdAt}
+                    handlePromote={() =>
+                      handlePromote(
+                        contributor._id,
+                        contributor.name,
+                        contributor.email
+                      )
+                    }
+                    handleDemote={() =>
+                      handleDemote(
+                        contributor._id,
+                        contributor.name,
+                        contributor.email
+                      )
+                    }
+                  />
+                </ButtonBase>
+              ))
+            )}
           </Box>
 
           {/* Pagination component */}

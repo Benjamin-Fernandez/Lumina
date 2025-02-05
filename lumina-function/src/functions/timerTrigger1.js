@@ -59,6 +59,13 @@ app.timer("timerTrigger1", {
         }
         const mobileChatbots = await mobileCollection.find({}).toArray();
         context.log("mobileChatbots:", mobileChatbots);
+        for (const chatbots of mobileChatbots) {
+          // If the record does not exist in the web database, delete it from the mobile database
+          const webPlugin = await webCollection.findOne({ _id: chatbots._id });
+          if (!webPlugin) {
+            await mobileCollection.deleteOne({ _id: chatbots._id });
+          }
+        }
       }
     } catch (error) {
       context.log("Error:", error);
