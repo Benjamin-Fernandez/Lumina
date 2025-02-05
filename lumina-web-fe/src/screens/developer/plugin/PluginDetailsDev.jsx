@@ -11,22 +11,26 @@ import DeactivateModal from "../../../components/modal/DeactivateModal";
 import CancelModal from "../../../components/modal/CancelModal";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
-import { useParams } from "react-router-dom";
+import BlockIcon from "@mui/icons-material/Block";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../config/axiosConfig";
 import Loading from "../../global/Loading";
 import ActivateModal from "../../../components/modal/ActivateModal";
 import { ToastContainer, toast } from "react-toastify";
 import * as yaml from "js-yaml";
+import DeleteModal from "../../../components/modal/DeleteModal";
 
 const PluginDetailsDev = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const Navigate = useNavigate();
 
   // State to track which section is selected
   const [selectedSection, setSelectedSection] = useState("details");
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [cancelModal, setCancelModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [plugin, setPlugin] = useState(null);
   const [editedPlugin, setEditedPlugin] = useState(plugin || {});
@@ -79,6 +83,12 @@ const PluginDetailsDev = () => {
   const handleCloseCancel = () => {
     setEdit(false);
     setCancelModal(false);
+  };
+  const handleOpenDelete = () => {
+    setDeleteModal(true);
+  };
+  const handleCloseDelete = () => {
+    setDeleteModal(false);
   };
   const handleBackCancel = () => {
     setCancelModal(false);
@@ -222,6 +232,19 @@ const PluginDetailsDev = () => {
       .catch((err) => {
         console.log(err);
         errorToastify("Error activating plugin: " + err);
+      });
+  };
+  const handleDelete = () => {
+    axios
+      .delete(`/plugin/${id}`)
+      .then(() => {
+        setDeleteModal(false);
+        successToastify("Plugin deleted successfully");
+        Navigate("/pluginDev");
+      })
+      .catch((err) => {
+        console.log(err);
+        errorToastify("Error deleting plugin: " + err);
       });
   };
 
@@ -393,20 +416,22 @@ const PluginDetailsDev = () => {
               {!edit && plugin.activated && (
                 <Button
                   variant="contained"
-                  color="error"
                   sx={{
                     padding: "8px 16px", // Adjust padding to hug content
                     alignSelf: "flex-end", // Position the button at the bottom of the Box
                     textTransform: "none",
                     fontSize: "13px",
                     borderRadius: 2,
+                    mr: 2,
+                    bgcolor: colors.blueAccent[500],
                   }}
                   onClick={handleOpenDeactivate}
-                  startIcon={<DeleteOutlineOutlinedIcon />}
+                  startIcon={<BlockIcon />}
                 >
                   Deactivate
                 </Button>
               )}
+
               {!edit && !plugin.activated && (
                 <Button
                   variant="contained"
@@ -417,11 +442,29 @@ const PluginDetailsDev = () => {
                     textTransform: "none",
                     fontSize: "13px",
                     borderRadius: 2,
+                    mr: 2,
                   }}
                   onClick={handleOpenActivate}
                   startIcon={<RocketLaunchOutlinedIcon />}
                 >
                   Activate
+                </Button>
+              )}
+              {!edit && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    padding: "8px 16px", // Adjust padding to hug content
+                    alignSelf: "flex-end", // Position the button at the bottom of the Box
+                    textTransform: "none",
+                    fontSize: "13px",
+                    borderRadius: 2,
+                  }}
+                  onClick={handleOpenDelete}
+                  startIcon={<DeleteOutlineOutlinedIcon />}
+                >
+                  Delete
                 </Button>
               )}
               {edit && (
@@ -472,6 +515,11 @@ const PluginDetailsDev = () => {
             open={cancelModal}
             handleClose={handleCloseCancel}
             handleBack={handleBackCancel}
+          />
+          <DeleteModal
+            open={deleteModal}
+            handleClose={handleCloseDelete}
+            onDelete={handleDelete}
           />
         </Box>
       )}
