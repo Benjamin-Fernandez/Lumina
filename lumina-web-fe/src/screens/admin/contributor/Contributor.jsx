@@ -27,7 +27,7 @@ const Contributor = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [page, setPage] = useState(0); // Current page number
-  const [rowsPerPage, setRowsPerPage] = useState(8); // Rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Rows per page
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -101,9 +101,8 @@ const Contributor = () => {
       (filterTerm === "" || contributor.domain === filterTerm)
   );
   const paginatedData = filteredData
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   const handlePromote = async (id, name, email) => {
     try {
       const body = {

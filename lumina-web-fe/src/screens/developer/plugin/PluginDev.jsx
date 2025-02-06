@@ -95,8 +95,8 @@ const PluginDev = () => {
           filterTerm !== "General"))
   );
   const paginatedData = filteredData
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   return (
     <>
       {loading ? (
