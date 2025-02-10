@@ -82,7 +82,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      errorToastify("Login failed: " + error.message);
+      errorToastify("Login failed. Please try again.");
     }
   };
 
@@ -91,26 +91,16 @@ const Login = () => {
       <ToastContainer />
       <Box
         width="60%"
-        borderRadius={6}
+        borderRadiusLeft={6}
         height="100%"
-        bgcolor={colors.blueAccent[900]}
+        component="img"
+        src={"/assets/login2.jpg"}
         display="flex"
         alignItems="center"
         justifyContent="flex-end"
         justifyItems="end"
-      >
-        <Box
-          component="img"
-          src={"/assets/login2.jpg"}
-          sx={{
-            width: "90%",
-            height: "90%",
-            borderTopLeftRadius: 20,
-            borderBottomLeftRadius: 20,
-            objectFit: "cover",
-          }}
-        />
-      </Box>
+        sx={{ objectFit: "cover" }}
+      ></Box>
       <Box
         width="35%"
         display="flex"

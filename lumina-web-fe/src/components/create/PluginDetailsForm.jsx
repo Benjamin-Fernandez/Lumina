@@ -88,38 +88,43 @@ const PluginDetailsForm = ({
       <Grid container spacing={2} mb="15px" justifyContent="center">
         <Grid item xs={12} display="flex" justifyContent="center">
           {/* Avatar Selector */}
-          <input
-            accept="image/*"
-            type="file"
-            id="file-upload"
-            hidden
-            onChange={handleFileChange}
-          />
-          <label htmlFor="file-upload">
-            <IconButton
-              component="span"
-              sx={{ width: "120px", height: "120px" }}
-            >
-              {file ? (
-                <Avatar sx={{ width: "120px", height: "120px" }}>
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="avatar"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                    }}
-                  />
-                </Avatar>
-              ) : (
-                <Avatar sx={{ width: "120px", height: "120px" }}>
-                  <Typography variant="h4">+</Typography>
-                </Avatar>
-              )}
-            </IconButton>
-          </label>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="body1" marginBottom="1rem">
+              Plugin Image *
+            </Typography>
+            <input
+              accept="image/*"
+              type="file"
+              id="file-upload"
+              hidden
+              onChange={handleFileChange}
+            />
+            <label htmlFor="file-upload">
+              <IconButton
+                component="span"
+                sx={{ width: "120px", height: "120px" }}
+              >
+                {file ? (
+                  <Avatar sx={{ width: "120px", height: "120px" }}>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="avatar"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </Avatar>
+                ) : (
+                  <Avatar sx={{ width: "120px", height: "120px" }}>
+                    <Typography variant="h4">+</Typography>
+                  </Avatar>
+                )}
+              </IconButton>
+            </label>
+          </Box>
         </Grid>
       </Grid>
       <Grid container spacing={2} mb="15px">
