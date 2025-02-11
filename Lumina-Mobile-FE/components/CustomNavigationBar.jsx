@@ -20,7 +20,12 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             canPreventDefault: true,
           });
           if (!isFocused && !event.defaultPrevented) {
-            router.push(`/${route.name}`);
+            router.push({
+              pathname: `/${route.name}`,
+              params: {
+                previousRoute: router.pathname,
+              },
+            });
           }
         };
 

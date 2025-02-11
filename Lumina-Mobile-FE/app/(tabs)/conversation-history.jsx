@@ -23,9 +23,10 @@ const ConversationHistory = () => {
   };
 
   const handleNewChat = () => {
+    console.log(router.pathname);
     router.push({
       pathname: "/conversation/new",
-      params: { chatbotId: "0" },
+      params: { chatbotId: "0", previousRoute: router.pathname },
     });
   };
 

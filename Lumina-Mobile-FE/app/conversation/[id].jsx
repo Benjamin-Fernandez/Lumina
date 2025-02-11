@@ -41,7 +41,7 @@ const ChatScreen = ({ navigation }) => {
       const response = await axios.get(
         "message/conversation/" + conversationId
       );
-      console.log("Messages fetched from the database: ", response.data);
+      // console.log("Messages fetched from the database: ", response.data);
 
       // Assuming response.data contains the array of message objects
       const messages = response.data;
@@ -58,7 +58,7 @@ const ChatScreen = ({ navigation }) => {
   const fetchChatbot = async () => {
     try {
       const response = await axios.get("/chatbot/" + chatbotId);
-      console.log("Chatbot details:", response.data);
+      // console.log("Chatbot details:", response.data);
       setChatbot(response.data.chatbot);
     } catch (error) {
       console.error("Error fetching chatbot details:", error);
@@ -67,8 +67,8 @@ const ChatScreen = ({ navigation }) => {
 
   // Fetch messages on initial render
   React.useEffect(() => {
-    console.log("Conversation ID: ", conversationId);
-    console.log("params: ", params);
+    // console.log("Conversation ID: ", conversationId);
+    // console.log("params: ", params);
     if (chatbotId !== "0") {
       fetchChatbot();
     }
@@ -90,17 +90,17 @@ const ChatScreen = ({ navigation }) => {
 
     if (chatbotId === "0") {
       // If the chatbot is Lumina GPT-4o
-      console.log("Getting response from OpenAI...");
-      console.log("Messages: ", messages);
+      // console.log("Getting response from OpenAI...");
+      // console.log("Messages: ", messages);
 
       const response = await axios.post("/openai", {
         messages: messages,
       });
 
-      console.log(
-        "Response from OpenAI: ",
-        response.data.response.choices[0].message.content
-      );
+      // console.log(
+      //   "Response from OpenAI: ",
+      //   response.data.response.choices[0].message.content
+      // );
 
       // Post the message to the backend
       await axios.post("/message", {
@@ -222,7 +222,13 @@ const ChatScreen = ({ navigation }) => {
   };
 
   const handleBack = () => {
-    router.push("/conversation-history");
+    const previousRoute = params.previousRoute;
+    console.log("Previous route in cid: ", previousRoute);
+    if (previousRoute) {
+      router.push(previousRoute);
+    } else {
+      router.back();
+    }
   };
 
   useEffect(() => {

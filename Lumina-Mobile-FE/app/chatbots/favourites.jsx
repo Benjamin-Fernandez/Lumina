@@ -15,7 +15,7 @@ import axios from "../../config/axiosConfig";
 
 const FavouriteChatbots = () => {
   const handleBack = () => {
-    router.push("/home");
+    router.back();
   };
   const handleFavourite = async (chatbot) => {
     // Add the chatbot to the user's favourite chatbots

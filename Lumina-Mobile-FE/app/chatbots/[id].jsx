@@ -15,7 +15,7 @@ import { useUser } from "../../context/UserContext";
 
 const ChatbotDetail = () => {
   handleBack = () => {
-    router.push("/home");
+    router.back();
   };
 
   const [chatbot, setChatbot] = useState({});

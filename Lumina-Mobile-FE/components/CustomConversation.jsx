@@ -9,7 +9,7 @@ import {
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Icon from "react-native-vector-icons/Octicons"; // Assuming you're using Material Icons
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import CustomModal from "./CustomModal";
 import axios from "../config/axiosConfig";
 
@@ -25,15 +25,16 @@ const CustomConversation = ({
   const [isSwipeActive, setIsSwipeActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
-
+  const pathname = usePathname();
   const handleConversation = () => {
     if (!isSwipeActive) {
       // Only navigate if swipe is not active
       console.log("Navigating to conversation with ID: " + id);
       console.log("Passing in chatbot: " + chatbotId);
+      console.log("Previous route: " + pathname);
       router.push({
         pathname: "/conversation/" + id,
-        params: { chatbotId: chatbotId },
+        params: { chatbotId: chatbotId, previousRoute: pathname },
       }); // Navigate to the conversation screen
     }
   };
