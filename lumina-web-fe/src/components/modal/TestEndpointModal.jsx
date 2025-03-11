@@ -93,17 +93,24 @@ const TestEndpointModal = ({
 
       testEndpoint({ yamlString, query: newMessage, path })
         .then((response) => {
+          // Format the response based on its type
+          const formattedResponse =
+            typeof response === "object" && response !== null
+              ? JSON.stringify(response, null, 2) // Pretty print with indentation
+              : response;
+
           setMessages((prevMessages) => [
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: JSON.stringify(response),
+              text: formattedResponse,
               isOwn: false,
             },
           ]);
+
           if (
-            !response.includes("Error") &&
-            response !== "No response from API."
+            !formattedResponse.includes("Error") &&
+            formattedResponse !== "No response from API."
           ) {
             setMessages((prevMessages) => [
               ...prevMessages,
