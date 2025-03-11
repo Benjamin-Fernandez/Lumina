@@ -94,7 +94,7 @@ const Login = () => {
         borderRadiusLeft={6}
         height="100%"
         component="img"
-        src={"/assets/login2.jpg"}
+        src={"/assets/login.png"}
         display="flex"
         alignItems="center"
         justifyContent="flex-end"
