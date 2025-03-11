@@ -74,30 +74,41 @@ const TestEndpoint = ({
       setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage("");
 
-      testEndpoint({ yamlString, query: newMessage, path }).then((response) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            id: prevMessages.length + 1,
-            text: response,
-            isOwn: false,
-          },
-        ]);
-        if (
-          !response.includes("Error") &&
-          response !== "No response from API."
-        ) {
+      testEndpoint({ yamlString, query: newMessage, path })
+        .then((response) => {
           setMessages((prevMessages) => [
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
+              text: response,
               isOwn: false,
             },
           ]);
-          setEndpointSuccess(true);
-        }
-      });
+          if (
+            !response.includes("Error") &&
+            response !== "No response from API."
+          ) {
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                id: prevMessages.length + 1,
+                text: "Endpoint test successful! 🎉 You may proceed to review and submit your plugin.",
+                isOwn: false,
+              },
+            ]);
+            setEndpointSuccess(true);
+          }
+        })
+        .catch((error) => {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: prevMessages.length + 1,
+              text: `Error: ${error.message}`,
+              isOwn: false,
+            },
+          ]);
+        });
     }
   };
 

@@ -121,7 +121,7 @@ const TestEndpointModal = ({
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: error,
+              text: `Error: ${error.message}`,
               isOwn: false,
             },
           ]);
