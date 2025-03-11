@@ -80,7 +80,7 @@ const TestEndpoint = ({
             ...prevMessages,
             {
               id: prevMessages.length + 1,
-              text: response,
+              text: JSON.stringify(response),
               isOwn: false,
             },
           ]);
