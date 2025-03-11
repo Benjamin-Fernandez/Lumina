@@ -11,8 +11,8 @@ export const msalConfig = {
   auth: {
     clientId: "d6a126c8-d974-4272-9209-f7fc66d9fb5f",
     authority: "https://login.microsoftonline.com/common",
-    // redirectUri: "https://polite-desert-08f77b110.4.azurestaticapps.net/",
-    redirectUri: "http://localhost:3000",
+    redirectUri: "https://polite-desert-08f77b110.4.azurestaticapps.net/",
+    // redirectUri: "http://localhost:3000",
   },
   cache: {
     cacheLocation: "sessionStorage",
