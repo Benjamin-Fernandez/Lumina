@@ -39,25 +39,35 @@ const callEndpoint = async ({ client, query, path }) => {
       const response = await client.execute({
         operationId: "getResponse",
         requestBody: {
-          [requestBodyQueryKey]: query, // Use the dynamic key
+          [requestBodyQueryKey]: query,
         },
       });
-      if (!response) {
-        console.error("No response returned from the API.");
-        return "No response from API.";
-      }
-      return response.body;
-    } else {
-      const response = await client.execute({
-        operationId: "getResponse",
-        requestBody: query,
-      });
+
+      // Ensure response.body is properly handled
       if (!response) {
         console.error("No response returned from the API.");
         return "No response from API.";
       }
 
-      return response.body;
+      // Convert object responses to strings consistently
+      return typeof response.body === "object"
+        ? JSON.stringify(response.body, null, 2)
+        : String(response.body); // Convert to string explicitly
+    } else {
+      const response = await client.execute({
+        operationId: "getResponse",
+        requestBody: query,
+      });
+      // Ensure response.body is properly handled
+      if (!response) {
+        console.error("No response returned from the API.");
+        return "No response from API.";
+      }
+
+      // Convert object responses to strings consistently
+      return typeof response.body === "object"
+        ? JSON.stringify(response.body, null, 2)
+        : String(response.body); // Convert to string explicitly
     }
   } catch (error) {
     console.error("Error calling endpoint:", error);
