@@ -96,7 +96,7 @@ const TestEndpointModal = ({
           // Format the response based on its type
           const formattedResponse =
             typeof response === "object" && response !== null
-              ? JSON.stringify(response, null, 2) // Pretty print with indentation
+              ? response.text()
               : response;
 
           setMessages((prevMessages) => [
