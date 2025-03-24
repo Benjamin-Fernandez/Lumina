@@ -1,7 +1,7 @@
 <h1 align="center"> Lumina </h1> <br>
 <p align="center">
     <img alt="Lumina Web Portal" title="Lumina Web Portal" src="/assets/LuminaPortal.png" width="450">
-    <img alt="Lumina Mobile" title="Lumina Mobile" src="/assets/LuminaMobile.PNG" width="450">
+    <img alt="Lumina Mobile" title="Lumina Mobile" src="/assets/LuminaMobile.PNG" width="150">
 
 </p>
 
@@ -18,7 +18,6 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Contributors](#contributors)
 - [Build Process](#build-process)
 - [Acknowledgments](#acknowledgments)
 
