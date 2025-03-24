@@ -1,8 +1,8 @@
 <h1 align="center"> Lumina </h1> <br>
 <p align="center">
-  <a>
     <img alt="Lumina Web Portal" title="Lumina Web Portal" src="/assets/LuminaPortal.png" width="450">
-  </a>
+    <img alt="Lumina Mobile" title="Lumina Mobile" src="/assets/LuminaMobile.PNG" width="450">
+
 </p>
 
 <p align="center">
