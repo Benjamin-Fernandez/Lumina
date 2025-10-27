@@ -62,6 +62,7 @@ jobs:
         with:
           app-name: 'lumina-web-be'
           slot-name: 'Production'
-          package: .
+          package: ./lumina-web-be
 
           
+
