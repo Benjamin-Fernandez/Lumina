@@ -28,7 +28,7 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: ./lumina-web-be
+        working-directory: './lumina-web-be'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -62,7 +62,8 @@ jobs:
         with:
           app-name: 'lumina-web-be'
           slot-name: 'Production'
-          package: ./lumina-web-be
+          package: './lumina-web-be'
 
           
+
 
