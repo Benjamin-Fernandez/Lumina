@@ -30,7 +30,7 @@ WebBrowser.maybeCompleteAuthSession();
 export default function App() {
   // Endpoint
   const discovery = useAutoDiscovery(
-    "https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/v2.0"
+    "https://login.microsoftonline.com/common/v2.0"
   );
   const redirectUri = AuthSession.makeRedirectUri({
     scheme: "com.lumina",
