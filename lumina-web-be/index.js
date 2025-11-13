@@ -1,46 +1,69 @@
+// index.js
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+// const morgan = require("morgan"); // optional request logging
+
 const app = express();
 
-
-// Middleware -> needed to parse the request body which is in JSON format
+/* ---------- Middleware ---------- */
 app.use(express.json({ limit: "50mb" }));
-
-
-// Middleware -> needed to allow request from frontend
 app.use(
- cors({
-   // origin: "https://polite-desert-08f77b110.4.azurestaticapps.net", // Allow requests from your frontend LOCAL TESTING
-   origin: "*",
-   methods: ["GET", "POST", "PUT"], // Allow GET and POST requests
-   // credentials: true, // If you need to include credentials (like cookies)
- })
+  cors({
+    origin: process.env.FRONTEND_ORIGIN || "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  })
 );
+// app.use(morgan("dev")); // optional
 
+/* ---------- Basic routes ---------- */
+app.get("/", (_, res) => res.send("API up"));
+app.get("/health", (_, res) => {
+  // 1 = connected, 2 = connecting
+  const connected = mongoose.connection.readyState === 1;
+  res.status(connected ? 200 : 503).send(connected ? "OK" : "DB not connected");
+});
 
-// Importing routes
-const userRoute = require("./routes/user.route");
-const pluginRoute = require("./routes/plugin.route");
-const PORT = process.env.PORT || 3001;
-app.use("/user", userRoute);
-app.use("/plugin", pluginRoute);
+/* ---------- Feature routes ---------- */
+app.use("/user", require("./routes/user.route"));
+app.use("/plugin", require("./routes/plugin.route"));
 
+/* ---------- Start HTTP first (Azure requires binding to provided PORT) ---------- */
+const PORT = process.env.PORT || 8080; // Azure injects PORT; 8080 fallback works locally too
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`HTTP listening on ${PORT}`);
+});
 
-mongoose
- .connect(process.env.MONGODB_URI)
- .then(() => {
-   console.log("Connected to database");
-   app.listen(PORT, () => {
-     console.log(`Server is running on port ${PORT}`);
-   });
- })
- .catch(() => {
-   console.log("Connection failed");
- });
+/* ---------- Connect to Cosmos Mongo in background (non-blocking) ---------- */
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error("MONGODB_URI not set – running without DB connection");
+} else {
+  (async () => {
+    try {
+      await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 10000, // fail fast if blocked
+        maxPoolSize: 10,
+        socketTimeoutMS: 20000,
+      });
+      console.log("DB connected");
+    } catch (err) {
+      console.error("DB connect failed:", err.message);
+    }
+  })();
+}
 
+/* ---------- Graceful shutdown ---------- */
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received: closing DB");
+  try {
+    await mongoose.connection.close();
+  } catch {}
+  process.exit(0);
+});
 
-
-
-
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled promise rejection:", err);
+});
