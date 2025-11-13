@@ -4,7 +4,6 @@ import { Slot, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { UserProvider } from "../context/UserContext";
 import { ChatbotProvider } from "../context/ChatbotContext";
-import "../global.css";
 
 SplashScreen.preventAutoHideAsync(); // prevent splash screen from auto hiding before asset loading is complete.
 
