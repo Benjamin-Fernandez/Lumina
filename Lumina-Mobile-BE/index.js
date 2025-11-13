@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
+
 
 // Middleware -> needed to parse the request body which is in JSON format
 app.use(express.json({ limit: "50mb" }));
+
 
 // Importing routes
 const userRoute = require("./routes/user.route");
@@ -12,6 +15,7 @@ const messageRoute = require("./routes/message.route");
 const openaiRoute = require("./routes/openai.route");
 const chatbotRoute = require("./routes/chatbot.route");
 const customRoute = require("./routes/custom.route");
+
 
 /* 1. Insert routes in index.js
 2. Create a new file in routes folder
@@ -23,26 +27,34 @@ app.use("/openai", openaiRoute);
 app.use("/chatbot", chatbotRoute);
 app.use("/custom", customRoute);
 
-mongoose
-  .connect(
-    "mongodb://lumina-mobile:7DQyl8h3mD1xnMEPb6K9KCInYZh7rYMcEOfGqHBAHpCD7qGCFTDwE4zdfLEXUAMGHRX3asMN4eAWACDbLr22kg%3D%3D@lumina-mobile.mongo.cosmos.azure.com:10255/lumina-mobile?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@lumina-mobile@"
-  )
-  .then(() => {
-    console.log("Connected to database");
-    /*
-    req -> request object
-    res -> response object
-    '/' -> root route
-    Whenever we visit the root route, the callback function is executed
-    res.send() sends a response to the client
-    */
-    app.listen(3002, () => {
-      console.log("Server running on port 3002");
 
-      // ----------------------------------- Endpoints ------------- ----------------------
-      // GET request to the root route
-      app.get("/", (req, res) => {
-        res.send("WELCOME TO LUMINA!");
-      });
-    });
-  });
+const PORT = process.env.PORT || 3002;
+
+
+mongoose
+ .connect(process.env.MONGODB_URI)
+ .then(() => {
+   console.log("Connected to database");
+   /*
+   req -> request object
+   res -> response object
+   '/' -> root route
+   Whenever we visit the root route, the callback function is executed
+   res.send() sends a response to the client
+   */
+   app.listen(PORT, () => {
+     console.log(`Server running on port ${PORT}`);
+
+
+     // ----------------------------------- Endpoints ------------- ----------------------
+     // GET request to the root route
+     app.get("/", (req, res) => {
+       res.send("WELCOME TO LUMINA!");
+     });
+   });
+ });
+
+
+
+
+
