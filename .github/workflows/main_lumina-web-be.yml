@@ -28,7 +28,7 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-        working-directory: './lumina-web-be'
+        working-directory : ./lumina-web-be
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -52,9 +52,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C92D009F845C43E6A76BFA9187032A8D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_84B730DBE498493F8D40FCB416BFAE56 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2227A104BA37408F84E49D04CD29E6D9 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E956596B8A644AC4A619AA4C9C36EE7D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E7D52CD0F9D3481997CA27B8C6B35669 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0D00E8B0346942449F87ECD5CBBFC342 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,8 +62,6 @@ jobs:
         with:
           app-name: 'lumina-web-be'
           slot-name: 'Production'
-          package: './lumina-web-be'
+          package: ./lumina-web-be
 
           
-
-
