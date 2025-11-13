@@ -1,60 +1,59 @@
 {
-  "expo": {
-    "name": "Lumina-Mobile",
-    "slug": "Lumina-Mobile",
-    "scheme": "com.lumina",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.lumina"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "package": "com.lumina"
-      },
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "data": {
-            "scheme": "lumina-mobile",
-            "host": "auth"
-          },
-          "category": ["BROWSABLE", "DEFAULT"]
-        }
-      ],
-      "package": "com.lumina",
-      "config": {
-        "appAuthRedirectScheme": "lumina-mobile"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": ["expo-router"],
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "01ec192d-e71d-4dd4-b1e8-1c391c99fee6"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/01ec192d-e71d-4dd4-b1e8-1c391c99fee6"
-    }
-  }
+ "expo": {
+   "name": "Lumina-Mobile",
+   "slug": "Lumina-Mobile",
+   "scheme": "com.lumina",
+   "version": "1.0.0",
+   "orientation": "portrait",
+   "icon": "./assets/images/icon.png",
+   "userInterfaceStyle": "light",
+   "newArchEnabled": true,
+   "splash": {
+     "image": "./assets/images/splash.png",
+     "resizeMode": "contain",
+     "backgroundColor": "#ffffff"
+   },
+   "ios": {
+     "supportsTablet": true,
+     "bundleIdentifier": "com.lumina"
+   },
+   "android": {
+     "package": "com.lumina",
+     "adaptiveIcon": {
+       "foregroundImage": "./assets/images/adaptive-icon.png",
+       "backgroundColor": "#ffffff"
+     },
+     "intentFilters": [
+       {
+         "action": "VIEW",
+         "data": {
+           "scheme": "lumina-mobile",
+           "host": "auth"
+         },
+         "category": ["BROWSABLE", "DEFAULT"]
+       }
+     ]
+   },
+   "web": {
+     "favicon": "./assets/favicon.png"
+   },
+   "plugins": ["expo-router"],
+   "extra": {
+     "router": {
+       "origin": false
+     },
+     "eas": {
+       "projectId": "01ec192d-e71d-4dd4-b1e8-1c391c99fee6"
+     }
+   },
+   "runtimeVersion": {
+     "policy": "appVersion"
+   },
+   "updates": {
+     "url": "https://u.expo.dev/01ec192d-e71d-4dd4-b1e8-1c391c99fee6"
+   }
+ }
 }
+
+
+
