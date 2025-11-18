@@ -25,14 +25,19 @@ export const authConfig = {
  // redirectUri: "http://localhost:3000",
 
  // Scopes (permissions app needs)
- scopes: ["user.read"],
+ scopes: [
+  "User.Read",
+  "openid",
+  "email",
+  "profile"
+ ],
 };
 
 
 // Backend API Configuration
 export const apiConfig = {
  // Production backend
- baseURL: "lumina-web-be-deh3gwc0fre2hjgz.southeastasia-01.azurewebsites.net", // Updated - Ben
+ baseURL: "https://lumina-web-be-deh3gwc0fre2hjgz.southeastasia-01.azurewebsites.net", // Updated - Ben
 
 
  // Local development backend (uncomment when running backend locally)
