@@ -11,7 +11,7 @@ export const authConfig = {
  // Use "common" for multi-tenant (any Microsoft account)
  // Use specific tenant ID for single-tenant (organization only)
 //  authority: "https://login.microsoftonline.com/eb5a9f14-35b1-491a-8e43-fd42a0b8a540/v2.0", // ⚠️ UPDATE THIS
- authority: "https://login.microsoftonline.com/common/v2.0", // ⚠️ UPDATE THIS
+authority: "https://login.microsoftonline.com/common/v2.0", // ⚠️ UPDATE THIS
 
   // Scopes - permissions your app needs
  scopes: ["openid", "profile", "email", "User.Read"],
