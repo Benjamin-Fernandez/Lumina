@@ -7,14 +7,7 @@ axios.defaults.baseURL = apiConfig.baseURL;
 
 
 // Uncomment for local development:
-// axios.defaults.baseURL = "http://192.168.0.114:3000";
-// axios.defaults.baseURL = "http://172.20.10.4:3002";
-// axios.defaults.baseURL = "http://192.168.50.156:3002";
+// axios.defaults.baseURL = "http://10.91.53.37:3002";
 
 
 export default axios;
-
-
-
-
-
