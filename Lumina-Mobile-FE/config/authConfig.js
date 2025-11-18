@@ -23,7 +23,7 @@ export const authConfig = {
 
 // Backend API Configuration
 export const apiConfig = {
- baseURL: "lumina-mobile-be-cahcaybjbbhxdzf4.southeastasia-01.azurewebsites.net", // ⚠️ UPDATE THIS if backend URL changed
+ baseURL: "https://lumina-mobile-be-cahcaybjbbhxdzf4.southeastasia-01.azurewebsites.net", // ⚠️ UPDATE THIS if backend URL changed
 };
 
 
