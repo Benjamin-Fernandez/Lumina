@@ -315,7 +315,7 @@ const PluginDetailsDev = () => {
      // Optionally redirect back to plugin list after error
      setTimeout(() => {
        Navigate("/pluginDev");
-     }, 5000);
+     }, 10000);
    }
  };
 
