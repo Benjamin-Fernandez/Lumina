@@ -8,32 +8,23 @@ import { PublicClientApplication } from "@azure/msal-browser";
 // Azure AD App Registration Settings
 export const authConfig = {
  // Get this from Azure Portal → App registrations → Application (client) ID
- clientId: "d6a126c8-d974-4272-9209-f7fc66d9fb5f", // ⚠️ UPDATE THIS
-
+ clientId: "3c79dd79-7c34-4cda-9973-25849a553f51", // Updated - Ben
 
  // Get this from Azure Portal → App registrations → Directory (tenant) ID
- tenantId: "0f8289d7-df22-4c3e-89b7-0fb1bcea61ab", // ⚠️ UPDATE THIS (or use "common" for multi-tenant)
-
+ tenantId: "0f8289d7-df22-4c3e-89b7-0fb1bcea61ab", // Updated - Ben
 
  // Authority URL
- // Option 1: Multi-tenant (any Microsoft account) - RECOMMENDED
+ // Multi-tenant (any Microsoft account)
  authority: "https://login.microsoftonline.com/common",
-
-
- // Option 2: Single-tenant (only your organization)
- // authority: "https://login.microsoftonline.com/0f8289d7-df22-4c3e-89b7-0fb1bcea61ab",
-
 
  // Redirect URIs
  // Production: Your deployed Azure Static Web App URL
- redirectUri: "https://ashy-moss-01833a500.3.azurestaticapps.net", // ⚠️ UPDATE THIS
-
+ redirectUri: "https://ashy-moss-01833a500.3.azurestaticapps.net", // Updated - Ben
 
  // Local development: Uncomment when testing locally
  // redirectUri: "http://localhost:3000",
 
-
- // Scopes (permissions your app needs)
+ // Scopes (permissions app needs)
  scopes: ["user.read"],
 };
 
@@ -41,7 +32,7 @@ export const authConfig = {
 // Backend API Configuration
 export const apiConfig = {
  // Production backend
- baseURL: "https://lumina-web-be-deh3gwc0fre2hjgz.southeastasia-01.azurewebsites.net", // ⚠️ UPDATE THIS
+ baseURL: "lumina-web-be-deh3gwc0fre2hjgz.southeastasia-01.azurewebsites.net", // Updated - Ben
 
 
  // Local development backend (uncomment when running backend locally)
