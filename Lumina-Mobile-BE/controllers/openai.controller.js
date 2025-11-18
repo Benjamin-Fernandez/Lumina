@@ -42,6 +42,13 @@ const getResponse = async (req, res) => {
 
  //console.log("Payload: ", payload);
  try {
+   // DEBUG: Log environment variables (mask sensitive data)
+   console.log("=== AZURE OPENAI DEBUG ===");
+   console.log("AZURE_OPENAI_API_BASE:", process.env.AZURE_OPENAI_API_BASE ? "SET" : "UNDEFINED");
+   console.log("AZURE_OPENAI_APIVERSION:", process.env.AZURE_OPENAI_APIVERSION || "UNDEFINED");
+   console.log("AZURE_OPENAI_APIKEY:", process.env.AZURE_OPENAI_APIKEY ? "SET (length: " + process.env.AZURE_OPENAI_APIKEY.length + ")" : "UNDEFINED");
+
+
    // Construct the API URL with api-version in query string
    const API = `${process.env.AZURE_OPENAI_API_BASE}?api-version=${process.env.AZURE_OPENAI_APIVERSION}`;
 
@@ -53,18 +60,20 @@ const getResponse = async (req, res) => {
    };
 
 
-   //console.log("API endpoint", API);
-   //console.log("Payload", payload);
+   console.log("API endpoint:", API);
+   console.log("Payload:", JSON.stringify(payload));
+   console.log("========================");
 
 
    const response = await axios.post(API, payload, { headers });
    res.status(200).json({ response: response.data });
-   //console.log("Response: ", response.data);
+   console.log("Response received successfully");
  } catch (error) {
-   console.error(
-     "Error fetching response:",
-     error.response ? error.response.data : error.message
-   );
+   console.error("=== ERROR ===");
+   console.error("Error fetching response:", error.response ? error.response.data : error.message);
+   console.error("Error status:", error.response ? error.response.status : "N/A");
+   console.error("Error headers:", error.response ? error.response.headers : "N/A");
+   console.error("=============");
    res.status(500).json({ error: error.message });
  }
 };
