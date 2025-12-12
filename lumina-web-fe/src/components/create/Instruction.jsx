@@ -159,7 +159,7 @@ const Instruction = ({ checked, setChecked }) => {
      <Typography variant="body1">
        Do not upload models trained on sensitive data or inappropriate content
        that may cause harm. Plugins that are deemed inappropriate will be
-       removed from the Lumina store. Your NTU email will tagged with every
+       removed from the Lumina store. Your NTU email will be tagged with every
        plugin you submit.
      </Typography>
      <FormGroup>
