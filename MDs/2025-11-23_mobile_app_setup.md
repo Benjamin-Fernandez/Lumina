@@ -40,20 +40,17 @@ The mobile app uses a centralized configuration file:
 **File**: `Lumina-Mobile-FE/config/authConfig.js`
 
 
-<augment_code_snippet path="Lumina-Mobile-FE/config/authConfig.js" mode="EXCERPT">
 ````javascript
 // Backend API Configuration
 export const apiConfig = {
 baseURL: "https://lumina-mobile-be-cahcaybjbbhxdzf4.southeastasia-01.azurewebsites.net",
 };
 ````
-</augment_code_snippet>
 
 
 This configuration is imported by axios:
 
 
-<augment_code_snippet path="Lumina-Mobile-FE/config/axiosConfig.js" mode="EXCERPT">
 ````javascript
 import axios from "axios";
 import { apiConfig } from "./authConfig";
@@ -61,7 +58,6 @@ import { apiConfig } from "./authConfig";
 
 axios.defaults.baseURL = apiConfig.baseURL;
 ````
-</augment_code_snippet>
 
 
 ---
