@@ -12,13 +12,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@azure/arm-appservice": "^18.0.0",
+    "@azure/arm-storage": "^19.1.0",
+    "@azure/identity": "^4.13.0",
+    "adm-zip": "^0.5.16",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^4.21.1",
     "js-yaml": "^4.1.0",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.2",
-    "swagger-client": "^3.32.0"
+    "multer": "^2.0.2",
+    "swagger-client": "^3.32.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
