@@ -1,0 +1,31 @@
+# Lumina Chatbot Plugin - Python Dependencies
+#
+# Add your Python package dependencies here.
+# These will be installed automatically when your function is deployed.
+#
+# Format: package-name==version or package-name>=version
+#
+# Examples:
+#   openai>=1.0.0
+#   requests>=2.28.0
+#   langchain>=0.1.0
+#   pymongo>=4.0.0
+#   redis>=4.0.0
+#   transformers>=4.30.0
+
+
+# Required: Azure Functions runtime
+azure-functions
+
+
+# Add your dependencies below this line:
+# -------------------------------------------
+
+
+
+
+
+
+
+
+
