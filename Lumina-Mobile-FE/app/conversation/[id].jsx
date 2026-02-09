@@ -195,7 +195,7 @@ setLoading(false);
 
 
 
-const getResponse = useCallback(async (messagesToSend, currentConversationId) => {
+const getResponse = useCallback(async (messagesToSend) => {
 // Prevent multiple simultaneous calls
 if (isProcessingRef.current) {
 console.log("Already processing a response, skipping...");
@@ -203,8 +203,10 @@ return;
 }
 
 
-// Use the passed conversationId, or fall back to state
-const convId = currentConversationId || conversationId;
+
+
+
+
 
 
 isProcessingRef.current = true;
@@ -321,7 +323,7 @@ try {
   // Now try to save to database (in background, don't fail if it errors)
   try {
     await axios.post("/message", {
-      conversationId: convId,
+      conversationId: conversationId,
       fromSelf: false,
       content: response.data.response.choices[0].message.content,
     });
@@ -341,8 +343,8 @@ try {
 
 
 
-    console.log("Conversation updated: ", convId);
-    await axios.put("/conversation/" + convId, {
+    console.log("Conversation updated: ", conversationId);
+    await axios.put("/conversation/" + conversationId, {
       lastMessage: response.data.response.choices[0].message.content,
     });
   } catch (dbError) {
@@ -428,7 +430,7 @@ try {
     path: chatbot.path || "/getResponse",
     conversationHistory: conversationHistory,
     userEmail: email,
-    conversationId: convId,
+    conversationId: conversationId,
     authType: chatbot.authType,
     apiKey: chatbot.apiKey,
     pluginName: chatbot.name,
@@ -481,7 +483,7 @@ try {
   // Now try to save to database (in background, don't fail if it errors)
   try {
     await axios.post("/message", {
-      conversationId: convId,
+      conversationId: conversationId,
       fromSelf: false,
       content: response.data.response,
     });
@@ -501,8 +503,8 @@ try {
 
 
 
-    console.log("Conversation updated: ", convId);
-    await axios.put("/conversation/" + convId, {
+    console.log("Conversation updated: ", conversationId);
+    await axios.put("/conversation/" + conversationId, {
       lastMessage: response.data.response,
     });
   } catch (dbError) {
@@ -580,75 +582,101 @@ try {
 
 
 
+React.useEffect(() => {
+console.log("Messages: ", messages);
+if (messages.length > 0) {
+const lastMessage = messages[messages.length - 1];
+// Only trigger if:
+// 1. Last message is from user (fromSelf: true)
+// 2. Not already processing (isProcessingRef prevents duplicate calls)
+// 3. Not a "Fetching response..." or error message placeholder
+if (
+  lastMessage.fromSelf &&
+  !isProcessingRef.current &&
+  lastMessage.content !== "Fetching response..." &&
+  !lastMessage.content.startsWith("Error:")
+) {
+  console.log("Triggering getResponse for message:", lastMessage.content);
+  // Pass the current messages array to avoid stale closure issues
+  getResponse([...messages]);
+}
+}
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [messages]); // Only depend on messages, not getResponse (prevents infinite loop)
 // Handle sending a message
 const handleSend = async () => {
-if (!input.trim()) return;
-
-
 setGenerating(true);
 console.log("Sending message: ", input);
+if (input.trim()) {
 const messageContent = input;
 
 
-// Build the new messages array with the user's message
-const newMessages = [...messages, { content: messageContent, fromSelf: true }];
+
+
 
 
 // Update UI FIRST (so user sees their message immediately)
-setMessages(newMessages);
+setMessages([...messages, { content: messageContent, fromSelf: true }]);
 setInput("");
 
 
-let currentConversationId = conversationId;
 
 
-// Create conversation if this is the first message
+
+
+
+
+// Now save to database in background (don't fail if it errors)
 if (messages.length === 0) {
- try {
-   const res = await axios.post("conversation/", {
-     userEmail: email,
-     chatbotId: chatbotId,
-     firstMessage: messageContent,
-     chatbotName: chatbot.name || "Lumina GPT-4o",
-   });
-   console.log("Conversation created with: ", chatbot.name);
-   currentConversationId = res.data.conversation._id;
-   setConversationId(currentConversationId);
+  // Create new conversation
+  try {
+    const res = await axios.post("conversation/", {
+      userEmail: email,
+      chatbotId: chatbotId,
+      firstMessage: messageContent,
+      chatbotName: chatbot.name || "Lumina GPT-4o",
+    });
+    console.log("Conversation created with: ", chatbot.name);
+    setConversationId(res.data.conversation._id);
+    const currentConversationId = res.data.conversation._id;
 
 
-   // Save the message to database
-   try {
-     await axios.post("/message", {
-       conversationId: currentConversationId,
-       fromSelf: true,
-       content: messageContent,
-     });
-   } catch (dbError) {
-     console.warn("Failed to save message to database:", dbError.message);
-   }
- } catch (error) {
-   console.error("Error creating conversation:", error);
-   setGenerating(false);
-   return; // Don't proceed if conversation creation failed
- }
+
+
+
+
+
+
+    // Save the message to database
+    try {
+      await axios.post("/message", {
+        conversationId: currentConversationId,
+        fromSelf: true,
+        content: messageContent,
+      });
+    } catch (dbError) {
+      console.warn("Failed to save message to database:", dbError.message);
+      // Continue anyway - user can still see the message in UI
+    }
+  } catch (error) {
+    console.error("Error creating conversation:", error);
+    // User still sees the message in UI, but it's not saved to database
+  }
 } else {
- // Existing conversation - just save the message
- try {
-   console.log("Conversation exists: ", conversationId);
-   await axios.post("/message", {
-     conversationId: conversationId,
-     fromSelf: true,
-     content: messageContent,
-   });
- } catch (error) {
-   console.warn("Failed to save message to database:", error.message);
- }
+  // Existing conversation - just save the message
+  try {
+    console.log("Conversation exists: ", conversationId);
+    await axios.post("/message", {
+      conversationId: conversationId,
+      fromSelf: true,
+      content: messageContent,
+    });
+  } catch (error) {
+    console.warn("Failed to save message to database:", error.message);
+    // Continue anyway - user can still see the message in UI
+  }
 }
-
-
-// Now call getResponse with the correct conversationId
-console.log("Calling getResponse with conversationId:", currentConversationId);
-getResponse(newMessages, currentConversationId);
+}
 };
 
 
