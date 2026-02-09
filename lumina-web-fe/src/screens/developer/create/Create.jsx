@@ -300,7 +300,7 @@ const handleSubmit = async () => {
 
 
    const pluginRes = await axios.post("/plugin/", pluginData);
-   const pluginId = pluginRes.data._id;
+   const pluginId = pluginRes.data.plugin._id;
 
 
    // If managed deployment, deploy the zip file
