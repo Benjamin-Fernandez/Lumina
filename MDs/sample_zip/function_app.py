@@ -21,8 +21,8 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
 
-@app.route(route="chat", methods=["POST"])
-def chat(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="http_trigger", methods=["POST"])
+def http_trigger(req: func.HttpRequest) -> func.HttpResponse:
    """
    Main chatbot endpoint.
   
