@@ -128,6 +128,8 @@ exports.deployPlugin = async (req, res) => {
    plugin.deploymentType = "managed";
    plugin.functionAppName = functionAppName;
    plugin.endpoint = deployResult.functionUrl;
+   plugin.path = "/api/http_trigger";
+   plugin.activated = true;
    await plugin.save();
 
 
