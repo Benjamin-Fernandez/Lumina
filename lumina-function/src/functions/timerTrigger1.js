@@ -12,11 +12,11 @@ app.timer("timerTrigger1", {
    const mobileConnectionString = process.env.MOBILE_CONNECTION_STRING;
 
 
-   const webName = "lumina-web";
+   const webName = "test";
    const webCollectionName = "plugins";
 
 
-   const mobileName = "lumina-mobile";
+   const mobileName = "test";
    const mobileCollectionName = "chatbots";
 
 
