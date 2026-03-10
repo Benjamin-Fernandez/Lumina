@@ -198,7 +198,10 @@ try {
 
 
 
-    return response.body;
+    // Convert object responses to strings consistently (same as web frontend TestEndpoint.js)
+    return typeof response.body === "object"
+      ? JSON.stringify(response.body, null, 2)
+      : String(response.body);
   } else {
     // For text/plain or other content types
     const response = await client.execute({
@@ -217,7 +220,10 @@ try {
 
 
 
-    return response.body;
+    // Convert object responses to strings consistently
+    return typeof response.body === "object"
+      ? JSON.stringify(response.body, null, 2)
+      : String(response.body);
   }
 } catch (error) {
   console.error("Error calling endpoint:", error);
