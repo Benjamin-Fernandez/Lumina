@@ -79,7 +79,56 @@ const getResponse = async (req, res) => {
 };
 
 
-module.exports = { getResponse };
+const getSimpleResponse = async (req, res) => {
+  const { query } = req.body;
+  if (!query || typeof query !== "string" || query.trim().length === 0) {
+    return res.status(400).json({ error: "Invalid or missing query string" });
+  }
+
+  const payload = {
+    messages: [
+      {
+        role: "system",
+        content: [
+          {
+            type: "text",
+            text: "You are an AI assistant that helps people find information.",
+          },
+        ],
+      },
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: query.trim(),
+          },
+        ],
+      },
+    ],
+    temperature: 0.7,
+    top_p: 0.95,
+    max_tokens: 800,
+  };
+
+  try {
+    const API = `${process.env.AZURE_OPENAI_API_BASE}?api-version=${process.env.AZURE_OPENAI_APIVERSION}`;
+    const headers = {
+      "Content-Type": "application/json",
+      "api-key": process.env.AZURE_OPENAI_APIKEY,
+    };
+
+    const response = await axios.post(API, payload, { headers });
+    const aiMessage =
+      response.data.choices?.[0]?.message?.content || "No response from AI";
+    res.status(200).json({ response: aiMessage });
+  } catch (error) {
+    console.error("Error in getSimpleResponse:", error.response ? error.response.data : error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getResponse, getSimpleResponse };
 
 
 

@@ -11,7 +11,7 @@ const { DefaultAzureCredential } = require("@azure/identity");
 const { WebSiteManagementClient } = require("@azure/arm-appservice");
 const { StorageManagementClient } = require("@azure/arm-storage");
 const AdmZip = require("adm-zip");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 
 
 
@@ -135,7 +135,7 @@ validateZipStructure(zipBuffer) {
  * @returns {string} - Azure-compliant function app name
  */
 generateFunctionAppName(pluginId) {
-  const shortUuid = uuidv4().split("-")[0];
+  const shortUuid = crypto.randomUUID().split("-")[0];
   // Azure function names: 2-60 chars, alphanumeric and hyphens
   const baseName = `lumina-${pluginId.slice(-8)}-${shortUuid}`;
   return baseName.toLowerCase().slice(0, 60);

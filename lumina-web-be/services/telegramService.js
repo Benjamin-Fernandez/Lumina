@@ -242,14 +242,12 @@ class TelegramService {
      // Get user's selected plugin
      const telegramUser = await TelegramUser.findOne({ telegramId: chatId });
 
-
      if (!telegramUser || !telegramUser.selectedPluginId) {
        return await this.sendMessage(
          chatId,
          "No chatbot selected. Use /list to choose a chatbot first."
        );
      }
-
 
      // Check if already querying (prevent concurrent requests)
      if (telegramUser.isQuerying) {
@@ -258,7 +256,6 @@ class TelegramService {
          "⏳ Please wait for the current query to complete."
        );
      }
-
 
      // Get plugin details
      const plugin = await Plugin.findById(telegramUser.selectedPluginId);
@@ -269,33 +266,38 @@ class TelegramService {
        );
      }
 
-
      // Set querying flag
      await TelegramUser.updateOne(
        { telegramId: chatId },
        { isQuerying: true, lastActivity: new Date() }
      );
 
-
      try {
        // Build full endpoint URL
        const chatbotUrl = `${plugin.endpoint}${plugin.path}`;
 
+       // Use the plugin's requestBodyQueryKey if set, otherwise default to "query"
+       const queryKey = plugin.requestBodyQueryKey || "query";
+
+       // Build request headers
+       const headers = { "Content-Type": "application/json" };
+
+       // Add API key auth if configured
+       if (plugin.authType === "apiKey" && plugin.apiKey) {
+         headers["x-api-key"] = plugin.apiKey;
+       } else if (plugin.authType === "bearer" && plugin.apiKey) {
+         headers["Authorization"] = `Bearer ${plugin.apiKey}`;
+       }
 
        // Forward query to chatbot
        const response = await axios.post(
          chatbotUrl,
-         {
-           query: userQuery,
-         },
+         { [queryKey]: userQuery },
          {
            timeout: 30000, // 30 second timeout
-           headers: {
-             "Content-Type": "application/json",
-           },
+           headers,
          }
        );
-
 
        // Parse response - handle both string and object responses
        let responseText;
@@ -309,12 +311,10 @@ class TelegramService {
          responseText = JSON.stringify(response.data);
        }
 
-
        // Telegram message limit is 4096 characters
        if (responseText.length > 4000) {
          responseText = responseText.substring(0, 4000) + "... (truncated)";
        }
-
 
        return await this.sendMessage(chatId, responseText);
      } finally {
@@ -327,13 +327,11 @@ class TelegramService {
    } catch (error) {
      console.error("handleQuery error:", error);
 
-
      // Clear querying flag on error
      await TelegramUser.updateOne(
        { telegramId: chatId },
        { isQuerying: false }
      ).catch(() => {});
-
 
      if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
        return await this.sendMessage(
@@ -341,7 +339,6 @@ class TelegramService {
          "⏱️ The chatbot took too long to respond. Please try again."
        );
      }
-
 
      return await this.sendMessage(
        chatId,
@@ -353,9 +350,5 @@ class TelegramService {
 
 
 module.exports = new TelegramService();
-
-
-
-
 
 
