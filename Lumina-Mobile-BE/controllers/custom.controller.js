@@ -45,6 +45,27 @@ logError: (pluginName, path, error, duration) => {
 
 
 /**
+* Extract a display string from a plugin response body.
+* Handles cases where the endpoint returns a JSON object (e.g. {response: "..."})
+* instead of a plain string.
+*/
+const extractResponseString = (body) => {
+  if (body == null) return "No response from API.";
+  if (typeof body === "string") return body;
+  if (typeof body !== "object") return String(body);
+
+  // If the object has a single key whose value is a string, return that value directly
+  const keys = Object.keys(body);
+  if (keys.length === 1 && typeof body[keys[0]] === "string") {
+    return body[keys[0]];
+  }
+
+  // Fallback: pretty-print the whole object
+  return JSON.stringify(body, null, 2);
+};
+
+
+/**
 * Load and parse OpenAPI schema, initialize SwaggerClient
 */
 const loadSchema = async ({ schema, authType, apiKey }) => {
@@ -198,10 +219,7 @@ try {
 
 
 
-    // Convert object responses to strings consistently (same as web frontend TestEndpoint.js)
-    return typeof response.body === "object"
-      ? JSON.stringify(response.body, null, 2)
-      : String(response.body);
+    return extractResponseString(response.body);
   } else {
     // For text/plain or other content types
     const response = await client.execute({
@@ -220,10 +238,7 @@ try {
 
 
 
-    // Convert object responses to strings consistently
-    return typeof response.body === "object"
-      ? JSON.stringify(response.body, null, 2)
-      : String(response.body);
+    return extractResponseString(response.body);
   }
 } catch (error) {
   console.error("Error calling endpoint:", error);
