@@ -72,6 +72,10 @@ console.error("MONGODB_URI not set – running without DB connection");
       socketTimeoutMS: 20000,
     });
     console.log("DB connected");
+
+    // Register Telegram webhook after DB is ready
+    const telegramService = require("./services/telegramService");
+    telegramService.registerWebhook();
   } catch (err) {
     console.error("DB connect failed:", err.message);
   }

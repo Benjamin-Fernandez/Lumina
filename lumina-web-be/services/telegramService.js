@@ -346,6 +346,37 @@ class TelegramService {
      );
    }
  }
+
+
+ /**
+  * Register webhook URL with Telegram Bot API
+  * Called once on server startup to ensure webhook is always correctly set.
+  * Safe to call repeatedly — Telegram ignores duplicate registrations.
+  */
+ async registerWebhook() {
+   if (!this.botToken) {
+     console.log("Telegram webhook registration skipped: TELEGRAM_BOT_TOKEN not set");
+     return;
+   }
+
+   const webhookUrl =
+     "https://lumina-web-be-deh3gwc0fre2hjgz.southeastasia-01.azurewebsites.net/api/telegram/webhook";
+
+   try {
+     const response = await axios.post(
+       `${this.apiUrl}${this.botToken}/setWebhook`,
+       { url: webhookUrl }
+     );
+
+     if (response.data && response.data.ok) {
+       console.log(`Telegram webhook registered: ${webhookUrl}`);
+     } else {
+       console.error("Telegram webhook registration response:", response.data);
+     }
+   } catch (error) {
+     console.error("Telegram webhook registration failed:", error.message);
+   }
+ }
 }
 
 
