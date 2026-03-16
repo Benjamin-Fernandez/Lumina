@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { tokens } from "../../../theme";
-import { config, msalInstance } from "../../../config";
+import { config } from "../../../config";
 import { useMsal } from "@azure/msal-react";
 import { useEffect } from "react";
 import axios from "../../../config/axiosConfig";
@@ -61,7 +61,8 @@ const Login = () => {
        const email = response.account.username;
        if (!email.endsWith("@e.ntu.edu.sg")) {
          errorToastify("Please sign in with your NTU account.");
-         msalInstance.loginRedirect();
+         // Log out the non-NTU account so the user can try again
+         await instance.logoutPopup({ account: response.account, mainWindowRedirectUri: "/" });
          return;
        }
        // Get the user's display name from Microsoft account

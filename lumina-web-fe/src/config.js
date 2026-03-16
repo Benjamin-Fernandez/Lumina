@@ -14,8 +14,8 @@ export const authConfig = {
  tenantId: "0f8289d7-df22-4c3e-89b7-0fb1bcea61ab", // Updated - Ben
 
  // Authority URL
- // Multi-tenant (any Microsoft account)
- authority: "https://login.microsoftonline.com/common",
+ // Use specific tenant for NTU organizational accounts only
+ authority: "https://login.microsoftonline.com/0f8289d7-df22-4c3e-89b7-0fb1bcea61ab",
 
  // Redirect URIs
  // Production: Your deployed Azure Static Web App URL
