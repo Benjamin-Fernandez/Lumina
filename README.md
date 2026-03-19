@@ -19,6 +19,7 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Build Process](#build-process)
+- [Setup & Deployment Guide](#setup--deployment-guide)
 - [Acknowledgments](#acknowledgments)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -98,6 +99,33 @@ npm run start
 ```
 
 3. For Lumina Mobile Front-End, download Expo GO from Google Playstore OR Apple App Store to preview the build.
+
+## Setup & Deployment Guide
+
+For a comprehensive, step-by-step guide to setting up the entire Lumina ecosystem from scratch — including Azure infrastructure provisioning, environment configuration, production deployment, Telegram bot integration, and managed plugin deployment automation — see the full guide:
+
+> 📘 **[End-to-End Setup Guide](end_to_end_setup_guide.md)**
+
+### Quick-Start Overview
+
+| Step | Description |
+|------|-------------|
+| **1. Clone the repository** | `git clone https://github.com/yanxchi/Lumina.git` |
+| **2. Provision Azure resources** | Create Cosmos DB, Azure OpenAI, App Services, Static Web App, Storage Account, and Azure AD app registrations |
+| **3. Configure environment variables** | Set up `.env` files for both backends and update `config.js` / `authConfig.js` for both frontends |
+| **4. Run locally** | Start all four components with `npm install` and `npm run dev` / `npm start` / `npx expo start` |
+| **5. Deploy to Azure** | Push to `main` to trigger GitHub Actions CI/CD for backends and Static Web App; use Expo EAS for mobile builds |
+| **6. Set up Telegram (optional)** | Create a bot via @BotFather, configure the webhook, and enable Telegram support on plugins |
+
+### What the Guide Covers
+
+- **Azure Infrastructure** — Resource groups, Cosmos DB (MongoDB API), Azure OpenAI, App Services, Static Web Apps, Storage, Service Principals, and Azure AD app registrations
+- **Configuration** — Complete environment variable reference for all four components (`lumina-web-be`, `Lumina-Mobile-BE`, `lumina-web-fe`, `Lumina-Mobile-FE`)
+- **Local Development** — Dependency installation and startup instructions for each component
+- **Production Deployment** — GitHub Actions CI/CD workflows, manual zip deploy, and Expo EAS build profiles
+- **Telegram Bot Integration** — Bot creation, webhook registration, and local testing with ngrok
+- **Managed Plugin Deployment** — How the automated Azure Function App deployment pipeline works
+- **Troubleshooting** — Common issues, Azure log streaming, and debugging tips
 
 ## Acknowledgments
 
